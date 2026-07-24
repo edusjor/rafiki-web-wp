@@ -1,0 +1,7 @@
+# Contiene credenciales de acceso en texto plano — no debe subirse a un repo remoto.
+redme
+
+# Artefactos de SO / editor
+.DS_Store
+Thumbs.db
+node_modules/
