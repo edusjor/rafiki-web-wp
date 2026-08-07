@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="<?php bloginfo( 'charset' ); ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,17 +14,20 @@
     </a>
 
     <nav class="main-nav" id="mainNav">
-      <a href="<?php echo esc_url( get_post_type_archive_link( 'alojamiento' ) ); ?>">Stay</a>
-      <a href="<?php echo esc_url( get_post_type_archive_link( 'actividad' ) ); ?>">Experiencias</a>
-      <a href="<?php echo esc_url( home_url( '/#paquetes' ) ); ?>">Paquetes</a>
-      <a href="<?php echo esc_url( home_url( '/#grupos' ) ); ?>">Grupos &amp; Retiros</a>
-      <a href="<?php echo esc_url( home_url( '/#beach-camp' ) ); ?>">Beach Camp</a>
-      <a href="<?php echo esc_url( home_url( '/#nosotros' ) ); ?>">Sobre Rafiki</a>
+      <a href="<?php echo esc_url( get_post_type_archive_link( 'accommodation' ) ); ?>">Stay With Us</a>
+      <a href="<?php echo esc_url( get_post_type_archive_link( 'activity' ) ); ?>">What You'll Do</a>
+      <a href="<?php echo esc_url( home_url( '/bring-your-group/' ) ); ?>">Bring Your Group</a>
+      <a href="<?php echo esc_url( home_url( '/why-rafiki/' ) ); ?>">Why Rafiki</a>
+      <a href="<?php echo esc_url( home_url( '/plan-your-trip/' ) ); ?>">Plan Your Trip</a>
+      <a href="<?php echo esc_url( home_url( '/rafiki-journal/' ) ); ?>">Rafiki Journal</a>
     </nav>
 
     <div class="header-actions">
-      <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hola! Quiero hacer una reserva en Rafiki Safari Lodge.' ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Reservar Ahora</a>
-      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+      <?php if ( shortcode_exists( 'language-switcher' ) ) : ?>
+        <div class="lang-switcher"><?php echo do_shortcode( '[language-switcher]' ); ?></div>
+      <?php endif; ?>
+      <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to make a reservation at Rafiki Safari Lodge.' ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Check Availability</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>

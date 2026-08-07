@@ -8,21 +8,21 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 function rafiki_icon_choices() {
 	return array(
-		'leaf'     => 'Hoja (genérico)',
-		'tent'     => 'Tienda',
-		'wood'     => 'Plataforma de madera',
-		'porch'    => 'Porche',
-		'bolt'     => 'Electricidad',
-		'bath'     => 'Baño',
-		'heart'    => 'Corazón',
-		'shield'   => 'Seguridad',
-		'guide'    => 'Guía / brújula',
-		'truck'    => '4x4 / transporte',
-		'wave'     => 'Agua / cascada',
-		'meal'     => 'Comida',
-		'tax'      => 'Impuestos / precio',
-		'mountain' => 'Montaña / hike',
-		'family'   => 'Familia',
+		'leaf'     => 'Leaf (generic)',
+		'tent'     => 'Tent',
+		'wood'     => 'Wood platform',
+		'porch'    => 'Porch',
+		'bolt'     => 'Electricity',
+		'bath'     => 'Bathroom',
+		'heart'    => 'Heart',
+		'shield'   => 'Safety',
+		'guide'    => 'Guide / compass',
+		'truck'    => '4x4 / transport',
+		'wave'     => 'Water / waterfall',
+		'meal'     => 'Meal',
+		'tax'      => 'Taxes / price',
+		'mountain' => 'Mountain / hike',
+		'family'   => 'Family',
 	);
 }
 

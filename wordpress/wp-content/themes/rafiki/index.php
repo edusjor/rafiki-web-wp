@@ -8,7 +8,7 @@
         <div><?php the_excerpt(); ?></div>
       </article>
     <?php endwhile; else : ?>
-      <p>No se encontró contenido.</p>
+      <p>No content found.</p>
     <?php endif; ?>
   </div>
 </section>

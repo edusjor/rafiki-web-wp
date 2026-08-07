@@ -1,16 +1,21 @@
 <?php
 /**
- * Hand-rolled meta boxes for "alojamiento" / "actividad".
+ * Hand-rolled meta boxes for "accommodation" / "activity" / "package".
  *
  * No ACF / paid plugin dependency: scalar fields save as single postmeta
- * keys, and repeatable fields (badges, datos rápidos, amenidades,
- * galería, variantes, tarifas, itinerario, paquetes) go through one
- * generic repeater engine (rafiki_render_repeater / rafiki_save_repeater)
- * driven by a small column schema, so every "list of rows" field in the
- * theme shares the same admin UI and save/sanitize logic.
+ * keys, and repeatable fields (badges, quick facts, amenities, gallery,
+ * room options, rates, itinerary, included packages, group pricing) go
+ * through one generic repeater engine (rafiki_render_repeater /
+ * rafiki_save_meta) driven by a small column schema, so every "list of
+ * rows" field in the theme shares the same admin UI and save/sanitize
+ * logic.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+function rafiki_post_types() {
+	return array( 'accommodation', 'activity', 'package' );
+}
 
 /* ------------------------------------------------------------------ */
 /* Field schemas                                                       */
@@ -19,69 +24,84 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function rafiki_repeater_schemas() {
 	return array(
 		'rafiki_badges' => array(
-			'label'   => 'Badges (bajo el título del hero)',
+			'label'   => 'Badges (under the hero title)',
 			'columns' => array(
-				array( 'key' => 'texto', 'label' => 'Texto', 'type' => 'text' ),
+				array( 'key' => 'text', 'label' => 'Text', 'type' => 'text' ),
 			),
 		),
-		'rafiki_datos_rapidos' => array(
-			'label'   => 'Datos Rápidos (ficha lateral)',
+		'rafiki_quick_facts' => array(
+			'label'   => 'Quick Facts (sidebar card)',
 			'columns' => array(
-				array( 'key' => 'label', 'label' => 'Etiqueta', 'type' => 'text' ),
-				array( 'key' => 'valor', 'label' => 'Valor', 'type' => 'text' ),
+				array( 'key' => 'label', 'label' => 'Label', 'type' => 'text' ),
+				array( 'key' => 'value', 'label' => 'Value', 'type' => 'text' ),
 			),
 		),
-		'rafiki_amenidades' => array(
-			'label'   => 'Amenidades / Lo que incluye',
+		'rafiki_amenities' => array(
+			'label'   => 'Amenities / What\'s Included',
 			'columns' => array(
-				array( 'key' => 'icono', 'label' => 'Ícono', 'type' => 'select', 'options' => 'icons' ),
-				array( 'key' => 'titulo', 'label' => 'Título', 'type' => 'text' ),
-				array( 'key' => 'texto', 'label' => 'Texto', 'type' => 'text' ),
+				array( 'key' => 'icon', 'label' => 'Icon', 'type' => 'select', 'options' => 'icons' ),
+				array( 'key' => 'title', 'label' => 'Title', 'type' => 'text' ),
+				array( 'key' => 'text', 'label' => 'Text', 'type' => 'text' ),
 			),
 		),
-		'rafiki_galeria' => array(
-			'label'   => 'Galería de Fotos',
+		'rafiki_gallery' => array(
+			'label'   => 'Photo Gallery',
 			'columns' => array(
-				array( 'key' => 'imagen', 'label' => 'Imagen', 'type' => 'image' ),
-				array( 'key' => 'alt', 'label' => 'Descripción (alt)', 'type' => 'text' ),
+				array( 'key' => 'image', 'label' => 'Image', 'type' => 'image' ),
+				array( 'key' => 'alt', 'label' => 'Description (alt text)', 'type' => 'text' ),
 			),
 		),
-		'rafiki_variantes' => array(
-			'label'      => 'Variantes / Elige tu Tienda',
-			'post_types' => array( 'alojamiento' ),
+		'rafiki_room_options' => array(
+			'label'      => 'Room Options',
+			'post_types' => array( 'accommodation' ),
 			'columns'    => array(
-				array( 'key' => 'imagen', 'label' => 'Imagen', 'type' => 'image' ),
-				array( 'key' => 'titulo', 'label' => 'Título', 'type' => 'text' ),
-				array( 'key' => 'texto', 'label' => 'Texto', 'type' => 'textarea' ),
+				array( 'key' => 'image', 'label' => 'Image', 'type' => 'image' ),
+				array( 'key' => 'title', 'label' => 'Title', 'type' => 'text' ),
+				array( 'key' => 'text', 'label' => 'Text', 'type' => 'textarea' ),
 			),
 		),
-		'rafiki_tarifas' => array(
-			'label'      => 'Tabla de Tarifas',
-			'post_types' => array( 'alojamiento' ),
+		'rafiki_rates' => array(
+			'label'      => 'Rates Table',
+			'post_types' => array( 'accommodation' ),
 			'columns'    => array(
-				array( 'key' => 'temporada', 'label' => 'Temporada', 'type' => 'text' ),
-				array( 'key' => 'doble', 'label' => 'Doble Ocupación', 'type' => 'text' ),
-				array( 'key' => 'extra', 'label' => 'Persona Extra', 'type' => 'text' ),
+				array( 'key' => 'season', 'label' => 'Season', 'type' => 'text' ),
+				array( 'key' => 'double', 'label' => 'Double Occupancy', 'type' => 'text' ),
+				array( 'key' => 'extra', 'label' => 'Extra Person', 'type' => 'text' ),
 				array( 'key' => 'upgrade', 'label' => 'Upgrade', 'type' => 'text' ),
 			),
 		),
-		'rafiki_itinerario' => array(
-			'label'      => 'Itinerario / Cómo es tu Día',
-			'post_types' => array( 'actividad' ),
+		'rafiki_itinerary' => array(
+			'label'      => 'Itinerary / Day by Day',
+			'post_types' => array( 'activity', 'package' ),
 			'columns'    => array(
-				array( 'key' => 'titulo', 'label' => 'Título del paso', 'type' => 'text' ),
-				array( 'key' => 'texto', 'label' => 'Descripción', 'type' => 'textarea' ),
+				array( 'key' => 'title', 'label' => 'Step Title', 'type' => 'text' ),
+				array( 'key' => 'text', 'label' => 'Description', 'type' => 'textarea' ),
 			),
 		),
-		'rafiki_paquetes' => array(
-			'label'      => 'Paquetes que Incluyen esta Actividad',
-			'post_types' => array( 'actividad' ),
+		'rafiki_included_packages' => array(
+			'label'      => 'Packages That Include This Activity',
+			'post_types' => array( 'activity' ),
 			'columns'    => array(
-				array( 'key' => 'etiqueta', 'label' => 'Etiqueta (ej. "3 noches")', 'type' => 'text' ),
-				array( 'key' => 'nombre', 'label' => 'Nombre del Paquete', 'type' => 'text' ),
-				array( 'key' => 'texto', 'label' => 'Descripción', 'type' => 'textarea' ),
-				array( 'key' => 'precio', 'label' => 'Precio', 'type' => 'text' ),
-				array( 'key' => 'precio_nota', 'label' => 'Nota del precio', 'type' => 'text' ),
+				array( 'key' => 'tag', 'label' => 'Tag (e.g. "3 nights")', 'type' => 'text' ),
+				array( 'key' => 'name', 'label' => 'Package Name', 'type' => 'text' ),
+				array( 'key' => 'text', 'label' => 'Description', 'type' => 'textarea' ),
+				array( 'key' => 'price', 'label' => 'Price', 'type' => 'text' ),
+				array( 'key' => 'price_note', 'label' => 'Price Note', 'type' => 'text' ),
+			),
+		),
+		'rafiki_group_pricing' => array(
+			'label'      => 'Pricing by Group Size',
+			'post_types' => array( 'package' ),
+			'columns'    => array(
+				array( 'key' => 'guests', 'label' => 'Group Size (e.g. "2 people")', 'type' => 'text' ),
+				array( 'key' => 'green', 'label' => 'Green Season', 'type' => 'text' ),
+				array( 'key' => 'high', 'label' => 'High Season', 'type' => 'text' ),
+			),
+		),
+		'rafiki_blocked_dates' => array(
+			'label'   => 'Blocked Dates (Online Booking) — dates guests can\'t select. For accommodations, nights already booked by a paid, non-cancelled order are blocked automatically on top of this list.',
+			'columns' => array(
+				array( 'key' => 'date', 'label' => 'Date', 'type' => 'date' ),
 			),
 		),
 	);
@@ -89,21 +109,31 @@ function rafiki_repeater_schemas() {
 
 function rafiki_scalar_fields() {
 	return array(
-		array( 'key' => 'rafiki_subtitulo', 'label' => 'Subtítulo del Hero', 'type' => 'textarea' ),
-		array( 'key' => 'rafiki_precio', 'label' => 'Precio', 'type' => 'text' ),
-		array( 'key' => 'rafiki_precio_unidad', 'label' => 'Unidad del precio (ej. "/ noche")', 'type' => 'text' ),
-		array( 'key' => 'rafiki_precio_nota', 'label' => 'Nota bajo el precio', 'type' => 'text' ),
-		array( 'key' => 'rafiki_link_reserva', 'label' => 'Link de Reserva de este tour (botón "Reservar Ahora")', 'type' => 'url' ),
-		array( 'key' => 'rafiki_intro_eyebrow', 'label' => 'Eyebrow de la intro (ej. "Stay / Tiendas Safari")', 'type' => 'text' ),
-		array( 'key' => 'rafiki_intro_titulo', 'label' => 'Título de la intro', 'type' => 'text' ),
-		array( 'key' => 'rafiki_intro_texto', 'label' => 'Texto de la intro (un párrafo por línea)', 'type' => 'textarea_big' ),
-		array( 'key' => 'rafiki_amenidades_titulo', 'label' => 'Título de la sección de amenidades', 'type' => 'text' ),
-		array( 'key' => 'rafiki_testimonio_fuente', 'label' => 'Fuente del testimonio', 'type' => 'select', 'options' => array( 'google' => 'Google', 'tripadvisor' => 'TripAdvisor', 'facebook' => 'Facebook' ) ),
-		array( 'key' => 'rafiki_testimonio_texto', 'label' => 'Texto del testimonio', 'type' => 'textarea' ),
-		array( 'key' => 'rafiki_testimonio_autor', 'label' => 'Autor del testimonio', 'type' => 'text' ),
-		array( 'key' => 'rafiki_cta_titulo', 'label' => 'Título del banner final', 'type' => 'text' ),
-		array( 'key' => 'rafiki_cta_texto', 'label' => 'Texto del banner final', 'type' => 'text' ),
-		array( 'key' => 'rafiki_cta_imagen', 'label' => 'Imagen del banner final', 'type' => 'image' ),
+		array( 'key' => 'rafiki_is_beach_camp', 'label' => 'This is the Beach Camp accommodation (drives the site-wide "Beach Camp" links in the menu and homepage — set this instead of relying on the post title)', 'type' => 'select', 'options' => array( '' => 'No', '1' => 'Yes' ) ),
+		array( 'key' => 'rafiki_subtitle', 'label' => 'Hero Subtitle', 'type' => 'textarea' ),
+		array( 'key' => 'rafiki_price', 'label' => 'Price', 'type' => 'text' ),
+		array( 'key' => 'rafiki_price_unit', 'label' => 'Price Unit (e.g. "/ night")', 'type' => 'text' ),
+		array( 'key' => 'rafiki_price_note', 'label' => 'Note Under the Price', 'type' => 'text' ),
+		array( 'key' => 'rafiki_booking_link', 'label' => 'Booking Link for This Tour ("Check Availability" button)', 'type' => 'url' ),
+		array( 'key' => 'rafiki_price_amount', 'label' => 'Online Booking Price (numeric — nightly rate for accommodations, per-person/per-booking price for activities & packages)', 'type' => 'number' ),
+		array( 'key' => 'rafiki_deposit_type', 'label' => 'Payment Type', 'type' => 'select', 'options' => array(
+			'full'             => 'Pay in full',
+			'fixed_total'      => 'Fixed deposit (total)',
+			'fixed_per_person' => 'Fixed deposit (per person)',
+			'percent'          => 'Percentage deposit',
+		) ),
+		array( 'key' => 'rafiki_deposit_amount', 'label' => 'Deposit Amount ($, used for "Fixed deposit" options)', 'type' => 'number' ),
+		array( 'key' => 'rafiki_deposit_percent', 'label' => 'Deposit Percent (%, used for "Percentage deposit")', 'type' => 'percent' ),
+		array( 'key' => 'rafiki_intro_eyebrow', 'label' => 'Intro Eyebrow (e.g. "Stay / Luxury Tents")', 'type' => 'text' ),
+		array( 'key' => 'rafiki_intro_title', 'label' => 'Intro Title', 'type' => 'text' ),
+		array( 'key' => 'rafiki_intro_text', 'label' => 'Intro Text (one paragraph per line)', 'type' => 'textarea_big' ),
+		array( 'key' => 'rafiki_amenities_title', 'label' => 'Amenities Section Title', 'type' => 'text' ),
+		array( 'key' => 'rafiki_testimonial_source', 'label' => 'Testimonial Source', 'type' => 'select', 'options' => array( 'google' => 'Google', 'tripadvisor' => 'TripAdvisor', 'facebook' => 'Facebook' ) ),
+		array( 'key' => 'rafiki_testimonial_text', 'label' => 'Testimonial Text', 'type' => 'textarea' ),
+		array( 'key' => 'rafiki_testimonial_author', 'label' => 'Testimonial Author', 'type' => 'text' ),
+		array( 'key' => 'rafiki_cta_title', 'label' => 'Closing Banner Title', 'type' => 'text' ),
+		array( 'key' => 'rafiki_cta_text', 'label' => 'Closing Banner Text', 'type' => 'text' ),
+		array( 'key' => 'rafiki_cta_image', 'label' => 'Closing Banner Image', 'type' => 'image' ),
 	);
 }
 
@@ -112,11 +142,11 @@ function rafiki_scalar_fields() {
 /* ------------------------------------------------------------------ */
 
 function rafiki_add_meta_boxes() {
-	foreach ( array( 'alojamiento', 'actividad' ) as $post_type ) {
-		add_meta_box( 'rafiki_scalar', 'Contenido de la Página', 'rafiki_render_scalar_box', $post_type, 'normal', 'high' );
+	foreach ( rafiki_post_types() as $post_type ) {
+		add_meta_box( 'rafiki_scalar', 'Page Content', 'rafiki_render_scalar_box', $post_type, 'normal', 'high' );
 	}
 	foreach ( rafiki_repeater_schemas() as $meta_key => $schema ) {
-		$post_types = isset( $schema['post_types'] ) ? $schema['post_types'] : array( 'alojamiento', 'actividad' );
+		$post_types = isset( $schema['post_types'] ) ? $schema['post_types'] : rafiki_post_types();
 		foreach ( $post_types as $post_type ) {
 			add_meta_box( 'rafiki_' . $meta_key, $schema['label'], function ( $post ) use ( $meta_key, $schema ) {
 				rafiki_render_repeater( $post->ID, $meta_key, $schema );
@@ -157,6 +187,15 @@ function rafiki_render_field_input( $name, $type, $value, $options = null ) {
 		case 'url':
 			echo '<input type="url" name="' . esc_attr( $name ) . '" value="' . esc_attr( $value ) . '" class="widefat" placeholder="https://...">';
 			break;
+		case 'number':
+			echo '<input type="number" step="0.01" min="0" name="' . esc_attr( $name ) . '" value="' . esc_attr( $value ) . '" class="widefat">';
+			break;
+		case 'percent':
+			echo '<input type="number" step="1" min="0" max="100" name="' . esc_attr( $name ) . '" value="' . esc_attr( $value ) . '" class="widefat">';
+			break;
+		case 'date':
+			echo '<input type="date" name="' . esc_attr( $name ) . '" value="' . esc_attr( $value ) . '">';
+			break;
 		case 'select':
 			$choices = ( $options === 'icons' ) ? rafiki_icon_choices() : (array) $options;
 			echo '<select name="' . esc_attr( $name ) . '">';
@@ -170,8 +209,8 @@ function rafiki_render_field_input( $name, $type, $value, $options = null ) {
 			echo '<div class="rafiki-image-field">';
 			echo '<img class="rafiki-image-preview" src="' . esc_url( $image_url ) . '" style="' . ( $image_url ? '' : 'display:none;' ) . 'max-width:140px;height:auto;display:block;margin-bottom:6px;border-radius:4px;">';
 			echo '<input type="hidden" class="rafiki-image-value" name="' . esc_attr( $name ) . '" value="' . esc_attr( $value ) . '">';
-			echo '<button type="button" class="button rafiki-image-select">Elegir imagen</button> ';
-			echo '<button type="button" class="button rafiki-image-clear"' . ( $image_url ? '' : ' style="display:none;"' ) . '>Quitar</button>';
+			echo '<button type="button" class="button rafiki-image-select">Choose Image</button> ';
+			echo '<button type="button" class="button rafiki-image-clear"' . ( $image_url ? '' : ' style="display:none;"' ) . '>Remove</button>';
 			echo '</div>';
 			break;
 		default:
@@ -198,7 +237,7 @@ function rafiki_render_repeater( $post_id, $meta_key, $schema ) {
 	rafiki_render_repeater_row( $meta_key, '__INDEX__', array(), $schema['columns'] );
 	echo '</template>';
 
-	echo '<p><button type="button" class="button button-primary rafiki-repeater-add">+ Agregar fila</button></p>';
+	echo '<p><button type="button" class="button button-primary rafiki-repeater-add">+ Add Row</button></p>';
 	echo '</div>';
 }
 
@@ -213,7 +252,7 @@ function rafiki_render_repeater_row( $meta_key, $index, $row, $columns ) {
 		echo '</div>';
 	}
 	echo '</div>';
-	echo '<button type="button" class="button-link-delete rafiki-repeater-remove">Eliminar fila</button>';
+	echo '<button type="button" class="button-link-delete rafiki-repeater-remove">Remove Row</button>';
 	echo '</div>';
 }
 
@@ -226,7 +265,7 @@ function rafiki_save_meta( $post_id ) {
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
 	if ( ! current_user_can( 'edit_post', $post_id ) ) return;
 	$post_type = get_post_type( $post_id );
-	if ( ! in_array( $post_type, array( 'alojamiento', 'actividad' ), true ) ) return;
+	if ( ! in_array( $post_type, rafiki_post_types(), true ) ) return;
 
 	foreach ( rafiki_scalar_fields() as $field ) {
 		$raw = isset( $_POST[ $field['key'] ] ) ? wp_unslash( $_POST[ $field['key'] ] ) : '';
@@ -235,7 +274,7 @@ function rafiki_save_meta( $post_id ) {
 	}
 
 	foreach ( rafiki_repeater_schemas() as $meta_key => $schema ) {
-		$post_types = isset( $schema['post_types'] ) ? $schema['post_types'] : array( 'alojamiento', 'actividad' );
+		$post_types = isset( $schema['post_types'] ) ? $schema['post_types'] : rafiki_post_types();
 		if ( ! in_array( $post_type, $post_types, true ) ) continue;
 
 		$posted = isset( $_POST[ $meta_key ] ) && is_array( $_POST[ $meta_key ] ) ? wp_unslash( $_POST[ $meta_key ] ) : array();
@@ -265,6 +304,13 @@ function rafiki_sanitize_value( $raw, $type ) {
 			return absint( $raw );
 		case 'url':
 			return esc_url_raw( $raw );
+		case 'number':
+			return is_numeric( $raw ) ? (string) round( (float) $raw, 2 ) : '';
+		case 'percent':
+			return is_numeric( $raw ) ? (string) max( 0, min( 100, round( (float) $raw ) ) ) : '';
+		case 'date':
+			$d = DateTime::createFromFormat( 'Y-m-d', (string) $raw );
+			return ( $d && $d->format( 'Y-m-d' ) === $raw ) ? $raw : '';
 		case 'select':
 			return sanitize_key( $raw );
 		default:
@@ -278,7 +324,7 @@ function rafiki_sanitize_value( $raw, $type ) {
 
 function rafiki_admin_assets( $hook ) {
 	global $post_type;
-	if ( ! in_array( $post_type, array( 'alojamiento', 'actividad' ), true ) ) return;
+	if ( ! in_array( $post_type, rafiki_post_types(), true ) ) return;
 	if ( ! in_array( $hook, array( 'post.php', 'post-new.php' ), true ) ) return;
 	wp_enqueue_media();
 	wp_enqueue_style( 'rafiki-admin', get_template_directory_uri() . '/assets/css/admin.css', array(), '1.0' );

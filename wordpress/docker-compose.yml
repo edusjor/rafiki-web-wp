@@ -23,6 +23,21 @@ services:
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: wordpress
       WORDPRESS_DEBUG: 1
+      # Keep logging errors/notices (WP_DEBUG_LOG) without printing them
+      # on top of the page (WP_DEBUG_DISPLAY) — some plugins (e.g. onvo-pay)
+      # trigger benign "doing it wrong" notices during normal operation.
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_DEBUG_DISPLAY', false);
+        define('WP_DEBUG_LOG', true);
+        // Cuando se accede via ngrok (u otro proxy), WordPress debe usar el
+        // host publico que llega en X-Forwarded-Host, no localhost:8080,
+        // o generara URLs/redirects rotos hacia afuera.
+        if (!empty($$_SERVER['HTTP_X_FORWARDED_HOST'])) {
+            $$forwarded_proto = $$_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'https';
+            $$forwarded_host = $$_SERVER['HTTP_X_FORWARDED_HOST'];
+            define('WP_HOME', $$forwarded_proto . '://' . $$forwarded_host);
+            define('WP_SITEURL', $$forwarded_proto . '://' . $$forwarded_host);
+        }
     volumes:
       - wp_data:/var/www/html
       - ./wp-content/themes/rafiki:/var/www/html/wp-content/themes/rafiki

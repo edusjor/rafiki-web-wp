@@ -6,7 +6,7 @@ function rafiki_rows( $post_id, $meta_key ) {
 	return is_array( $rows ) ? $rows : array();
 }
 
-/** Un párrafo por línea no vacía. */
+/** One paragraph per non-empty line. */
 function rafiki_paragraphs( $text ) {
 	$lines = array_filter( array_map( 'trim', explode( "\n", (string) $text ) ) );
 	$html  = '';
@@ -26,13 +26,13 @@ function rafiki_testimonial_source_svg( $source ) {
 }
 
 function rafiki_testimonial_source_label( $source ) {
-	$labels = array( 'google' => 'Reseña de Google', 'tripadvisor' => 'Reseña de TripAdvisor', 'facebook' => 'Reseña de Facebook' );
-	return isset( $labels[ $source ] ) ? $labels[ $source ] : 'Reseña';
+	$labels = array( 'google' => 'Google Review', 'tripadvisor' => 'TripAdvisor Review', 'facebook' => 'Facebook Review' );
+	return isset( $labels[ $source ] ) ? $labels[ $source ] : 'Review';
 }
 
-/** Número de WhatsApp desde Configuración General, normalizado con código de país. */
+/** WhatsApp number from General Settings, normalized with country code. */
 function rafiki_whatsapp_number() {
-	$digits = get_option( 'rafiki_whatsapp_numero', '86829454' );
+	$digits = get_option( 'rafiki_whatsapp_number', '50683689944' );
 	$digits = preg_replace( '/[^0-9]/', '', (string) $digits );
 	if ( 8 === strlen( $digits ) ) {
 		$digits = '506' . $digits;
@@ -52,17 +52,44 @@ function rafiki_whatsapp_icon_svg() {
 	return '<svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.36A10 10 0 1 0 12 2zm5.9 14.2c-.25.7-1.45 1.34-2 1.42-.5.08-1.15.11-1.86-.12-.43-.14-.98-.32-1.68-.63-2.96-1.28-4.9-4.24-5.04-4.44-.15-.2-1.2-1.6-1.2-3.05 0-1.45.76-2.16 1.03-2.46.27-.3.6-.37.8-.37h.57c.18 0 .43-.07.67.51.25.6.85 2.07.92 2.22.07.15.12.33.02.53-.1.2-.15.32-.3.5-.15.18-.32.4-.45.53-.15.15-.31.32-.13.62.18.3.8 1.32 1.72 2.14 1.18 1.05 2.18 1.38 2.48 1.53.3.15.48.13.65-.08.18-.2.75-.87.95-1.17.2-.3.4-.25.67-.15.28.1 1.75.83 2.05 .98.3.15.5.22.57.35.08.13.08.75-.17 1.45z"/></svg>';
 }
 
-/** Link de reserva de un alojamiento/actividad: el que puso el admin, o WhatsApp con el nombre del tour como respaldo. */
+/** Booking link for a tour: whatever the admin set, or WhatsApp with the tour name as a fallback. */
 function rafiki_booking_link( $post_id ) {
-	$link = get_post_meta( $post_id, 'rafiki_link_reserva', true );
-	return $link ? $link : rafiki_whatsapp_link( 'Hola! Quiero reservar: ' . get_the_title( $post_id ) );
+	$link = get_post_meta( $post_id, 'rafiki_booking_link', true );
+	return $link ? $link : rafiki_whatsapp_link( 'Hi! I would like to book: ' . get_the_title( $post_id ) );
 }
 
-/** Devuelve la URL de la primera imagen de la galería, o el featured image, como fallback para heros/CTAs. */
+/**
+ * The "Beach Camp" accommodation post, used by the header/footer/home to link
+ * straight to it. Looks up the `rafiki_is_beach_camp` flag first (set on the
+ * accommodation's Page Content meta box); falls back to matching the post
+ * title "Beach Camp" for sites that haven't set the flag yet.
+ */
+function rafiki_beach_camp_post() {
+	static $post = false;
+	if ( false !== $post ) return $post;
+
+	$flagged = get_posts( array(
+		'post_type'      => 'accommodation',
+		'posts_per_page' => 1,
+		'post_status'    => 'publish',
+		'meta_key'       => 'rafiki_is_beach_camp',
+		'meta_value'     => '1',
+	) );
+	if ( $flagged ) {
+		$post = $flagged[0];
+		return $post;
+	}
+
+	$by_title = get_posts( array( 'post_type' => 'accommodation', 'title' => 'Beach Camp', 'posts_per_page' => 1, 'post_status' => 'publish' ) );
+	$post = $by_title ? $by_title[0] : null;
+	return $post;
+}
+
+/** Returns the first gallery image URL, or the featured image, as a fallback for heros/CTAs. */
 function rafiki_lead_image_url( $post_id, $size = 'large' ) {
-	$gallery = rafiki_rows( $post_id, 'rafiki_galeria' );
-	if ( ! empty( $gallery[0]['imagen'] ) ) {
-		$url = wp_get_attachment_image_url( $gallery[0]['imagen'], $size );
+	$gallery = rafiki_rows( $post_id, 'rafiki_gallery' );
+	if ( ! empty( $gallery[0]['image'] ) ) {
+		$url = wp_get_attachment_image_url( $gallery[0]['image'], $size );
 		if ( $url ) return $url;
 	}
 	if ( has_post_thumbnail( $post_id ) ) {
