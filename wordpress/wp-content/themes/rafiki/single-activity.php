@@ -62,7 +62,7 @@
       <?php echo rafiki_paragraphs( get_post_meta( $post_id, 'rafiki_intro_text', true ) ); ?>
     </div>
 
-    <aside class="facts-card">
+    <aside class="facts-card" id="booking-widget">
       <h3>Quick Facts</h3>
       <?php if ( $price ) : ?>
         <span class="facts-price">$<?php echo esc_html( $price ); ?><span style="font-family:var(--font-body); font-size:14px; color:var(--text-muted);"> <?php echo esc_html( $price_unit ); ?></span></span>
@@ -176,6 +176,7 @@
   <div class="container cta-content">
     <h2><?php echo esc_html( $cta_title ); ?></h2>
     <p><?php echo esc_html( $cta_text ); ?></p>
+    <?php $GLOBALS['rafiki_booking_variant'] = 'anchor'; ?>
     <?php get_template_part( 'template-parts/booking-cta', null, array( 'post_id' => $post_id, 'book_now_label' => 'Check Availability →' ) ); ?>
   </div>
 </section>

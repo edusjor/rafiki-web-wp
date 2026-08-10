@@ -12,14 +12,26 @@
  * and optionally $book_now_label (defaults to "Check Availability").
  *
  * This partial is included twice per single-*.php template (sidebar +
- * closing banner), so every id is suffixed with a per-render unique
- * token rather than just $post_id, to avoid duplicate-id form fields.
+ * closing banner). Set $GLOBALS['rafiki_booking_variant'] = 'anchor'
+ * immediately before the second (closing banner) get_template_part()
+ * call when online booking is active: rather than repeating the full
+ * calendar + form (the sidebar one, #booking-widget, already has it —
+ * see the aside.facts-card in each single-*.php), it renders a single
+ * "back to the calendar" CTA. (A global, not the $args array, because
+ * load_template() no longer extract()s $args into this file's scope —
+ * it only extracts $wp_query->query_vars — so passing 'variant' via the
+ * get_template_part() $args array silently does nothing.) Every
+ * form-field id is still suffixed with a per-render unique token rather
+ * than just $post_id, to avoid duplicate-id form fields on the 'full'
+ * variant.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! isset( $post_id ) ) $post_id = get_the_ID();
 if ( ! isset( $book_now_label ) ) $book_now_label = 'Check Availability';
+$variant = isset( $GLOBALS['rafiki_booking_variant'] ) ? $GLOBALS['rafiki_booking_variant'] : 'full';
+unset( $GLOBALS['rafiki_booking_variant'] );
 
 $booking_product = null;
 if ( rafiki_booking_active() ) {
@@ -32,7 +44,9 @@ if ( rafiki_booking_active() ) {
 	}
 }
 ?>
-<?php if ( $booking_product ) :
+<?php if ( $booking_product && 'anchor' === $variant ) : ?>
+	<a href="#booking-widget" class="btn btn-primary">Check Availability ↑</a>
+<?php elseif ( $booking_product ) :
 	$uid             = 'rb_' . substr( md5( uniqid( '', true ) ), 0, 8 );
 	$is_accommodation = ( 'accommodation' === get_post_type( $post_id ) );
 	$min_date         = wp_date( 'Y-m-d', strtotime( '+1 day' ) );

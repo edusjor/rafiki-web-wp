@@ -576,7 +576,14 @@ h1, h2, h3 {
 
 @media (max-width: 620px) {
   .section { padding: 64px 0; }
-  .hero-content { padding-top: 130px; }
+  /* .hero-features is pinned to the bottom of the 100vh hero via
+     position:absolute; on mobile hero-features-inner drops to 1 column
+     (below) and grows taller than the space left under the centered
+     hero-content, so it overlapped the CTA buttons. Let it flow in
+     normal document order under the content instead of overlaying it. */
+  .hero { min-height: 0; }
+  .hero-content { padding-top: 130px; padding-bottom: 32px; }
+  .hero-features { position: static; }
   .hero-actions { flex-direction: column; }
   .hero-actions .btn { width: 100%; justify-content: center; }
   .hero-features-inner { grid-template-columns: 1fr; }

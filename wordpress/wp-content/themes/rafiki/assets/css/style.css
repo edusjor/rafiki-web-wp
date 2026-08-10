@@ -160,6 +160,9 @@ h1, h2, h3 {
 /* TranslatePress language switcher, restyled to match the header chrome */
 .trp-floating-switcher { display: none !important; }
 
+/* Hidden for now — remove this rule to bring the switcher back. */
+.lang-switcher { display: none !important; }
+
 .lang-switcher .trp-shortcode-switcher__wrapper {
   --bg: transparent !important;
   --bg-hover: rgba(255,255,255,0.1) !important;
@@ -643,7 +646,14 @@ h1, h2, h3 {
 
 @media (max-width: 620px) {
   .section { padding: 64px 0; }
-  .hero-content { padding-top: 130px; }
+  /* .hero-features is pinned to the bottom of the 100vh hero via
+     position:absolute; on mobile hero-features-inner drops to 1 column
+     (below) and grows taller than the space left under the centered
+     hero-content, so it overlapped the CTA buttons. Let it flow in
+     normal document order under the content instead of overlaying it. */
+  .hero { min-height: 0; }
+  .hero-content { padding-top: 130px; padding-bottom: 32px; }
+  .hero-features { position: static; }
   .hero-actions { flex-direction: column; }
   .hero-actions .btn { width: 100%; justify-content: center; }
   .hero-features-inner { grid-template-columns: 1fr; }
@@ -654,6 +664,33 @@ h1, h2, h3 {
   .why-stats { grid-template-columns: 1fr; }
   .footer-top { grid-template-columns: 1fr; }
   .logo img { height: 44px; }
+}
+
+/* Header actions (lang switcher + CTA + hamburger) don't fit next to the
+   logo on narrow phones — the CTA's full-width text plus the switcher push
+   .nav-toggle off-screen, making the mobile menu unreachable. Drop the
+   switcher and shrink the CTA so everything stays on one row. */
+@media (max-width: 560px) {
+  .header-inner { gap: 10px; }
+  .header-actions { gap: 8px; }
+  .header-actions .lang-switcher { display: none; }
+  .header-actions .btn-primary {
+    padding: 9px 12px;
+    font-size: 10px;
+    letter-spacing: 0.6px;
+  }
+  .nav-toggle { flex-shrink: 0; }
+}
+
+@media (max-width: 360px) {
+  /* No <span> to hide around the CTA's text node — collapse it with
+     font-size:0 and swap in a short label via ::after instead. */
+  .header-actions .btn-primary { font-size: 0; padding: 9px 10px; }
+  .header-actions .btn-primary::after {
+    content: 'Book';
+    font-size: 11px;
+    letter-spacing: 0.6px;
+  }
 }
 
 /* ===========================
@@ -1910,7 +1947,20 @@ h1, h2, h3 {
   .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 180px; }
 }
 
+/* WooCommerce's own default archive/single-product markup (#primary.
+   content-area) has no theme template override, so it renders flush at
+   the top of the page — underneath the fixed header — and full-bleed
+   with no side margin. Give it the same clearance + container treatment
+   as our own page sections so these fallback pages (e.g. /shop/) don't
+   look broken. */
+#primary.content-area {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 110px 24px 64px;
+}
+
 @media (max-width: 620px) {
+  #primary.content-area { padding: 96px 20px 48px; }
   .page-hero-content { padding-top: 130px; }
   .amenities-grid { grid-template-columns: 1fr; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 140px; }
