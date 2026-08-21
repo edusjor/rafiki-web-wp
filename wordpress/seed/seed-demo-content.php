@@ -290,7 +290,7 @@ $braai_id = rafiki_seed_post( 'accommodation', 'Lekker Bar and Braai', array(
 /* ==================================================================== */
 
 $rafting_id = rafiki_seed_post( 'activity', 'White Water Rafting', array(
-	'rafiki_subtitle'     => 'Raft the cleanest river in Central America. Class II-III rapids, hidden waterfalls and incredible views of the rainforest — leaving straight from the lodge.',
+	'rafiki_subtitle'     => "Rafiki's signature experience. Wake up here, raft Class II-III rapids and a waterfall stop, and come back to the lodge for lunch.",
 	'rafiki_badges'       => array(
 		array( 'text' => 'Class II–III' ),
 		array( 'text' => 'From $105 / person' ),
@@ -349,7 +349,7 @@ $rafting_id = rafiki_seed_post( 'activity', 'White Water Rafting', array(
 ) );
 
 $horseback_id = rafiki_seed_post( 'activity', 'Horseback Riding', array(
-	'rafiki_subtitle'     => 'Ride through the tropical forest on one of our sturdy ponies, tracing the river basin to a natural swimming hole deep in the jungle.',
+	'rafiki_subtitle'     => 'Ride with the Duarte family, part of this valley since 2002 — not horses brought in for tourists.',
 	'rafiki_badges'       => array(
 		array( 'text' => 'Valley Loop $105' ),
 		array( 'text' => 'All skill levels' ),
@@ -396,8 +396,16 @@ $horseback_id = rafiki_seed_post( 'activity', 'Horseback Riding', array(
 	'rafiki_cta_image'    => rafiki_seed_image( 'https://rafikisafari.com/wp/wp-content/uploads/2016/12/horses-kids.jpg' ),
 ) );
 
-$hiking_id = rafiki_seed_post( 'activity', 'Hiking', array(
-	'rafiki_subtitle'     => 'Immerse yourself in a tropical paradise on foot — the most intimate way to experience Rafiki\'s private reserve.',
+/* Renamed from "Hiking" — rename in place so an existing seeded post is
+   updated instead of duplicated, and give it its own slug. */
+$renamed_hiking = get_posts( array( 'post_type' => 'activity', 'title' => 'Hiking', 'posts_per_page' => 1, 'post_status' => 'any', 'fields' => 'ids' ) );
+if ( $renamed_hiking ) {
+	wp_update_post( array( 'ID' => $renamed_hiking[0], 'post_title' => 'Aqua Hike', 'post_name' => 'aqua-hike' ) );
+	WP_CLI::log( 'Renamed "Hiking" -> "Aqua Hike" (#' . $renamed_hiking[0] . ').' );
+}
+
+$hiking_id = rafiki_seed_post( 'activity', 'Aqua Hike', array(
+	'rafiki_subtitle'     => 'Walk in, swim out. Waterfalls, rainforest and lunch with Los Campesinos, a local community-run project.',
 	'rafiki_badges'       => array(
 		array( 'text' => 'Waterfall hike $105' ),
 		array( 'text' => '1–5 km options' ),
@@ -524,7 +532,7 @@ $birding_id = rafiki_seed_post( 'activity', 'Birding', array(
 ) );
 
 $fishing_id = rafiki_seed_post( 'activity', 'Fishing', array(
-	'rafiki_subtitle'     => 'Fly fish one of the cleanest rivers in Central America, with 8+ freshwater and saltwater species on the line.',
+	'rafiki_subtitle'     => 'A slower day on the lower Savegre by raft, reading deep pools for machaca and other tropical freshwater species.',
 	'rafiki_badges'       => array(
 		array( 'text' => 'Full day' ),
 		array( 'text' => '8+ species' ),
@@ -557,7 +565,7 @@ $fishing_id = rafiki_seed_post( 'activity', 'Fishing', array(
 ) );
 
 $massage_id = rafiki_seed_post( 'activity', 'Massage', array(
-	'rafiki_subtitle'     => 'Tropical massage in the privacy of your own tent — Swedish, bamboo, chocolate and coconut treatments, plus foot rubs and pedicures, by a certified therapist.',
+	'rafiki_subtitle'     => 'No spa music, no hallway — just the forest going quiet around you while someone takes care of you.',
 	'rafiki_badges'       => array(
 		array( 'text' => 'In-tent service' ),
 		array( 'text' => 'Certified therapist' ),
@@ -603,6 +611,7 @@ rafiki_seed_post( 'package', 'Safarito', array(
 		array( 'text' => '2 nights' ),
 		array( 'text' => '1 activity per person' ),
 		array( 'text' => 'From $575 for 2' ),
+		array( 'text' => 'Road Trip · Independent · Off the Main Route' ),
 	),
 	'rafiki_price'        => '575',
 	'rafiki_price_unit'   => 'for 2 people',
@@ -613,9 +622,9 @@ rafiki_seed_post( 'package', 'Safarito', array(
 		array( 'label' => 'Meals', 'value' => 'Breakfast & lunch with tour' ),
 		array( 'label' => 'Perks', 'value' => 'Water slide, hot tub, Lekker Bar' ),
 	),
-	'rafiki_intro_eyebrow' => 'Packages / Safarito',
-	'rafiki_intro_title'   => 'A QUICK TASTE OF RAFIKI',
-	'rafiki_intro_text'    => "This 2-night package is the fastest way to experience Rafiki without feeling rushed — except down the river. Choose one adventure per person from whitewater rafting, hiking or horseback riding, with lodging, breakfast and lunch included.\nWant more? Turn it into our \"Ultimate Safari\" by combining horseback riding with whitewater rafting.",
+	'rafiki_intro_eyebrow' => 'The Detour',
+	'rafiki_intro_title'   => 'TAKE THE TURN OFF THE MAIN ROAD.',
+	'rafiki_intro_text'    => "You've got the rental car. Your Costa Rica route is already moving through the South Pacific. Now give yourself two nights somewhere the highway doesn't show you.\nSafarito takes you inland to Rafiki for a short forest stay built around one full Rafiki experience — raft the Savegre, ride through the valley, or take the Aqua Hike. Then spend the rest of your time doing what road trips rarely give you enough of: staying put for a while. Pool, birds, dinner, your safari tent, one more morning in the forest. Then get back in the car and continue toward the coast.\nWhy this trip works: you don't need another destination. You need one good detour.\nBuilt for rental-car travelers, couples, families road-tripping Costa Rica, travelers moving through Manuel Antonio, Dominical or Uvita, and people who enjoy finding the places between the famous stops.",
 	'rafiki_gallery'       => rafiki_gallery_from_urls( array(
 		'https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_25.jpeg',
 		'https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_44.jpeg',
@@ -650,6 +659,7 @@ rafiki_seed_post( 'package', 'Rafiki Safari', array(
 		array( 'text' => '3 nights' ),
 		array( 'text' => '2 activities per person' ),
 		array( 'text' => 'From $963 for 2' ),
+		array( 'text' => 'Family · Adventure · Together' ),
 	),
 	'rafiki_price'        => '963',
 	'rafiki_price_unit'   => 'for 2 people',
@@ -660,9 +670,9 @@ rafiki_seed_post( 'package', 'Rafiki Safari', array(
 		array( 'label' => 'Meals', 'value' => 'Breakfast & lunch with tour' ),
 		array( 'label' => 'Upgrade', 'value' => 'Ultimate Safari add-on available' ),
 	),
-	'rafiki_intro_eyebrow' => 'Packages / Rafiki Safari',
-	'rafiki_intro_title'   => 'THE FREEDOM TO RELAX',
-	'rafiki_intro_text'    => "A ton of your adventure is already planned for you — you'll just have to pick your 2 favorite trips from whitewater rafting, hiking or horseback riding. Three nights of lodging, breakfast and lunch on tour days, all included.\nWant to go further? Upgrade to our \"Ultimate Safari\" combo, pairing horseback riding with whitewater rafting.",
+	'rafiki_intro_eyebrow' => 'The Family Base',
+	'rafiki_intro_title'   => 'THREE NIGHTS WHERE THE FAMILY ACTUALLY DOES COSTA RICA TOGETHER.',
+	'rafiki_intro_text'    => "The first full day puts you into one side of Rafiki. The second takes you somewhere completely different — raft the Savegre, ride through the valley, or walk into the forest on the Aqua Hike. And between those bigger moments, stay right where you are: breakfast with the birds, lunch back at the lodge, kids at the water slide, pool, a slower afternoon, dinner together.\nThree nights gives your family enough time to create shared stories without turning the vacation into a schedule.\nWhy this trip works: staying in one place means you're not spending every morning organizing another transfer, another tour and another hotel. Everyone wakes up at Rafiki. The adventure starts from there.\nBuilt for families with kids or teenagers, multigenerational trips, parents who want meaningful shared experiences, travelers who want adventure without constant logistics, and first-time Rafiki guests.",
 	'rafiki_gallery'       => rafiki_gallery_from_urls( array(
 		'https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_25.jpeg',
 		'https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_44.jpeg',
@@ -697,6 +707,7 @@ rafiki_seed_post( 'package', 'Savegre Adventure', array(
 		array( 'text' => '5 nights' ),
 		array( 'text' => '4 activities' ),
 		array( 'text' => 'From $1,715 for 2' ),
+		array( 'text' => 'Rainforest + Pacific · Journey · Discovery' ),
 	),
 	'rafiki_price'        => '1,715',
 	'rafiki_price_unit'   => 'for 2 people',
@@ -707,9 +718,9 @@ rafiki_seed_post( 'package', 'Savegre Adventure', array(
 		array( 'label' => 'Includes', 'value' => 'Sea kayak transfer to Beach Camp' ),
 		array( 'label' => 'Highlight', 'value' => 'Longest canopy cable in Central America' ),
 	),
-	'rafiki_intro_eyebrow' => 'Packages / Savegre Adventure',
-	'rafiki_intro_title'   => 'MOUNTAIN THRILLS, THEN COASTAL CALM',
-	'rafiki_intro_text'    => "Five nights of glamping in the magnificent Savegre Valley, combining jungle adventure with beach relaxation. Choose 2 activities from whitewater rafting, hiking or horseback riding at the lodge, then sea-kayak through the mangroves to Beach Camp for a canopy tour finale.\nBreakfast is included at both locations, along with all 4 activities and their meals.",
+	'rafiki_intro_eyebrow' => 'Forest Beach · The Two-World Journey',
+	'rafiki_intro_title'   => 'START IN THE FOREST. END BY THE OCEAN.',
+	'rafiki_intro_text'    => "Costa Rica doesn't change from rainforest to beach at a hotel check-in desk. The landscape changes gradually: forest becomes river, river moves toward mangrove, mangrove meets the Pacific. Forest Beach lets you experience that transition.\nStart with three nights at Rafiki Safari Lodge surrounded by the inland forest, river and valley. Spend your days rafting, riding, walking or exploring. Then continue toward Rafiki Beach Camp for two final nights beside the Pacific. Not two separate vacations — one journey through two sides of Rafiki.\nWhy this trip works: you came to Costa Rica wanting both. You shouldn't have to choose between forest and ocean, or experience them as two completely unrelated hotel reservations.\nBuilt for couples, families, nature-focused travelers, people who want rainforest + beach, and travelers who prefer fewer hotels and more meaningful transitions.",
 	'rafiki_gallery'       => rafiki_gallery_from_urls( array(
 		'https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_25.jpeg',
 		'https://rafikisafari.com/wp/wp-content/uploads/2016/12/ohface.jpg',
@@ -747,6 +758,7 @@ rafiki_seed_post( 'package', 'Super Lekker Safari', array(
 		array( 'text' => '6 nights' ),
 		array( 'text' => '5 activities' ),
 		array( 'text' => 'From $1,567 / person' ),
+		array( 'text' => 'Deeper · Unrushed · Full Rafiki' ),
 	),
 	'rafiki_price'        => '1,567',
 	'rafiki_price_unit'   => '/ person (4 people)',
@@ -757,9 +769,9 @@ rafiki_seed_post( 'package', 'Super Lekker Safari', array(
 		array( 'label' => 'Transfers', 'value' => 'Included from San José airport' ),
 		array( 'label' => 'Highlight', 'value' => 'Night hike + canopy tour' ),
 	),
-	'rafiki_intro_eyebrow' => 'Packages / Super Lekker Safari',
-	'rafiki_intro_title'   => 'OUR SIGNATURE SURF & TURF ADVENTURE',
-	'rafiki_intro_text'    => "Six nights combining mountain and beach: whitewater rafting, horseback riding through the private reserve, a waterfall hike with suspension bridge, a night hike, sea kayaking to Beach Camp, and a canopy/zipline tour in the Manuel Antonio area.\nAll meals are included except beach camp dinners, along with every transfer — starting with pickup from San José.",
+	'rafiki_intro_eyebrow' => 'The Deep Stay',
+	'rafiki_intro_title'   => 'STOP COUNTING STOPS. START LIVING THE TRIP.',
+	'rafiki_intro_text'    => "Four nights in the forest changes the way Rafiki feels. You don't have to choose between the river and the horses. You don't have to skip the Aqua Hike because tomorrow is checkout. You don't have to decide whether birding is \"worth using a morning.\" There is time — time to go out, time to come back, time for the pool, time for the forest to surprise you, time for plans to change.\nThen the journey moves toward Rafiki Beach Camp for two final nights by the Pacific. By then, Rafiki isn't another stop in Costa Rica. It's part of the trip you actually got to know.\nWhy this trip works: not every great Costa Rica vacation needs more destinations. Sometimes it needs fewer, and more time inside each one.\nBuilt for families and couples with more time, slow travelers, nature and adventure-focused trips, travelers who prefer depth over hotel hopping, and people who want Rafiki to become a major part of their Costa Rica journey.",
 	'rafiki_gallery'       => rafiki_gallery_from_urls( array(
 		'https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_25.jpeg',
 		'https://rafikisafari.com/wp/wp-content/uploads/2016/12/dawnpatrol.jpg',
@@ -823,6 +835,9 @@ function rafiki_seed_page( $title, $slug, $template ) {
 	return $post_id;
 }
 
+rafiki_seed_page( 'Home 2', 'home-2', 'page-templates/template-home-2.php' );
+rafiki_seed_page( 'Our Ecological Mission', 'ecological-mission', 'page-templates/template-ecological-mission.php' );
+rafiki_seed_page( 'Lekker Bar & Braai', 'lekker-bar-braai', 'page-templates/template-lekker-bar-braai.php' );
 rafiki_seed_page( 'Bring Your Group', 'bring-your-group', 'page-templates/template-bring-your-group.php' );
 rafiki_seed_page( 'Why Rafiki', 'why-rafiki', 'page-templates/template-why-rafiki.php' );
 rafiki_seed_page( 'Meet Rafiki', 'meet-rafiki', 'page-templates/template-meet-rafiki.php' );

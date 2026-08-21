@@ -47,10 +47,12 @@
 
     <div class="footer-col">
       <h4>Why Rafiki</h4>
-      <a href="<?php echo esc_url( home_url( '/why-rafiki/' ) ); ?>">Why Rafiki</a>
+      <a href="<?php echo esc_url( home_url( '/why-rafiki/' ) ); ?>">Our Story</a>
+      <a href="<?php echo esc_url( home_url( '/ecological-mission/' ) ); ?>">Our Ecological Mission</a>
       <a href="<?php echo esc_url( home_url( '/meet-rafiki/' ) ); ?>">Meet Rafiki</a>
+      <a href="<?php echo esc_url( home_url( '/lekker-bar-braai/' ) ); ?>">Lekker Bar &amp; Braai</a>
       <a href="<?php echo esc_url( home_url( '/bring-your-group/' ) ); ?>">Bring Your Group</a>
-      <a href="<?php echo esc_url( home_url( '/plan-your-trip/' ) ); ?>">Plan Your Trip</a>
+      <a href="<?php echo esc_url( home_url( '/plan-your-trip/' ) ); ?>">Before You Get Here</a>
       <a href="<?php echo esc_url( home_url( '/rafiki-journal/' ) ); ?>">Rafiki Journal</a>
     </div>
 

@@ -102,6 +102,26 @@ $status = isset( $_GET['group_inquiry'] ) ? sanitize_key( $_GET['group_inquiry']
   </div>
 </section>
 
+<section class="section" style="background:var(--cream-2);">
+  <div class="container" style="max-width:760px;">
+    <h3 style="text-align:center; font-size:22px; text-transform:uppercase; margin-bottom:32px;">Before You Send the Inquiry</h3>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>Will a group trip to Rafiki feel like a school field trip?</summary>
+        <p>Not if we design it properly. One big shared experience, enough freedom afterward, different options for different people, dinner back together. The itinerary should create common moments, not keep everyone attached to each other all day.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What if our group has very different ages?</summary>
+        <p>That's actually one of the strongest reasons to use Rafiki as the base. Age differences matter less when the entire group doesn't need to choose one activity every day.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can Rafiki help me organize this without me becoming the group's full-time travel agent?</summary>
+        <p>Yes. Start by giving us the people, not the itinerary — adults, kids and ages, couples/families, dates, what people enjoy, where you're coming from and where you're heading. Rafiki helps structure the stay from there.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
 <section class="cta-banner" id="book">
   <div class="cta-media">
     <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_34.jpeg" alt="Group activity at Rafiki Safari Lodge">

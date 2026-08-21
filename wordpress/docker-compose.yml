@@ -41,6 +41,8 @@ services:
     volumes:
       - wp_data:/var/www/html
       - ./wp-content/themes/rafiki:/var/www/html/wp-content/themes/rafiki
+      - ./wp-content/plugins/woocommerce:/var/www/html/wp-content/plugins/woocommerce
+      - ./wp-content/plugins/onvo-pay:/var/www/html/wp-content/plugins/onvo-pay
       - ./php-uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
 
   wpcli:
@@ -57,6 +59,8 @@ services:
     volumes:
       - wp_data:/var/www/html
       - ./wp-content/themes/rafiki:/var/www/html/wp-content/themes/rafiki
+      - ./wp-content/plugins/woocommerce:/var/www/html/wp-content/plugins/woocommerce
+      - ./wp-content/plugins/onvo-pay:/var/www/html/wp-content/plugins/onvo-pay
       - ./seed:/seed
     entrypoint: ["wp"]
 

@@ -321,6 +321,7 @@ h1, h2, h3 {
   text-align: center;
   margin-bottom: 56px;
 }
+.for-you-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
 .for-you-item svg {
   width: 46px;
   height: 46px;
@@ -339,6 +340,38 @@ h1, h2, h3 {
   line-height: 1.55;
   margin: 0;
 }
+
+/* ----- Self-qualification checklist (Does Rafiki Fit Your Trip) -----
+   Deliberately not another icon-card grid — this section sits right
+   after the "Why Stay Here" cards, so it reads as a plain scan-down
+   checklist instead of a third near-identical block. */
+.fit-checklist {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px 56px;
+  max-width: 980px;
+  margin: 48px auto 0;
+  text-align: left;
+}
+.fit-checklist-item { display: flex; gap: 16px; align-items: flex-start; }
+.fit-checklist-item svg { width: 22px; height: 22px; color: var(--orange); flex: 0 0 22px; margin-top: 3px; }
+.fit-checklist-item h3 { font-size: 16px; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.3px; }
+.fit-checklist-item p { font-size: 14.5px; line-height: 1.6; color: var(--text-dark-muted); margin: 0; }
+
+/* ----- Compact trust strip (under testimonials) ----- */
+.trust-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  max-width: 900px;
+  margin: 56px auto 0;
+  padding-top: 40px;
+  border-top: 1px solid rgba(32,28,22,0.1);
+  text-align: center;
+}
+.trust-strip-item svg { width: 30px; height: 30px; color: var(--orange); margin-bottom: 10px; }
+.trust-strip-item strong { display: block; font-family: var(--font-head); font-size: 19px; letter-spacing: 0.4px; margin-bottom: 4px; }
+.trust-strip-item span { display: block; font-size: 13px; color: var(--text-dark-muted); }
 
 .for-you-photos {
   display: grid;
@@ -361,6 +394,19 @@ h1, h2, h3 {
 }
 .experience-grid.archive-grid {
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+/* Home's 5-card set (odd count) — flex + centered wrap so a lone last
+   row (e.g. 3 + 2) centers instead of grid-stretching to fill columns
+   or leaving a stranded gap on the right. */
+.experience-grid.home-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+.experience-grid.home-grid .experience-card {
+  flex: 0 1 calc(33.333% - 11px);
+  min-width: 260px;
 }
 .experience-card {
   position: relative;
@@ -638,10 +684,12 @@ h1, h2, h3 {
   .for-you-grid { grid-template-columns: repeat(2, 1fr); }
   .for-you-photos { grid-template-columns: repeat(2, 1fr); }
   .experience-grid { grid-template-columns: repeat(2, 1fr); }
+  .experience-grid.home-grid .experience-card { flex-basis: calc(50% - 8px); }
   .why-grid { grid-template-columns: 1fr; }
   .why-stats { grid-template-columns: repeat(2, 1fr); }
   .testimonial-grid { grid-template-columns: 1fr; }
   .footer-top { grid-template-columns: 1fr 1fr; }
+  .plan-grid.cols-4 { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 620px) {
@@ -660,10 +708,15 @@ h1, h2, h3 {
   .for-you-grid { grid-template-columns: 1fr; }
   .for-you-photos { grid-template-columns: repeat(2, 1fr); }
   .experience-grid { grid-template-columns: 1fr; }
+  .experience-grid.home-grid .experience-card { flex-basis: 100%; }
   .experience-card { height: 320px; }
   .why-stats { grid-template-columns: 1fr; }
   .footer-top { grid-template-columns: 1fr; }
   .logo img { height: 44px; }
+  .plan-grid.cols-4,
+  .plan-grid.cols-2 { grid-template-columns: 1fr; }
+  .fit-checklist { grid-template-columns: 1fr; }
+  .trust-strip { grid-template-columns: 1fr; }
 }
 
 /* Header actions (lang switcher + CTA + hamburger) don't fit next to the
@@ -760,7 +813,7 @@ h1, h2, h3 {
   gap: 56px;
   align-items: start;
 }
-.detail-intro-text .eyebrow {
+.eyebrow {
   display: block;
   font-size: 12.5px;
   font-weight: 700;
@@ -769,6 +822,7 @@ h1, h2, h3 {
   color: var(--orange);
   margin-bottom: 12px;
 }
+.eyebrow.center { text-align: center; }
 .detail-intro-text h2 {
   font-size: clamp(26px, 3.4vw, 36px);
   text-transform: uppercase;
@@ -1691,6 +1745,17 @@ h1, h2, h3 {
 .intro-block { max-width: 760px; margin: 0 auto 56px; }
 .intro-block p { font-size: 17px; line-height: 1.7; color: var(--text-dark-muted); margin: 0 0 16px; }
 
+/* ----- Asymmetric title/copy intro (Why Stay Here) ----- */
+.why-stay-intro {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 56px;
+  align-items: end;
+  margin-bottom: 48px;
+}
+.why-stay-intro .section-title { margin-bottom: 0; }
+.why-stay-intro p { color: var(--text-dark-muted); font-size: 16px; line-height: 1.75; margin: 0; }
+
 /* ----- Not-for-everyone split (Why Rafiki) ----- */
 .filter-split {
   display: grid;
@@ -1748,6 +1813,8 @@ h1, h2, h3 {
   gap: 28px;
   margin-bottom: 64px;
 }
+.plan-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+.plan-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
 .plan-card {
   background: #fff;
   border-radius: var(--radius);
@@ -1940,6 +2007,7 @@ h1, h2, h3 {
 
 @media (max-width: 960px) {
   .detail-intro { grid-template-columns: 1fr; }
+  .why-stay-intro { grid-template-columns: 1fr; align-items: start; gap: 20px; }
   .facts-card { position: static; }
   .amenities-grid { grid-template-columns: repeat(2, 1fr); }
   .variant-grid { grid-template-columns: 1fr; }

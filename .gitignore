@@ -5,3 +5,34 @@ redme
 .DS_Store
 Thumbs.db
 node_modules/
+
+# WordPress core + plugins de terceros (WooCommerce, ONVO Pay): se descargan
+# tal cual desde wordpress.org, no son codigo propio. Solo el tema
+# wp-content/themes/rafiki se versiona en este repo.
+wordpress/index.php
+wordpress/license.txt
+wordpress/readme.html
+wordpress/wp-activate.php
+wordpress/wp-admin/
+wordpress/wp-blog-header.php
+wordpress/wp-comments-post.php
+wordpress/wp-config-sample.php
+wordpress/wp-cron.php
+wordpress/wp-includes/
+wordpress/wp-links-opml.php
+wordpress/wp-load.php
+wordpress/wp-login.php
+wordpress/wp-mail.php
+wordpress/wp-settings.php
+wordpress/wp-signup.php
+wordpress/wp-trackback.php
+wordpress/xmlrpc.php
+wordpress/.htaccess
+wordpress/wp-content/index.php
+wordpress/wp-content/plugins/
+wordpress/wp-content/themes/index.php
+wordpress/wp-content/themes/twentytwentyfive/
+wordpress/wp-content/uploads/
+
+# Contiene credenciales de la base de datos de produccion una vez las llenes.
+wordpress/wp-config.php

@@ -23,6 +23,7 @@ function rafiki_icon_choices() {
 		'tax'      => 'Taxes / price',
 		'mountain' => 'Mountain / hike',
 		'family'   => 'Family',
+		'check'    => 'Checkmark',
 	);
 }
 
@@ -43,6 +44,7 @@ function rafiki_icon( $key = 'leaf' ) {
 		'mountain' => '<path d="M4 38 L18 14 L26 26 L32 16 L44 38 Z" fill="none" stroke="currentColor" stroke-width="2"/>',
 		'family'   => '<circle cx="14" cy="16" r="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="34" cy="16" r="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 40 C4 30 9 25 14 25 C19 25 24 30 24 40" fill="none" stroke="currentColor" stroke-width="2"/><path d="M24 40 C24 30 29 25 34 25 C39 25 44 30 44 40" fill="none" stroke="currentColor" stroke-width="2"/>',
 		'leaf'     => '<path d="M24 4 C30 14 36 20 36 28 C36 36.8 30.8 42 24 42 C17.2 42 12 36.8 12 28 C12 20 18 14 24 4 Z" fill="none" stroke="currentColor" stroke-width="2"/>',
+		'check'    => '<path d="M8 25 L19 36 L40 12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>',
 	);
 	$path = isset( $paths[ $key ] ) ? $paths[ $key ] : $paths['leaf'];
 	return '<svg viewBox="0 0 48 48" aria-hidden="true">' . $path . '</svg>';

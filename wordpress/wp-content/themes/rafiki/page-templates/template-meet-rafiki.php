@@ -26,7 +26,7 @@ get_header();
 
 <section class="section">
   <div class="container">
-    <div class="profile-grid">
+    <div class="profile-grid" style="grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto;">
       <div class="profile-card">
         <div class="placeholder-photo"><span>Placeholder — real photo of Loki needed (portrait, ideally candid, greeting guests or in the jungle)</span></div>
         <div>
@@ -34,15 +34,6 @@ get_header();
           <h3>Loki</h3>
           <p><em>[Placeholder bio — replace with Loki's real story in his own words.]</em> Loki built Rafiki from a piece of land on the Savegre River into what it is today, without ever wanting it to become another resort. He still greets guests at breakfast, still tells the story of how the property came to be, and still means it when he says he doesn't want everyone here — just the people who'll actually appreciate it.</p>
           <p>Ask him about the animals, the river, or why the tents came from South Africa. He'll talk for an hour if you let him.</p>
-        </div>
-      </div>
-
-      <div class="profile-card">
-        <div class="placeholder-photo"><span>Placeholder — real photo of Mauren needed (portrait, ideally in the lodge or with guests)</span></div>
-        <div>
-          <span class="profile-role">Co-Founder</span>
-          <h3>Mauren</h3>
-          <p><em>[Placeholder bio — replace with Mauren's real story.]</em> Mauren is the other half of Rafiki — the one making sure every family, group and retreat that comes through actually feels taken care of, from the first WhatsApp message to the last breakfast. Ask any long-time guest and they'll likely mention her by name.</p>
         </div>
       </div>
     </div>

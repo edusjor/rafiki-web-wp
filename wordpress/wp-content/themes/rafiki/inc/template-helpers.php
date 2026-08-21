@@ -85,6 +85,17 @@ function rafiki_beach_camp_post() {
 	return $post;
 }
 
+/** First published post of $post_type whose title contains $keyword, or null. */
+function rafiki_find_post_by_keyword( $post_type, $keyword ) {
+	$found = get_posts( array(
+		'post_type'      => $post_type,
+		'posts_per_page' => 1,
+		'post_status'    => 'publish',
+		's'              => $keyword,
+	) );
+	return $found ? $found[0] : null;
+}
+
 /** Returns the first gallery image URL, or the featured image, as a fallback for heros/CTAs. */
 function rafiki_lead_image_url( $post_id, $size = 'large' ) {
 	$gallery = rafiki_rows( $post_id, 'rafiki_gallery' );

@@ -1,12 +1,13 @@
 # Plugins required for online booking
 
 The theme's booking system (toggle in **Settings → Rafiki**) is built on top of WooCommerce.
-WordPress core and plugins live in the `wp_data` Docker volume, which is **not** tracked in
-git — only `wp-content/themes/rafiki` is bind-mounted. On a fresh environment, install these
-once after `docker compose up -d`:
+WordPress core lives in the `wp_data` Docker volume, which is **not** tracked in git.
+`wp-content/themes/rafiki` and the `woocommerce`/`onvo-pay` plugin folders (downloaded into
+`wp-content/plugins/`, ready for the hosting upload) are bind-mounted into the container, so
+on a fresh environment you only need to **activate** them after `docker compose up -d`:
 
 ```
-docker compose run --rm wpcli plugin install woocommerce onvo-pay --activate
+docker compose run --rm wpcli plugin activate woocommerce onvo-pay
 ```
 
 Then, in `/wp-admin`:
