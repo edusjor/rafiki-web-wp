@@ -1,0 +1,13 @@
+{
+  "name": "rafiki-pdf",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Genera un PDF de una pagina del sitio Rafiki (localhost:8080) usando el Chrome instalado.",
+  "type": "commonjs",
+  "scripts": {
+    "pdf": "node generar-pdf.js"
+  },
+  "dependencies": {
+    "puppeteer-core": "^23.0.0"
+  }
+}

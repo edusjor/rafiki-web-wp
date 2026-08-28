@@ -6,6 +6,9 @@ redme
 Thumbs.db
 node_modules/
 
+# PDFs generados con tools/pdf
+*.pdf
+
 # WordPress core + plugins de terceros (WooCommerce, ONVO Pay): se descargan
 # tal cual desde wordpress.org, no son codigo propio. Solo el tema
 # wp-content/themes/rafiki se versiona en este repo.

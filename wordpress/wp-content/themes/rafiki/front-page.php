@@ -24,7 +24,7 @@ $beach_camp_post = rafiki_beach_camp_post();
     <div class="hero-content-inner">
       <span class="eyebrow">All-Inclusive Nature in Costa Rica</span>
       <h1>GIVE YOUR COSTA RICA ROAD TRIP<br><span class="accent">A FEW DAYS IN THE WILD.</span></h1>
-      <p class="hero-sub">Raft the river. Ride through the valley. Hike to a waterfall. Watch birds over breakfast. Stay by the pool. One safari tent in the rainforest, tucked inland between Manuel Antonio, Dominical and Uvita.</p>
+      <p class="hero-sub">Imagine your own safari tent&hellip; Raft down the river, ride horses through the valley, hike to waterfalls. Relax by the pool. All adventures start on site, deep in the heart of the Savegre Valley in between Manuel Antonio and Dominical.</p>
       <div class="hero-actions">
         <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to check availability at Rafiki Safari Lodge.' ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Check Availability</a>
         <a href="#plan" class="btn btn-outline">Plan Your Rafiki Stay</a>
@@ -82,9 +82,9 @@ $beach_camp_post = rafiki_beach_camp_post();
     <div class="why-stay-intro">
       <div>
         <span class="eyebrow">Why Rafiki</span>
-        <h2 class="section-title">ONE PLACE TO STAY.<br>A DIFFERENT KIND OF DAY EVERY MORNING.</h2>
+        <h2 class="section-title">ONE PLACE TO STAY.<br>A DIFFERENT WAY TO SPEND EVERY DAY.</h2>
       </div>
-      <p>Costa Rica road trips can move fast. Pack the bags. Change hotels. Drive somewhere else. Find the next tour. Do it again tomorrow.<br><br>Rafiki gives you a few days where you don't have to. Stay for two or three nights, unpack once and experience the river, forest and valley from the same place.</p>
+      <p>Costa Rica road trips can move fast. Pack the bags. Change hotels. Drive somewhere else. Find the next tour. Do it again tomorrow.<br><br>Rafiki gives you a few days where you don't have to pack, drive or chase the next tour. Curated adventures, homestyle cuisine and Rafiki hospitality are all just steps from your front porch.</p>
     </div>
 
     <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-place-wildlife-web_24.jpeg" alt="Savegre River surrounded by tropical rainforest at Rafiki" style="width:100%; height:420px; object-fit:cover; border-radius:var(--radius); margin-bottom:56px;">
@@ -93,7 +93,7 @@ $beach_camp_post = rafiki_beach_camp_post();
       <div class="plan-card">
         <?php echo rafiki_icon( 'tent' ); ?>
         <h3>Sleep in the Rainforest</h3>
-        <p>Rafiki has 14 South African-style safari tents surrounded by tropical forest. Proper beds. Private bathrooms. Your own porch. Close enough to hear what's happening outside without giving up the things that make a good night's sleep feel good.</p>
+        <p>Rafiki has 14 South African-style safari tents surrounded by tropical forest. Proper beds. Private bathrooms. Your own porch. Close enough to hear what's happening outside without giving up what makes for a good night's sleep.</p>
       </div>
       <div class="plan-card">
         <?php echo rafiki_icon( 'guide' ); ?>
@@ -291,7 +291,7 @@ $beach_camp_post = rafiki_beach_camp_post();
     <span class="eyebrow">14 Safari Tents. One Place to Come Back To.</span>
     <h2>SOME TRIPS ARE BETTER WHEN EVERYONE IS THERE.</h2>
     <p>Bring the family. Bring the grandparents. Bring your closest friends. Bring the people you've been saying you should travel with for years. Rafiki's 14 safari tents give groups room to stay together without requiring everyone to spend every hour doing the same thing.</p>
-    <p>Some can raft. Some can ride. Some can stay at the lodge. Then everyone comes back to the same place at the end of the day — the same pool, the same table, the same stories.</p>
+    <p>Some can raft. Some can ride. Some can stay at the lodge. Then everyone comes back to the same place at the end of the day — the same pool, the same table, different stories.</p>
     <a href="<?php echo esc_url( home_url( '/bring-your-group/' ) ); ?>" class="btn btn-primary">Plan a Group Stay →</a>
   </div>
 </section>

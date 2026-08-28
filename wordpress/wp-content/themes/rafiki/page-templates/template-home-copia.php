@@ -1,22 +1,27 @@
 <?php
 /**
- * Template Name: Home — Draft (6 Sections)
+ * Template Name: Home - Copia
  *
- * Comparison draft only. This is the consolidated homepage (hero + 5
- * sections) built to test a shorter structure against the official
- * 15-section front-page.php. Not linked from any nav/menu — reachable
- * only by direct URL while it's being reviewed.
+ * Shortened comparison copy of front-page.php, wired up as a normal Page
+ * (not a front-page override) so it shows in wp-admin as "Home - Copia"
+ * without touching the live homepage. Same wording, kept sections only:
+ * hero, all-inclusive nature, why stay (trimmed from 6 to 4 cards),
+ * experiences, guest reviews, our story. Dropped the "does this fit your
+ * trip" checklist, the 2-3 nights itinerary walkthrough, the separate
+ * "bring your people" banner, the "ways to stay" card grid (same card
+ * layout repeated), packages, conservation and getting-here blocks — all
+ * either duplicated elsewhere on the site or a second copy of the same
+ * card-grid pattern already used above. Does not touch the original file.
  */
 get_header();
+
+$hero_img_url = wp_get_attachment_image_url( 125, 'full' );
+if ( ! $hero_img_url ) $hero_img_url = 'https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-property-and-food-web_19-700x480.jpeg';
 
 $rafting_post    = rafiki_find_post_by_keyword( 'activity', 'raft' );
 $horseback_post  = rafiki_find_post_by_keyword( 'activity', 'horseback' );
 $hiking_post     = rafiki_find_post_by_keyword( 'activity', 'hik' );
 $birding_post    = rafiki_find_post_by_keyword( 'activity', 'bird' );
-$beach_camp_post = rafiki_beach_camp_post();
-
-$hero_img_url = wp_get_attachment_image_url( 125, 'full' );
-if ( ! $hero_img_url ) $hero_img_url = 'https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-property-and-food-web_19-700x480.jpeg';
 ?>
 
 <!-- ===== 01. HERO ===== -->
@@ -72,39 +77,49 @@ if ( ! $hero_img_url ) $hero_img_url = 'https://rafikisafari.com/wp/wp-content/u
   </div>
 </section>
 
-<!-- ===== 02. WHY RAFIKI (consolidated — intro + reasons in one section) ===== -->
+<!-- ===== ALL-INCLUSIVE NATURE ===== -->
+<section class="section" style="padding:64px 0; background:var(--cream);">
+  <div class="container intro-block" style="text-align:center;">
+    <span class="eyebrow center">All-Inclusive Nature</span>
+    <h2 class="section-title center" style="margin-bottom:20px;">NOT THE KIND THAT KEEPS YOU INSIDE A RESORT.</h2>
+    <p>At Rafiki, nature is what fills the days. River. Forest. Horses. Trails. Birds. Waterfalls. Local guides. Long lunches. A pool waiting when you come back.</p>
+    <p>Stay in one place and choose how much of it you want to experience.</p>
+  </div>
+</section>
+
+<!-- ===== 02. WHY STAY HERE ===== -->
 <section class="section" style="background:var(--cream-2);" id="why-stay">
   <div class="container">
     <div class="why-stay-intro">
       <div>
-        <span class="eyebrow">All-Inclusive Nature</span>
-        <h2 class="section-title">ONE PLACE TO STAY.<br>AS MUCH ADVENTURE AS YOU WANT.</h2>
+        <span class="eyebrow">Why Rafiki</span>
+        <h2 class="section-title">ONE PLACE TO STAY.<br>A DIFFERENT KIND OF DAY EVERY MORNING.</h2>
       </div>
-      <p>Nature is what fills the days here — river, forest, horses, trails, birds, waterfalls. Stay two or three nights, unpack once, and decide each morning how much of it becomes your day.</p>
+      <p>Costa Rica road trips can move fast. Pack the bags. Change hotels. Drive somewhere else. Find the next tour. Do it again tomorrow.<br><br>Rafiki gives you a few days where you don't have to. Experience curated Adventures, homestyle cuisine and Rafiki hospitality all from your front porch.</p>
     </div>
 
     <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-place-wildlife-web_24.jpeg" alt="Savegre River surrounded by tropical rainforest at Rafiki" style="width:100%; height:420px; object-fit:cover; border-radius:var(--radius); margin-bottom:56px;">
 
-    <div class="plan-grid cols-4" style="margin-bottom:0;">
+    <div class="plan-grid" style="margin-bottom:0;">
       <div class="plan-card">
         <?php echo rafiki_icon( 'tent' ); ?>
         <h3>Sleep in the Rainforest</h3>
-        <p>14 South African-style safari tents surrounded by tropical forest. Proper beds. Private bathrooms. Your own porch.</p>
+        <p>Rafiki has 14 South African-style safari tents surrounded by tropical forest. Proper beds. Private bathrooms. Your own porch. Close enough to hear what's happening outside without giving up the things that make a good night's sleep feel good.</p>
+      </div>
+      <div class="plan-card">
+        <?php echo rafiki_icon( 'guide' ); ?>
+        <h3>Adventure Starts Here</h3>
+        <p>Rafting, horseback riding, hiking and birding aren't things you have to search for once you arrive. They're part of life around Rafiki. Some days start on the river. Others start on horseback. And some never really need to leave the lodge.</p>
       </div>
       <div class="plan-card">
         <?php echo rafiki_icon( 'family' ); ?>
         <h3>Travel Together Without Doing Everything Together</h3>
-        <p>Someone wants the river. Someone wants the pool. You don't all have to vacation the same way to still spend the trip together.</p>
-      </div>
-      <div class="plan-card">
-        <?php echo rafiki_icon( 'heart' ); ?>
-        <h3>Meet the People Who Know This Place</h3>
-        <p>Many guides live just down the road in Santo Domingo and grew up around these rivers, horses and forests. That changes the experience.</p>
+        <p>Especially good for families and groups. Some people want the river. Others want a trail. Someone wants the pool. Someone else wants a book and the porch. You don't all have to vacation the same way to still spend the trip together.</p>
       </div>
       <div class="plan-card">
         <?php echo rafiki_icon( 'meal' ); ?>
-        <h3>Sit Down for Real Meals</h3>
-        <p>Breakfast before the day starts, lunch when you're back, dinner when everyone's stories catch up — all without leaving the property.</p>
+        <h3>Sit Down for Real Meals, Not Snacks Between Tours</h3>
+        <p>Breakfast before the day starts, lunch when you're back from the river, dinner when everyone's stories catch up. Lekker Bar &amp; Braai keeps the lodge fed without anyone leaving the property.</p>
       </div>
     </div>
   </div>
@@ -115,6 +130,7 @@ if ( ! $hero_img_url ) $hero_img_url = 'https://rafikisafari.com/wp/wp-content/u
   <div class="container">
     <span class="eyebrow center">Your Days at Rafiki</span>
     <h2 class="section-title center">PICK THE KIND OF DAY YOU WANT.</h2>
+    <p style="text-align:center; max-width:640px; margin:-24px auto 40px; color:var(--text-dark-muted); font-size:16px;">You don't stay at Rafiki just to have somewhere to sleep between tours. The lodge is the base the experiences grow from.</p>
 
     <div class="experience-grid home-grid">
       <a href="<?php echo $rafting_post ? esc_url( get_permalink( $rafting_post ) ) : esc_url( get_post_type_archive_link( 'activity' ) ); ?>" class="experience-card">
@@ -153,15 +169,6 @@ if ( ! $hero_img_url ) $hero_img_url = 'https://rafikisafari.com/wp/wp-content/u
           <span class="arrow-link">→</span>
         </div>
       </a>
-      <a href="<?php echo esc_url( get_post_type_archive_link( 'accommodation' ) ); ?>" class="experience-card">
-        <img src="https://rafikisafari.com/wp/wp-content/uploads/2016/12/beach-pool-700x420.jpg" alt="Pool at Rafiki Safari Lodge">
-        <div class="experience-card-overlay"></div>
-        <div class="experience-card-content">
-          <h3>OR DON'T PLAN THE AFTERNOON</h3>
-          <p>Pool. Water slide. A long lunch. A massage. Your porch. A book. Doing less counts too.</p>
-          <span class="arrow-link">→</span>
-        </div>
-      </a>
     </div>
 
     <p style="text-align:center; margin-top:36px;">
@@ -175,6 +182,7 @@ if ( ! $hero_img_url ) $hero_img_url = 'https://rafikisafari.com/wp/wp-content/u
   <div class="container">
     <span class="eyebrow center">What People Remember</span>
     <h2 class="section-title center">THE REVIEWS USUALLY START WITH THE ADVENTURE.</h2>
+    <p style="text-align:center; max-width:640px; margin:-24px auto 40px; color:var(--text-dark-muted); font-size:16px;">Then they start talking about everything around it — the safari tents, the birds at breakfast, the food, the river, the kids not wanting to leave the water slide. And, again and again, the people.</p>
 
     <div class="testimonial-grid">
       <div class="testimonial-card">
@@ -196,61 +204,49 @@ if ( ! $hero_img_url ) $hero_img_url = 'https://rafikisafari.com/wp/wp-content/u
         <span class="testimonial-author">Lance R.</span>
       </div>
     </div>
-    <!-- TODO(Eduardo): link to the real Google/TripAdvisor review page once we have one to point to. -->
-
-    <div class="trust-strip">
-      <div class="trust-strip-item">
-        <?php echo rafiki_icon( 'family' ); ?>
-        <strong>25+ YEARS</strong>
-        <span>Family-owned and operated</span>
-      </div>
-      <div class="trust-strip-item">
-        <?php echo rafiki_icon( 'leaf' ); ?>
-        <strong>100% COSTA RICAN</strong>
-        <span>Local team, local impact</span>
-      </div>
-      <div class="trust-strip-item">
-        <?php echo rafiki_icon( 'shield' ); ?>
-        <strong>1 INCREDIBLE LOCATION</strong>
-        <span>Between the jungle and the ocean</span>
-      </div>
-    </div>
   </div>
 </section>
 
-<!-- ===== 05. CHOOSE YOUR PATH ===== -->
-<section class="section" id="ways-to-stay">
-  <div class="container">
-    <span class="eyebrow center">Ways to Stay</span>
-    <h2 class="section-title center">START WITH THE KIND OF TRIP YOU'RE PLANNING.</h2>
+<!-- ===== 05. A FAMILY PLACE, BUILT OVER TIME ===== -->
+<section class="section why-rafiki" id="about">
+  <div class="why-grid">
+    <div class="why-media">
+      <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-property-and-food-web_16.jpeg" alt="Family sharing a meal at Rafiki Safari Lodge">
+      <div class="why-media-text">
+        <span class="eyebrow">Our Story</span>
+        <h2>RAFIKI DIDN'T START<br><span class="accent">AS A HOTEL CONCEPT.</span></h2>
+        <p>Constant Boshoff founded Rafiki after bringing an idea inspired by Africa to Costa Rica and finding a home for it in this river valley. Now Loki and Mauren continue that story alongside a local team closely connected to Santo Domingo and the communities around Rafiki.</p>
+        <a href="<?php echo esc_url( home_url( '/why-rafiki/' ) ); ?>" class="btn btn-primary">Read the Rafiki Story →</a>
+      </div>
+    </div>
 
-    <div class="plan-grid cols-4" style="margin-top:48px;">
-      <a href="<?php echo esc_url( get_post_type_archive_link( 'accommodation' ) ); ?>" class="plan-card" style="display:block;">
-        <?php echo rafiki_icon( 'tent' ); ?>
-        <h3>Stay Two or Three Nights</h3>
-        <p>The easiest way to add Rafiki to a Costa Rica road trip.</p>
-      </a>
-      <a href="<?php echo esc_url( get_post_type_archive_link( 'package' ) ); ?>" class="plan-card" style="display:block;">
-        <?php echo rafiki_icon( 'guide' ); ?>
-        <h3>Let Us Build the Experience</h3>
-        <p>Want the stay and activities to already make sense together? Start with a package.</p>
-      </a>
-      <a href="<?php echo esc_url( home_url( '/bring-your-group/' ) ); ?>" class="plan-card" style="display:block;">
+    <div class="why-stats">
+      <div class="stat">
         <?php echo rafiki_icon( 'family' ); ?>
-        <h3>Bring Your Group</h3>
-        <p>Families, friends, reunions, retreats — a few days together somewhere different.</p>
-      </a>
-      <a href="<?php echo $beach_camp_post ? esc_url( get_permalink( $beach_camp_post ) ) : esc_url( home_url( '/#beach-camp' ) ); ?>" class="plan-card" style="display:block;">
-        <?php echo rafiki_icon( 'wave' ); ?>
-        <h3>Forest + Beach</h3>
-        <p>Combine Rafiki Safari Lodge with Rafiki Beach Camp near Playa Matapalo.</p>
-      </a>
+        <strong>25+ YEARS</strong>
+        <span>Family-owned and operated.</span>
+      </div>
+      <div class="stat">
+        <?php echo rafiki_icon( 'leaf' ); ?>
+        <strong>100% COSTA RICAN</strong>
+        <span>Local team. Local impact.</span>
+      </div>
+      <div class="stat">
+        <?php echo rafiki_icon( 'shield' ); ?>
+        <strong>1 INCREDIBLE LOCATION</strong>
+        <span>Between the jungle and the ocean — 600 acres.</span>
+      </div>
+      <div class="stat">
+        <?php echo rafiki_icon( 'heart' ); ?>
+        <strong>A LIVING PLACE</strong>
+        <span>Not a museum about the family who built it.</span>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ===== 06. FINAL CTA ===== -->
-<section class="cta-banner" id="plan">
+<section class="cta-banner" id="book">
   <div class="cta-media">
     <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_34.jpeg" alt="Group rafting in front of the lodge">
     <div class="hero-overlay"></div>
@@ -261,7 +257,7 @@ if ( ! $hero_img_url ) $hero_img_url = 'https://rafikisafari.com/wp/wp-content/u
     <p>Give your Costa Rica trip a few days by the river, in the forest and away from the usual route.</p>
     <div class="btn-group">
       <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to check availability at Rafiki Safari Lodge.' ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Check Availability →</a>
-      <a href="<?php echo esc_url( rafiki_whatsapp_link( "Hi! I'd like help planning my Costa Rica trip around a stay at Rafiki." ) ); ?>" class="btn btn-outline" target="_blank" rel="noopener">Not Sure? Let Us Help You Plan</a>
+      <a href="#top" class="btn btn-outline">Back to Top</a>
     </div>
   </div>
 </section>
