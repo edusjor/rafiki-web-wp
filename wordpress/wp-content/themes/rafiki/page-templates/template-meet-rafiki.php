@@ -28,12 +28,12 @@ get_header();
   <div class="container">
     <div class="profile-grid" style="grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto;">
       <div class="profile-card">
-        <div class="placeholder-photo"><span>Placeholder — real photo of Loki needed (portrait, ideally candid, greeting guests or in the jungle)</span></div>
+        <div class="placeholder-photo"><span>Placeholder — real photo of Loki and Mauren needed (portrait, ideally candid, greeting guests or in the jungle)</span></div>
         <div>
-          <span class="profile-role">Founder</span>
-          <h3>Loki</h3>
-          <p><em>[Placeholder bio — replace with Loki's real story in his own words.]</em> Loki built Rafiki from a piece of land on the Savegre River into what it is today, without ever wanting it to become another resort. He still greets guests at breakfast, still tells the story of how the property came to be, and still means it when he says he doesn't want everyone here — just the people who'll actually appreciate it.</p>
-          <p>Ask him about the animals, the river, or why the tents came from South Africa. He'll talk for an hour if you let him.</p>
+          <span class="profile-role">Founders</span>
+          <h3>Loki and Mauren</h3>
+          <p><em>[Placeholder bio — replace with Loki and Mauren's real story in their own words.]</em> Loki and Mauren built Rafiki from a piece of land on the Savegre River into what it is today, without ever wanting it to become another resort. They still greet guests at breakfast, still tell the story of how the property came to be, and still mean it when they say they don't want everyone here — just the people who'll actually appreciate it.</p>
+          <p>Ask them about the animals, the river, or why the tents came from South Africa. They'll talk for an hour if you let them.</p>
         </div>
       </div>
     </div>
@@ -43,27 +43,10 @@ get_header();
 <section class="section" style="background:var(--cream-2);">
   <div class="container">
     <h2 class="section-title center">THE TEAM THAT MAKES IT REAL</h2>
-    <div class="intro-block" style="max-width:760px; margin:0 auto; text-align:center;">
-      <p><em>[Placeholder — this section is built to hold real names and photos of the guides, cooks and staff, most of whom grew up in the Savegre Valley. Guests mention them by name in almost every review; right now that isn't reflected anywhere on the site.]</em></p>
+    <div class="intro-block" style="max-width:760px; margin:0 auto 32px; text-align:center;">
+      <p>Most of the guides, cooks and staff at Rafiki grew up in the Savegre Valley — guests mention them by name in almost every review.</p>
     </div>
-    <div class="profile-grid">
-      <div class="profile-card">
-        <div class="placeholder-photo"><span>Placeholder — photo of a lead guide (e.g. rafting or horseback)</span></div>
-        <div>
-          <span class="profile-role">Lead Guide</span>
-          <h3>[Guide Name]</h3>
-          <p><em>[Placeholder — short bio: how long they've worked at Rafiki, what they're known for, where they grew up.]</em></p>
-        </div>
-      </div>
-      <div class="profile-card">
-        <div class="placeholder-photo"><span>Placeholder — photo of the kitchen / Lekker Bar team</span></div>
-        <div>
-          <span class="profile-role">Kitchen &amp; Lekker Bar</span>
-          <h3>[Team Name]</h3>
-          <p><em>[Placeholder — short bio: the story behind the food, who's cooking, what they're proud of.]</em></p>
-        </div>
-      </div>
-    </div>
+    <div class="placeholder-photo" style="max-width:820px; margin:0 auto; min-height:340px;"><span>Placeholder — one general photo of the whole Rafiki team together</span></div>
   </div>
 </section>
 

@@ -2,14 +2,14 @@
 <footer class="site-footer">
   <div class="container footer-top">
     <div class="footer-brand">
-      <img src="https://rafikisafari.com/wp/wp-content/uploads/2026/04/Logo_Rafiki-WH-e1775497351524.png" alt="Rafiki Safari Lodge">
+      <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/img/logo-rafiki-white.png' ); ?>" alt="Rafiki Safari Lodge">
       <p>Rafiki Safari Lodge<br>Costa Rica</p>
     </div>
 
     <div class="footer-col">
       <h4>Stay With Us</h4>
       <?php
-      $accommodations = get_posts( array( 'post_type' => 'accommodation', 'posts_per_page' => 4, 'post_status' => 'publish' ) );
+      $accommodations = get_posts( array( 'post_type' => 'accommodation', 'posts_per_page' => -1, 'orderby' => 'menu_order title', 'order' => 'ASC', 'post_status' => 'publish' ) );
       if ( $accommodations ) :
         foreach ( $accommodations as $a ) : ?>
           <a href="<?php echo esc_url( get_permalink( $a ) ); ?>"><?php echo esc_html( get_the_title( $a ) ); ?></a>
@@ -43,6 +43,7 @@
       else : ?>
         <a href="<?php echo esc_url( get_post_type_archive_link( 'package' ) ); ?>">View Packages</a>
       <?php endif; ?>
+      <a href="<?php echo esc_url( home_url( '/bring-your-group/' ) ); ?>">Bring Your Group</a>
     </div>
 
     <div class="footer-col">
@@ -50,10 +51,7 @@
       <a href="<?php echo esc_url( home_url( '/why-rafiki/' ) ); ?>">Our Story</a>
       <a href="<?php echo esc_url( home_url( '/ecological-mission/' ) ); ?>">Our Ecological Mission</a>
       <a href="<?php echo esc_url( home_url( '/meet-rafiki/' ) ); ?>">Meet Rafiki</a>
-      <a href="<?php echo esc_url( home_url( '/lekker-bar-braai/' ) ); ?>">Lekker Bar &amp; Braai</a>
-      <a href="<?php echo esc_url( home_url( '/bring-your-group/' ) ); ?>">Bring Your Group</a>
       <a href="<?php echo esc_url( home_url( '/plan-your-trip/' ) ); ?>">Before You Get Here</a>
-      <a href="<?php echo esc_url( home_url( '/rafiki-journal/' ) ); ?>">Rafiki Journal</a>
     </div>
 
     <div class="footer-col footer-contact">

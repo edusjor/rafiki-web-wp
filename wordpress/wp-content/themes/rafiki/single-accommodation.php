@@ -20,12 +20,16 @@
 	$cta_text    = get_post_meta( $post_id, 'rafiki_cta_text', true ) ?: 'Check availability and build your ideal package.';
 	$cta_img_id  = get_post_meta( $post_id, 'rafiki_cta_image', true );
 	$cta_img     = $cta_img_id ? wp_get_attachment_image_url( $cta_img_id, 'full' ) : $hero_img;
+
+	$book_url  = rafiki_booking_link( $post_id ); // per-post "Booking Link" field, else the site-wide Beds24 URL
+	$info_only = rafiki_is_info_only_stay( $post_id ); // Lekker Bar & Braai etc. — info page, no booking
+	$ask_url   = rafiki_whatsapp_link( 'Hi! I have a question about ' . get_the_title() . ' at Rafiki Safari Lodge.' );
 ?>
 
 <section class="page-hero">
   <div class="hero-media">
     <?php if ( $hero_img ) : ?><img src="<?php echo esc_url( $hero_img ); ?>" alt="<?php the_title_attribute(); ?>"><?php endif; ?>
-    <div class="hero-overlay"></div>
+    <div class="hero-overlay"<?php if ( get_the_title() === 'Main Lodge' ) : ?> style="background:linear-gradient(180deg, rgba(10,9,7,0.25) 0%, rgba(10,9,7,0.15) 45%, rgba(8,7,5,0.55) 100%);"<?php endif; ?>></div>
   </div>
 
   <div class="container page-hero-content">
@@ -62,7 +66,7 @@
       <?php echo rafiki_paragraphs( get_post_meta( $post_id, 'rafiki_intro_text', true ) ); ?>
     </div>
 
-    <aside class="facts-card" id="booking-widget">
+    <aside class="facts-card">
       <h3>Quick Facts</h3>
       <?php if ( $price ) : ?>
         <span class="facts-price">$<?php echo esc_html( $price ); ?><span style="font-family:var(--font-body); font-size:14px; color:var(--text-muted);"> <?php echo esc_html( $price_unit ); ?></span></span>
@@ -75,7 +79,15 @@
           <?php endforeach; ?>
         </ul>
       <?php endif; ?>
-      <?php get_template_part( 'template-parts/booking-cta', null, array( 'post_id' => $post_id ) ); ?>
+
+      <?php if ( $info_only ) : ?>
+        <p style="font-size:13px; color:var(--text-muted); margin:0 0 12px;">Which meals are included depends on the package you choose &mdash; the Lekker Bar is open to every guest for lunch and dinner.</p>
+        <a class="btn btn-primary" href="<?php echo esc_url( $ask_url ); ?>" target="_blank" rel="noopener">Ask on WhatsApp</a>
+      <?php else : ?>
+        <a class="btn btn-primary" href="<?php echo esc_url( $book_url ); ?>" target="_blank" rel="noopener">Check Availability &rarr;</a>
+        <p style="font-size:12.5px; color:var(--text-muted); margin:10px 0 0;">Opens our booking system to choose your dates.</p>
+        <a class="btn btn-outline" href="<?php echo esc_url( $ask_url ); ?>" target="_blank" rel="noopener" style="margin-top:10px;">Ask on WhatsApp</a>
+      <?php endif; ?>
     </aside>
   </div>
 </section>
@@ -181,8 +193,13 @@
   <div class="container cta-content">
     <h2><?php echo esc_html( $cta_title ); ?></h2>
     <p><?php echo esc_html( $cta_text ); ?></p>
-    <?php $GLOBALS['rafiki_booking_variant'] = 'anchor'; ?>
-    <?php get_template_part( 'template-parts/booking-cta', null, array( 'post_id' => $post_id, 'book_now_label' => 'Check Availability →' ) ); ?>
+    <div class="btn-group">
+      <?php if ( $info_only ) : ?>
+        <a class="btn btn-primary" href="<?php echo esc_url( $ask_url ); ?>" target="_blank" rel="noopener">Ask on WhatsApp</a>
+      <?php else : ?>
+        <a class="btn btn-primary" href="<?php echo esc_url( $book_url ); ?>" target="_blank" rel="noopener">Check Availability &rarr;</a>
+      <?php endif; ?>
+    </div>
   </div>
 </section>
 

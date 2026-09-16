@@ -20,6 +20,12 @@ function rafiki_settings_init() {
 		'default' => '50683689944',
 	) );
 
+	register_setting( 'rafiki_settings', 'rafiki_beds24_url', array(
+		'type'              => 'string',
+		'sanitize_callback' => 'esc_url_raw',
+		'default'           => 'https://www.beds24.com/booking.php?propid=7859',
+	) );
+
 	register_setting( 'rafiki_settings', 'rafiki_booking_enabled', array(
 		'type'              => 'boolean',
 		'sanitize_callback' => function ( $value ) {
@@ -55,6 +61,16 @@ function rafiki_booking_enabled() {
 	return '1' === get_option( 'rafiki_booking_enabled', '0' );
 }
 
+/**
+ * Site-wide booking URL (Beds24). This is the default target for every
+ * "Book Now" button on accommodations, packages and activities. A post can
+ * override it with its own "Booking Link" field — see rafiki_booking_link().
+ */
+function rafiki_beds24_url() {
+	$url = trim( (string) get_option( 'rafiki_beds24_url', '' ) );
+	return $url ? $url : 'https://www.beds24.com/booking.php?propid=7859';
+}
+
 function rafiki_settings_menu() {
 	add_options_page( 'Rafiki Settings', 'Rafiki', 'manage_options', 'rafiki-settings', 'rafiki_settings_page' );
 }
@@ -77,6 +93,18 @@ function rafiki_settings_page() {
 							Numbers only. Used by the "Book via WhatsApp" button on every accommodation/activity/package
 							and by the WhatsApp buttons elsewhere on the site. An 8-digit Costa Rican number automatically
 							gets the country code (506) added.
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><label for="rafiki_beds24_url">Booking Link (Beds24)</label></th>
+					<td>
+						<input type="url" id="rafiki_beds24_url" name="rafiki_beds24_url"
+							value="<?php echo esc_attr( get_option( 'rafiki_beds24_url', 'https://www.beds24.com/booking.php?propid=7859' ) ); ?>" class="regular-text" placeholder="https://www.beds24.com/booking.php?propid=7859">
+						<p class="description">
+							Where every "Book Now" button goes (accommodations, packages and activities). A single
+							accommodation or package can point somewhere else by filling its own "Booking Link" field
+							in the "Page Content" box; if that field is empty it uses this link.
 						</p>
 					</td>
 				</tr>

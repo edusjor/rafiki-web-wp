@@ -43,7 +43,7 @@ get_header();
   <div class="container intro-block" style="text-align:center; max-width:820px;">
     <span class="eyebrow center">Step 02 — Now You're Wondering About the Road</span>
     <h2 class="section-title center">"DO I NEED A 4X4?"</h2>
-    <p><em>[Placeholder — confirm current answer with Loki before publishing.]</em> Roughly 3.5–4 hours by car from San José (SJO), 16 km off the Coastal Highway near Savegre River, Pérez Zeledón. The last stretch is unpaved — 4x4 recommended, especially in green season.</p>
+    <p>Roughly 3.5–4 hours by car from San José (SJO), 16 km off the Coastal Highway near Savegre River, Pérez Zeledón. The last stretch is unpaved — 4x4 is required, not just recommended, especially in green season.</p>
     <h3 style="font-size:20px; margin:28px 0 8px;">"CAN YOU ARRANGE TRANSPORTATION?"</h3>
     <p>Yes. Tell us where you're sleeping before Rafiki and where you're heading afterward. We'll help connect the route.</p>
   </div>
@@ -68,7 +68,7 @@ get_header();
     <h2 class="section-title center">"I'VE NEVER RAFTED. IS THAT A PROBLEM?"</h2>
     <p>No. Your guide handles the river knowledge. You handle listening and paddling. Current water conditions determine how the day operates.</p>
     <h3 style="font-size:20px; margin:28px 0 8px;">"CAN MY CHILD RAFT?"</h3>
-    <p><em>[Placeholder — confirm current minimum age / guidance with Loki.]</em> Age is only part of the answer. River level, water conditions, confidence in the water and the guide's assessment all matter.</p>
+    <p>If your little one is under six, we can always talk about it. If they're comfortable in the water, adventurous, and happy to go down the slide, there's a good chance we can make it work. We'd just want to make sure it feels right and safe for them first.</p>
     <h3 style="font-size:20px; margin:28px 0 8px;">"WHAT IF THE RIVER CHANGES?"</h3>
     <p style="font-size:18px;">Then the plan changes. A real river doesn't run according to a booking calendar. Rafiki's guides make decisions based on what the Savegre is doing that day.</p>
     <p><a href="<?php echo esc_url( home_url( '/experiences/white-water-rafting/' ) ); ?>" class="btn btn-outline" style="border-color: var(--text-dark); color: var(--text-dark);">Explore Whitewater Rafting →</a></p>

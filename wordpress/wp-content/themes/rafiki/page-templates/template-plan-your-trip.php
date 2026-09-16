@@ -4,8 +4,8 @@
  *
  * Redesigned from a traditional FAQ accordion into a walked-through journey
  * ("Before You Get Here") that follows the order a guest actually thinks in:
- * coast -> road -> arrival -> tent -> morning -> experiences -> food ->
- * weather -> booking. Kept the "Plan Your Trip" template name/slug (nav and
+ * coast -> road -> arrival -> tent -> experiences -> food -> booking.
+ * Kept the "Plan Your Trip" template name/slug (nav and
  * footer already link here) but reframed the on-page identity per the new
  * copy. Facts below (drive times, ages, etc.) are still placeholders where
  * marked — verify with Loki before publishing.
@@ -23,7 +23,7 @@ get_header();
       <p class="breadcrumb"><a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a><span class="sep">/</span><span class="current">Plan Your Trip</span></p>
       <span class="eyebrow">Planning Rafiki?</span>
       <h1>BEFORE YOU GET HERE.<br><span class="accent">LET'S WALK THROUGH IT.</span></h1>
-      <p class="hero-sub">You're looking at Rafiki and probably trying to figure out the same things most guests want to know before coming. Where exactly is it? How do I get there? How many nights? What will the kids do? What do we eat? What happens if it rains?</p>
+      <p class="hero-sub">You're looking at Rafiki and probably trying to figure out the same things most guests want to know before coming. Where exactly is it? How do I get there? How many nights? What will the kids do? What do we eat?</p>
       <p class="hero-sub">So instead of a wall of questions, let's take the trip in order.</p>
     </div>
   </div>
@@ -47,7 +47,7 @@ get_header();
     <p style="text-align:center; font-size:12px; letter-spacing:0.5px; text-transform:uppercase; color:var(--text-dark-muted); margin-bottom:8px;">You're here: Costa Rica Route → Getting Here</p>
     <span class="eyebrow center">Step 02 — Now You're Wondering About the Road</span>
     <h2 class="section-title center">"DO I NEED A 4X4?"</h2>
-    <p><em>[Placeholder — confirm current answer with Loki before publishing.]</em> Roughly 3.5–4 hours by car from San José (SJO), 16 km off the Coastal Highway near Savegre River, Pérez Zeledón. The last stretch is unpaved — 4x4 recommended, especially in green season.</p>
+    <p>Roughly 3.5–4 hours by car from San José (SJO), 16 km off the Coastal Highway near Savegre River, Pérez Zeledón. The last stretch is unpaved — 4x4 is required, not just recommended, especially in green season.</p>
     <h3 style="font-size:20px; margin:28px 0 8px;">"CAN YOU ARRANGE TRANSPORTATION?"</h3>
     <p>Yes. Tell us where you're sleeping before Rafiki and where you're heading afterward. We'll help connect the route.</p>
     <h3 style="font-size:20px; margin:28px 0 8px;">"WHAT WILL THE FINAL PART OF THE DRIVE LOOK LIKE?"</h3>
@@ -68,7 +68,7 @@ get_header();
     <p style="text-align:center; font-size:12px; letter-spacing:0.5px; text-transform:uppercase; color:var(--text-dark-muted); margin-bottom:8px;">You're here: Costa Rica Route → Getting Here → Arrival</p>
     <span class="eyebrow center">Step 03 — You Arrive</span>
     <h2 class="section-title center">"WHAT ARE THE SAFARI TENTS ACTUALLY LIKE?"</h2>
-    <p>Canvas outside. A proper bed inside. Private bathroom. Hot shower. Your own porch. Forest around you. You hear more of Costa Rica without having to sleep like you're camping.</p>
+    <p>Canvas outside. A proper bed inside. Private bathroom. Hot shower. Rocking chairs and your own porch. Forest around you. You hear more of Costa Rica's nature without having to sleep like you're camping.</p>
     <h3 style="font-size:20px; margin:28px 0 8px;">"ARE THERE BUGS?"</h3>
     <p style="font-size:18px;">Yes. You're in a rainforest. Most of them belong outside your tent. Keep the screens and tent properly closed and let the forest stay where it belongs.</p>
     <!-- Ideally a short POV-style walkthrough: entrance -> tent exterior ->
@@ -81,22 +81,11 @@ get_header();
   </div>
 </section>
 
-<!-- ===== STEP 04 — TOMORROW MORNING ===== -->
+<!-- ===== STEP 04 — THE FAMILY HAS OPINIONS ===== -->
 <section class="section" style="background:var(--cream-2);">
   <div class="container intro-block" style="text-align:center; max-width:820px;">
-    <p style="text-align:center; font-size:12px; letter-spacing:0.5px; text-transform:uppercase; color:var(--text-dark-muted); margin-bottom:8px;">You're here: Getting Here → Arrival → Your Stay</p>
-    <span class="eyebrow center">Step 04 — Tomorrow Morning</span>
-    <h2 class="section-title center">"WHAT HAPPENS WHEN WE WAKE UP?"</h2>
-    <p>Coffee starts early. Birds usually start earlier. Have breakfast. Then decide what kind of day you're having: river, horseback, Aqua Hike, birding — or a slower morning at the lodge.</p>
-    <p style="font-size:18px;">This is where Rafiki starts working as your base instead of just your hotel.</p>
-  </div>
-</section>
-
-<!-- ===== STEP 05 — THE FAMILY HAS OPINIONS ===== -->
-<section class="section">
-  <div class="container intro-block" style="text-align:center; max-width:820px;">
     <p style="text-align:center; font-size:12px; letter-spacing:0.5px; text-transform:uppercase; color:var(--text-dark-muted); margin-bottom:8px;">You're here: Your Stay → Experiences</p>
-    <span class="eyebrow center">Step 05 — Now the Family Has Opinions</span>
+    <span class="eyebrow center">Step 04 — Now the Family Has Opinions</span>
     <h2 class="section-title center">"DO WE ALL HAVE TO DO THE SAME THING?"</h2>
     <p>No. One part of the family can raft. Someone can go birding. Someone stays at the lodge. Someone books a massage. Everyone comes back later.</p>
     <h3 style="font-size:20px; margin:28px 0 8px;">"IS RAFIKI GOOD FOR CHILDREN?"</h3>
@@ -104,26 +93,26 @@ get_header();
   </div>
 </section>
 
-<!-- ===== STEP 06 — THE RIVER ===== -->
-<section class="section" style="background:var(--cream-2);">
+<!-- ===== STEP 05 — THE RIVER ===== -->
+<section class="section">
   <div class="container intro-block" style="text-align:center; max-width:820px;">
     <p style="text-align:center; font-size:12px; letter-spacing:0.5px; text-transform:uppercase; color:var(--text-dark-muted); margin-bottom:8px;">You're here: Experiences</p>
-    <span class="eyebrow center">Step 06 — You're Thinking About the River</span>
+    <span class="eyebrow center">Step 05 — You're Thinking About the River</span>
     <h2 class="section-title center">"I'VE NEVER RAFTED. IS THAT A PROBLEM?"</h2>
     <p>No. Your guide handles the river knowledge. You handle listening and paddling. Current water conditions determine how the day operates.</p>
     <h3 style="font-size:20px; margin:28px 0 8px;">"CAN MY CHILD RAFT?"</h3>
-    <p><em>[Placeholder — confirm current minimum age / guidance with Loki.]</em> Age is only part of the answer. River level, water conditions, confidence in the water and the guide's assessment all matter.</p>
+    <p>If your little one is under six, we can always talk about it. If they're comfortable in the water, adventurous, and happy to go down the slide, there's a good chance we can make it work. We'd just want to make sure it feels right and safe for them first.</p>
     <h3 style="font-size:20px; margin:28px 0 8px;">"WHAT IF THE RIVER CHANGES?"</h3>
     <p style="font-size:18px;">Then the plan changes. A real river doesn't run according to a booking calendar. Rafiki's guides make decisions based on what the Savegre is doing that day.</p>
     <p><a href="<?php echo esc_url( home_url( '/experiences/white-water-rafting/' ) ); ?>" class="btn btn-outline" style="border-color: var(--text-dark); color: var(--text-dark);">Explore Whitewater Rafting →</a></p>
   </div>
 </section>
 
-<!-- ===== STEP 07 — FOOD ===== -->
-<section class="section">
+<!-- ===== STEP 06 — FOOD ===== -->
+<section class="section" style="background:var(--cream-2);">
   <div class="container intro-block" style="text-align:center; max-width:820px;">
     <p style="text-align:center; font-size:12px; letter-spacing:0.5px; text-transform:uppercase; color:var(--text-dark-muted); margin-bottom:8px;">You're here: Experiences → Food</p>
-    <span class="eyebrow center">Step 07 — Now You're Hungry</span>
+    <span class="eyebrow center">Step 06 — Now You're Hungry</span>
     <h2 class="section-title center">"WHAT WILL WE EAT?"</h2>
     <p>Breakfast, lunch and dinner are served at Lekker Bar &amp; Braai. And yes — you can see the menus before arriving.</p>
     <p><a href="<?php echo esc_url( home_url( '/lekker-bar-braai/' ) ); ?>" class="btn btn-primary">See What's Cooking →</a></p>
@@ -132,11 +121,11 @@ get_header();
   </div>
 </section>
 
-<!-- ===== STEP 08 — BOOKING / LENGTH OF STAY ===== -->
-<section class="section" style="background:var(--cream-2);">
+<!-- ===== STEP 07 — BOOKING / LENGTH OF STAY ===== -->
+<section class="section">
   <div class="container intro-block" style="text-align:center; max-width:820px;">
     <p style="text-align:center; font-size:12px; letter-spacing:0.5px; text-transform:uppercase; color:var(--text-dark-muted); margin-bottom:8px;">You're here: Booking</p>
-    <span class="eyebrow center">Step 08 — You've Been Here Two Days</span>
+    <span class="eyebrow center">Step 07 — You've Been Here Two Days</span>
     <h2 class="section-title center">"IS TWO NIGHTS ENOUGH?"</h2>
     <p>Two nights gives you one strong Rafiki experience. Three nights gives the place room to work — two different adventure days, time at the lodge, breakfast without rushing, a slower afternoon. For most first-time guests, three nights gives you a much fuller sense of Rafiki.</p>
     <h3 style="font-size:20px; margin:28px 0 8px;">"WHAT IF WE HAVE MORE TIME?"</h3>
@@ -145,25 +134,14 @@ get_header();
   </div>
 </section>
 
-<!-- ===== STEP 09 — WEATHER ===== -->
-<section class="section">
-  <div class="container intro-block" style="text-align:center; max-width:820px;">
-    <p style="text-align:center; font-size:12px; letter-spacing:0.5px; text-transform:uppercase; color:var(--text-dark-muted); margin-bottom:8px;">You're here: Weather</p>
-    <span class="eyebrow center">Step 09 — It Starts Raining</span>
-    <h2 class="section-title center">"DID WE PICK THE WRONG DAY?"</h2>
-    <p>You're in a rainforest. Rain is part of the place. Sometimes activities continue. Sometimes routes change. Sometimes the best afternoon becomes rain on the safari tent while you're sitting on the porch doing absolutely nothing.</p>
-    <p style="font-size:18px;">Your guides adjust around conditions. You don't need to manage the weather.</p>
-  </div>
-</section>
-
-<!-- ===== STEP 10 — ALL-INCLUSIVE NATURE ===== -->
+<!-- ===== STEP 08 — ALL-INCLUSIVE NATURE ===== -->
 <section class="section" style="background:var(--cream-2);">
   <div class="container intro-block" style="text-align:center; max-width:820px;">
     <p style="text-align:center; font-size:12px; letter-spacing:0.5px; text-transform:uppercase; color:var(--text-dark-muted); margin-bottom:8px;">You're here: Booking</p>
-    <span class="eyebrow center">Step 10 — You're Already Thinking About Booking</span>
+    <span class="eyebrow center">Step 08 — You're Already Thinking About Booking</span>
     <h2 class="section-title center">"WHAT DOES ALL-INCLUSIVE NATURE ACTUALLY MEAN?"</h2>
     <p style="font-size:18px;">Not everything included. Everything connected.</p>
-    <p>Your safari tent. The forest. The river. The people guiding you. Meals. Experiences. A pool to return to. Different ways to spend the day without starting your vacation planning process all over again every morning. That's Rafiki's version of all-inclusive.</p>
+    <p>Your safari tent. The forest. The river. The people guiding you. Experiences. A pool to return to. Different ways to spend the day without starting your vacation planning process all over again every morning. That's Rafiki's version of all-inclusive.</p>
   </div>
 </section>
 

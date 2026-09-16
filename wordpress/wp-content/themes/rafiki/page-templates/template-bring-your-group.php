@@ -21,7 +21,7 @@ $status = isset( $_GET['group_inquiry'] ) ? sanitize_key( $_GET['group_inquiry']
     <div class="page-hero-content-inner">
       <p class="breadcrumb"><a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a><span class="sep">/</span><span class="current">Bring Your Group</span></p>
       <h1>BRING YOUR <span class="accent">PEOPLE.</span></h1>
-      <p class="hero-sub">Family reunions. Retreats. Workshops. Celebrations. Rafiki was built for groups who want more than a meeting room with a view.</p>
+      <p class="hero-sub">Family reunions. Retreats. Workshops. Celebrations. These are private experiences — the entire lodge is reserved exclusively for your group, with no other guests on the property.</p>
     </div>
   </div>
 </section>
@@ -30,9 +30,11 @@ $status = isset( $_GET['group_inquiry'] ) ? sanitize_key( $_GET['group_inquiry']
   <div class="container group-layout">
     <div class="group-intro">
       <h2>A PLACE THAT HOLDS SPACE FOR YOUR PEOPLE</h2>
+      <p>Group stays at Rafiki are private, whole-property experiences. When your group books, the entire lodge is reserved for you — every room, every gathering area and every activity — with no other guests sharing the property.</p>
       <p>Most venues can host a group. Very few can hold one — give it room to actually connect, away from schedules, WiFi pressure and hotel noise.</p>
       <p>Whether you're reuniting three generations of family, leading a retreat, running a workshop, or bringing a group of friends who haven't traveled together in years, we build the stay around your group, not the other way around.</p>
       <ul>
+        <li><?php echo rafiki_icon( 'leaf' ); ?><span>Exclusive use of the whole lodge — the property is yours alone for the length of your stay.</span></li>
         <li><?php echo rafiki_icon( 'family' ); ?><span>Space for large families and multi-generational groups, all on one property.</span></li>
         <li><?php echo rafiki_icon( 'leaf' ); ?><span>Open-air gathering areas built for circles, workshops and shared meals — not banquet halls.</span></li>
         <li><?php echo rafiki_icon( 'guide' ); ?><span>One point of contact to help you plan activities, meals and logistics for the whole group.</span></li>
@@ -106,6 +108,10 @@ $status = isset( $_GET['group_inquiry'] ) ? sanitize_key( $_GET['group_inquiry']
   <div class="container" style="max-width:760px;">
     <h3 style="text-align:center; font-size:22px; text-transform:uppercase; margin-bottom:32px;">Before You Send the Inquiry</h3>
     <div class="faq-list">
+      <details class="faq-item">
+        <summary>Will other guests be at the lodge during our stay?</summary>
+        <p>No. Group bookings are private buyouts — the entire property is reserved exclusively for your group. The rooms, the open-air gathering areas and the activities are all yours for the duration of your stay.</p>
+      </details>
       <details class="faq-item">
         <summary>Will a group trip to Rafiki feel like a school field trip?</summary>
         <p>Not if we design it properly. One big shared experience, enough freedom afterward, different options for different people, dinner back together. The itinerary should create common moments, not keep everyone attached to each other all day.</p>

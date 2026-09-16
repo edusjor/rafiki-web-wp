@@ -114,7 +114,7 @@ function rafiki_scalar_fields() {
 		array( 'key' => 'rafiki_price', 'label' => 'Price', 'type' => 'text' ),
 		array( 'key' => 'rafiki_price_unit', 'label' => 'Price Unit (e.g. "/ night")', 'type' => 'text' ),
 		array( 'key' => 'rafiki_price_note', 'label' => 'Note Under the Price', 'type' => 'text' ),
-		array( 'key' => 'rafiki_booking_link', 'label' => 'Booking Link for This Tour ("Check Availability" button)', 'type' => 'url' ),
+		array( 'key' => 'rafiki_booking_link', 'label' => 'Booking Link ("Book Now" button) — leave empty to use the site-wide Beds24 link from Rafiki Settings', 'type' => 'url' ),
 		array( 'key' => 'rafiki_price_amount', 'label' => 'Online Booking Price (numeric — nightly rate for accommodations, per-person/per-booking price for activities & packages)', 'type' => 'number' ),
 		array( 'key' => 'rafiki_deposit_type', 'label' => 'Payment Type', 'type' => 'select', 'options' => array(
 			'full'             => 'Pay in full',

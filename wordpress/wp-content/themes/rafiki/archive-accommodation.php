@@ -1,14 +1,179 @@
-<?php get_header(); ?>
-
 <?php
-/* Real amenities pulled from the Luxury Safari Tents accommodation post,
-   so section 08 shows confirmed, admin-editable facts instead of guessed copy. */
-$tent_post   = get_posts( array( 'post_type' => 'accommodation', 'posts_per_page' => 1, 'orderby' => 'menu_order date', 'order' => 'ASC', 'post_status' => 'publish' ) );
-$tent_post   = $tent_post ? $tent_post[0] : null;
+/**
+ * archive-accommodation.php — booking-first /stay/ page (formerly "Stay - Copia").
+ *
+ * This is now the default /stay/ accommodation archive. The previous layout is
+ * preserved untouched as the "Stay - Oficial" page template
+ * (page-templates/template-stay-oficial.php).
+ *
+ * The Home already did the work of selling the desire, so this page is
+ * mostly a choice-and-booking screen, not another long marketing page:
+ *
+ *   1. Short hero
+ *   2. Choose your dates  ->  which safari tents are available  [#availability]
+ *   3. Book the tent on its own OR make it a package            [#packages]
+ *   4. Supporting content, condensed (why stay, 2/3 nights, what's
+ *      in the tent, food, group stays)
+ *   5. Add individual activities                                 [#activities]
+ *   6. Final CTA
+ *
+ * The date picker filters the tent cards client-side using each
+ * accommodation's real blocked dates + nights already held by a live
+ * order (rafiki_blocked_dates_for / rafiki_booked_ranges_for). When
+ * online booking is active and a tent has a purchasable linked product,
+ * "Select This Tent" posts the chosen check-in/check-out straight to the
+ * WooCommerce cart (same contract as template-parts/booking-cta.php);
+ * otherwise it falls back to WhatsApp with the dates in the message.
+ *
+ * The tent / package detail pages (single-accommodation.php, single-package.php)
+ * are confirm-only: their calendars were removed and they hand back here via
+ * ?checkin=&checkout=&guests=&tent= (see rafiki_stay_selection* helpers).
+ */
+get_header();
+
+$stay_url     = get_post_type_archive_link( 'accommodation' );
+$packages_url = get_post_type_archive_link( 'package' );
+$activities_url = get_post_type_archive_link( 'activity' );
+
+/*
+ * /stay/ lists every accommodation, in a fixed running order regardless of
+ * each post's menu_order: Main Lodge, then Beach Camp, then Luxury Safari
+ * Tents, with the Lekker Bar & Braai last. Anything added later that doesn't
+ * match one of those keywords lands in the middle, ahead of Lekker.
+ */
+$stay_rank = function ( $title ) {
+	$t = strtolower( (string) $title );
+	if ( false !== strpos( $t, 'lekker' ) || false !== strpos( $t, 'braai' ) ) return 90;
+	if ( false !== strpos( $t, 'main' ) || false !== strpos( $t, 'lodge' ) )   return 10;
+	if ( false !== strpos( $t, 'beach' ) )                                      return 20;
+	if ( false !== strpos( $t, 'luxury' ) || false !== strpos( $t, 'tent' ) )   return 30;
+	return 50;
+};
+
+$all_accommodations = get_posts( array( 'post_type' => 'accommodation', 'posts_per_page' => -1, 'orderby' => 'menu_order date', 'order' => 'ASC', 'post_status' => 'publish' ) );
+
+usort( $all_accommodations, function ( $a, $b ) use ( $stay_rank ) {
+	$ra = $stay_rank( $a->post_title );
+	$rb = $stay_rank( $b->post_title );
+	return $ra === $rb ? 0 : ( $ra < $rb ? -1 : 1 );
+} );
+
+// "What's in your safari tent" reads the real Luxury Safari Tents post,
+// not just whatever now sorts first (Main Lodge).
+$tent_post = null;
+foreach ( $all_accommodations as $acc ) {
+	$t = strtolower( get_the_title( $acc ) );
+	if ( false !== strpos( $t, 'tent' ) || false !== strpos( $t, 'luxury' ) ) { $tent_post = $acc; break; }
+}
+if ( ! $tent_post && $all_accommodations ) $tent_post = $all_accommodations[0];
 $tent_amenities = $tent_post ? rafiki_rows( $tent_post->ID, 'rafiki_amenities' ) : array();
+
+/* ---- Build the tent-card list ---- */
+$tents = array();
+
+foreach ( $all_accommodations as $acc ) {
+	$id = (int) $acc->ID;
+
+	$img        = rafiki_lead_image_url( $id, 'rafiki-card' );
+	if ( ! $img ) $img = rafiki_lead_image_url( $id, 'large' );
+	$sub        = get_post_meta( $id, 'rafiki_subtitle', true );
+	$price      = get_post_meta( $id, 'rafiki_price', true );
+	$price_unit = get_post_meta( $id, 'rafiki_price_unit', true );
+	if ( ! $price_unit ) $price_unit = '/ night';
+	$facts      = rafiki_rows( $id, 'rafiki_quick_facts' );
+
+	$capacity = '';
+	foreach ( $facts as $f ) {
+		$label = strtolower( isset( $f['label'] ) ? $f['label'] : '' );
+		if ( preg_match( '/sleep|guest|capacit|occupan|people|persons?/', $label ) ) {
+			$capacity = $f['value'];
+			break;
+		}
+	}
+
+	$tents[] = array(
+		'post'       => $acc,
+		'img'        => $img,
+		'sub'        => $sub,
+		'price'      => $price,
+		'price_unit' => $price_unit,
+		'facts'      => $facts,
+		'capacity'   => $capacity,
+	);
+}
 ?>
 
-<!-- ===== 01. HERO ===== -->
+<style>
+  /* ===== /stay/ : accommodation cards + Stay Only vs Packages ===== */
+  #availability { padding-top: 84px; }
+
+  .stay-results {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+  .stay-card {
+    display: flex; flex-direction: column;
+    background: #fff; border: 1px solid var(--cream-2);
+    border-radius: var(--radius); overflow: hidden;
+  }
+  .stay-card-media { position: relative; aspect-ratio: 16 / 10; background: var(--cream-2); }
+  .stay-card-media img { width: 100%; height: 100%; object-fit: cover; }
+  .stay-card-body { display: flex; flex-direction: column; flex: 1; padding: 24px; }
+  .stay-card-body h3 { font-size: 23px; text-transform: uppercase; margin: 0 0 8px; }
+  .stay-card-specs {
+    font-size: 13.5px; font-weight: 600; color: var(--text-dark);
+    margin: 0 0 6px; letter-spacing: 0.2px;
+  }
+  .stay-card-diff { font-size: 13.5px; line-height: 1.55; color: var(--text-dark-muted); margin: 0 0 16px; }
+
+  .stay-card-price {
+    font-size: 14px; color: var(--text-dark-muted); margin: 0 0 20px;
+    padding-top: 14px; border-top: 1px solid var(--cream-2);
+  }
+  .stay-card-price strong { font-family: var(--font-head); font-size: 30px; color: var(--text-dark); letter-spacing: 0.4px; }
+  .stay-card-price span { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: 0.6px; margin-top: 2px; }
+
+  .stay-card-actions { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+  .stay-card-actions .btn { width: 100%; justify-content: center; white-space: nowrap; }
+
+  /* --- Stay Only vs Packages comparison --- */
+  .stay-compare {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px;
+    align-items: stretch; margin-top: 44px;
+  }
+  .compare-card {
+    display: flex; flex-direction: column; background: #fff;
+    border: 1px solid var(--cream-2); border-radius: var(--radius); padding: 28px;
+  }
+  .compare-card.is-base { border-color: var(--text-dark); }
+  .compare-card .compare-kicker {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.9px; text-transform: uppercase;
+    color: var(--orange); margin-bottom: 8px;
+  }
+  .compare-card h3 { font-size: 21px; text-transform: uppercase; margin: 0 0 4px; }
+  .compare-card .compare-tagline { font-size: 13.5px; color: var(--text-dark-muted); margin: 0 0 18px; }
+  .compare-list { list-style: none; margin: 0 0 20px; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+  .compare-list li { position: relative; padding-left: 24px; font-size: 14px; line-height: 1.5; color: var(--text-dark); }
+  .compare-list li::before {
+    content: ""; position: absolute; left: 0; top: 3px; width: 14px; height: 14px;
+    border-radius: 50%; background: var(--orange);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z'/%3E%3C/svg%3E") center/12px no-repeat;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z'/%3E%3C/svg%3E") center/12px no-repeat;
+  }
+  .compare-card .compare-price { font-family: var(--font-head); font-size: 24px; color: var(--text-dark); margin: 0 0 16px; letter-spacing: 0.4px; }
+  .compare-card .compare-price small { font-family: var(--font-body); font-size: 12.5px; color: var(--text-dark-muted); font-weight: 400; letter-spacing: 0; }
+  .compare-card .btn { margin-top: auto; width: 100%; justify-content: center; }
+
+  @media (max-width: 820px) {
+    .stay-results { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .stay-compare { grid-template-columns: 1fr; }
+  }
+</style>
+
+<!-- ===== 01. HERO (short) ===== -->
 <section class="page-hero">
   <div class="hero-media">
     <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-tents-web_19.jpeg" alt="Safari tent at Rafiki Safari Lodge, surrounded by rainforest">
@@ -17,105 +182,166 @@ $tent_amenities = $tent_post ? rafiki_rows( $tent_post->ID, 'rafiki_amenities' )
   <div class="container page-hero-content">
     <div class="page-hero-content-inner">
       <p class="breadcrumb"><a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a><span class="sep">/</span><span class="current">Stay</span></p>
-      <span class="eyebrow">Stay at Rafiki</span>
-      <h1>SLEEP IN THE FOREST.<br><span class="accent">WAKE UP WITH SOMEWHERE TO GO.</span></h1>
-      <p class="hero-sub">Fourteen safari tents sit among the trees at Rafiki. You get a proper bed, private bathroom and your own porch — with the river valley, birds and forest just outside.</p>
-      <p class="hero-sub">Stay two or three nights and use Rafiki as your base for the days you want to spend exploring this side of Costa Rica.</p>
+      <span class="eyebrow">Book Your Stay</span>
+      <h1>STAY IN THE FOREST.</h1>
+      <p class="hero-sub">Fourteen safari tents, the Main Lodge and the Beach Camp. Have a look, then book your dates online.</p>
       <div class="hero-actions">
-        <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to check availability at Rafiki Safari Lodge.' ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Check Availability</a>
-        <a href="#tents" class="btn btn-outline">See the Safari Tents</a>
+        <a href="#availability" class="btn btn-primary">See Where You'll Stay</a>
+        <a href="#packages" class="btn btn-outline">See Packages</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== 02. THIS ISN'T CAMPING ===== -->
+<!-- ===== 02. WHERE YOU'LL STAY ===== -->
+<section class="section" id="availability">
+  <div class="container">
+    <span class="eyebrow center">Where You'll Stay</span>
+    <h2 class="section-title center" style="margin-bottom:28px;">SAFARI TENTS, THE LODGE &amp; THE BEACH CAMP.</h2>
+
+    <?php if ( $tents ) : ?>
+      <div class="stay-results" id="stay-results">
+        <?php foreach ( $tents as $i => $t ) :
+          $p          = $t['post'];
+          $permalink  = get_permalink( $p );
+          $title      = get_the_title( $p );
+          $card_info  = rafiki_is_info_only_stay( $p->ID ); // Lekker Bar & Braai — info card, not bookable
+
+          $specs = array();
+          if ( $t['capacity'] ) {
+            // Normalise whatever the Quick Fact says ("4–5 people", "2-4", "Sleeps 4")
+            // to one consistent "<n> guests" chip so every card reads the same way.
+            $cap_num = preg_replace( '/\b(sleeps?|up to|people|persons?|guests?|pax|max\.?)\b/i', '', $t['capacity'] );
+            $cap_num = trim( (string) $cap_num, " .,-" );
+            if ( '' !== $cap_num ) $specs[] = ( '1' === $cap_num ? '1 guest' : $cap_num . ' guests' );
+          }
+          if ( ! $card_info ) $specs[] = 'Private bathroom';
+
+          $unit_label = trim( ltrim( (string) $t['price_unit'], '/ ' ) );
+          if ( '' === $unit_label ) $unit_label = 'per night';
+        ?>
+          <article class="stay-card">
+            <div class="stay-card-media">
+              <?php if ( $t['img'] ) : ?><img src="<?php echo esc_url( $t['img'] ); ?>" alt="<?php echo esc_attr( $title ); ?>"><?php endif; ?>
+            </div>
+            <div class="stay-card-body">
+              <h3><?php echo esc_html( $title ); ?></h3>
+              <p class="stay-card-specs"><?php echo esc_html( implode( ' · ', $specs ) ); ?></p>
+              <?php if ( $t['sub'] ) : ?><p class="stay-card-diff"><?php echo esc_html( wp_trim_words( $t['sub'], 16 ) ); ?></p><?php endif; ?>
+
+              <?php if ( $t['price'] ) : ?>
+                <p class="stay-card-price">From <strong>$<?php echo esc_html( $t['price'] ); ?></strong><span><?php echo esc_html( $unit_label ); ?></span></p>
+              <?php endif; ?>
+
+              <div class="stay-card-actions">
+                <a class="btn btn-primary" href="<?php echo esc_url( $permalink ); ?>"><?php echo $card_info ? 'See the Bar &amp; Restaurant' : 'View Tent'; ?></a>
+              </div>
+            </div>
+          </article>
+        <?php endforeach; ?>
+      </div>
+
+      <p style="text-align:center; margin-top:36px;">
+        <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I have a question about staying at Rafiki Safari Lodge.' ) ); ?>" class="btn btn-outline" target="_blank" rel="noopener" style="border-color: var(--text-dark); color: var(--text-dark);">Have a question? Ask us on WhatsApp</a>
+      </p>
+    <?php else : ?>
+      <p style="text-align:center;">No accommodations published yet.</p>
+    <?php endif; ?>
+  </div>
+</section>
+
+<!-- ===== 03. WAYS TO STAY (Stay Only vs Packages) ===== -->
+<section class="section" style="background:var(--cream-2);" id="packages">
+  <div class="container">
+    <span class="eyebrow center">Ways to Stay</span>
+    <h2 class="section-title center" style="margin-bottom:16px;">STAY ONLY, OR MAKE IT A PACKAGE.</h2>
+    <p style="text-align:center; max-width:640px; margin:0 auto 8px; color:var(--text-dark-muted); font-size:16px; line-height:1.75;">Book a tent on its own, or choose a package with activities already included. A package is an upgrade on the same stay &mdash; not a different product.</p>
+
+    <?php
+    $all_packages = get_posts( array( 'post_type' => 'package', 'posts_per_page' => -1, 'orderby' => 'menu_order date', 'order' => 'ASC', 'post_status' => 'publish' ) );
+    ?>
+
+    <div class="stay-compare">
+      <div class="compare-card is-base">
+        <span class="compare-kicker">Baseline</span>
+        <h3>Stay Only</h3>
+        <p class="compare-tagline">Your tent + breakfast</p>
+        <ul class="compare-list">
+          <li>Safari tent</li>
+          <li>Breakfast</li>
+          <li>Pool &amp; water slide</li>
+          <li>Forest trails from your tent</li>
+        </ul>
+        <a class="btn btn-primary" href="#availability">View the Tents &uarr;</a>
+      </div>
+
+      <?php foreach ( $all_packages as $pkg ) :
+        $p_id     = $pkg->ID;
+        $p_title  = get_the_title( $pkg );
+        $badges   = rafiki_rows( $p_id, 'rafiki_badges' );
+        $p_sub    = get_post_meta( $p_id, 'rafiki_subtitle', true );
+        $p_price  = get_post_meta( $p_id, 'rafiki_price', true );
+        $p_unit   = trim( ltrim( (string) get_post_meta( $p_id, 'rafiki_price_unit', true ), '/ ' ) );
+        $p_amen   = rafiki_rows( $p_id, 'rafiki_amenities' );
+
+        // The "plus" list: package inclusions that aren't already in Stay Only.
+        $extras = array();
+        foreach ( $p_amen as $a ) {
+          $ti = isset( $a['title'] ) ? trim( $a['title'] ) : '';
+          if ( '' === $ti ) continue;
+          if ( preg_match( '/tent|meal|breakfast|lunch|dinner|pool|water slide|trail|accommodat|lodging|\broom\b/i', $ti ) ) continue;
+          $extras[] = $ti;
+        }
+        if ( ! $extras ) {
+          foreach ( $p_amen as $a ) { if ( ! empty( $a['title'] ) ) $extras[] = trim( $a['title'] ); }
+        }
+        $extras = array_slice( $extras, 0, 6 );
+        $kicker = ( $badges && ! empty( $badges[0]['text'] ) ) ? $badges[0]['text'] : 'Package';
+
+        $p_tagline  = get_post_meta( $p_id, 'rafiki_compare_tagline', true );
+        $price_text = $p_price ? ( 'From $' . $p_price . ( $p_unit ? ' ' . $p_unit : '' ) ) : '';
+      ?>
+        <div class="compare-card">
+          <span class="compare-kicker"><?php echo esc_html( $kicker ); ?></span>
+          <h3><?php echo esc_html( $p_title ); ?></h3>
+          <p class="compare-tagline"><?php echo esc_html( $p_tagline ? $p_tagline : 'Your tent + breakfast + activities' ); ?></p>
+          <ul class="compare-list">
+            <?php foreach ( $extras as $ex ) : ?><li><?php echo esc_html( $ex ); ?></li><?php endforeach; ?>
+            <?php if ( ! $extras && $p_sub ) : ?><li><?php echo esc_html( wp_trim_words( $p_sub, 16 ) ); ?></li><?php endif; ?>
+          </ul>
+          <p class="compare-price">
+            <?php if ( $price_text ) : ?>
+              <?php echo esc_html( $price_text ); ?>
+            <?php else : ?>
+              <small>See the package page for pricing</small>
+            <?php endif; ?>
+          </p>
+          <a href="<?php echo esc_url( get_permalink( $pkg ) ); ?>" class="btn btn-outline" style="border-color:var(--text-dark); color:var(--text-dark);">View Package &rarr;</a>
+        </div>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 04. THIS ISN'T CAMPING ===== -->
 <section class="section">
   <div class="container intro-block" style="text-align:center;">
     <span class="eyebrow center">Safari Tent Living</span>
     <h2 class="section-title center" style="margin-bottom:20px;">CLOSE TO NATURE DOESN'T HAVE TO MEAN SLEEPING ON THE GROUND.</h2>
     <p>The idea came from the safari camps Constant Boshoff knew in Africa. A canvas tent lets you hear more of what's happening outside. But inside, it still needs to feel good.</p>
     <p>Proper beds. Private bathrooms. Hot showers. Space for your things. A porch to sit on when you've had enough adventure for the day.</p>
-    <p>It's simple in the right places and comfortable in the places that matter.</p>
   </div>
-
   <div class="container">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-tents-web_1.jpeg" alt="Inside a safari tent at Rafiki Safari Lodge" style="width:100%; height:420px; object-fit:cover; border-radius:var(--radius); margin-top:16px;">
+    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-tents-web_1.jpeg" alt="Inside a safari tent at Rafiki Safari Lodge" style="width:100%; height:420px; object-fit:cover; border-radius:var(--radius);">
   </div>
 </section>
 
-<!-- ===== 03. THE BEST PART IS WHAT'S OUTSIDE ===== -->
-<section class="section why-rafiki">
-  <div class="why-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-place-wildlife-web_3.jpeg" alt="Forest view from a safari tent porch at Rafiki">
-    <div class="why-media-text">
-      <span class="eyebrow">Morning at Rafiki</span>
-      <h2>YOU'LL PROBABLY HEAR THE FOREST<br><span class="accent">BEFORE YOU SEE IT.</span></h2>
-      <p style="max-width:620px;">Some mornings start with birds around the lodge. Others with rain on the canvas. Someone heading toward breakfast. Kids already talking about the water slide. Or a quiet few minutes on the porch before everybody else wakes up.</p>
-      <p style="max-width:620px;">There's no television competing with what's outside. There really doesn't need to be.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ===== 04. 14 SAFARI TENTS ===== -->
-<section class="section for-you">
-  <div class="container">
-    <span class="eyebrow center">Your Place in the Forest</span>
-    <h2 class="section-title center">ENOUGH ROOM TO COME AS TWO.<br>ENOUGH TENTS TO BRING EVERYONE.</h2>
-    <p style="text-align:center; max-width:680px; margin:-24px auto 48px; color:var(--text-dark-muted); font-size:16px; line-height:1.75;">Rafiki has 14 safari tents spread through the property. That means the lodge works just as naturally for a couple or family as it does when several families, friends or generations want to travel together. You're staying in the same place. But you still have your own space to disappear to at the end of the day.</p>
-
-    <div class="for-you-grid cols-3">
-      <div class="for-you-item">
-        <?php echo rafiki_icon( 'heart' ); ?>
-        <h3>FOR COUPLES</h3>
-        <p>A few days somewhere completely different from the beach hotels and towns already on your route. Adventure when you want it. Quiet when you don't.</p>
-      </div>
-      <div class="for-you-item">
-        <?php echo rafiki_icon( 'family' ); ?>
-        <h3>FOR FAMILIES</h3>
-        <p>Enough space for real family travel. Days that can include rafting, horses, hiking, swimming and the kind of downtime kids usually decide for themselves.</p>
-      </div>
-      <div class="for-you-item">
-        <?php echo rafiki_icon( 'guide' ); ?>
-        <h3>FOR GROUPS</h3>
-        <p>Fourteen tents make it possible to bring more of your people without turning the trip into a logistical puzzle. Different tents. Different plans during the day. One place to meet again later.</p>
-      </div>
-    </div>
-
-    <p style="text-align:center; margin-top:16px;">
-      <a href="<?php echo esc_url( home_url( '/bring-your-group/' ) ); ?>" class="btn btn-outline" style="border-color: var(--text-dark); color: var(--text-dark);">Planning a Group Stay?</a>
-    </p>
-
-    <div style="max-width:760px; margin:56px auto 0;">
-      <h3 style="text-align:center; font-size:22px; text-transform:uppercase; margin-bottom:32px;">By Kind of Traveler</h3>
-      <div class="faq-list">
-        <details class="faq-item">
-          <summary>My kids have already done ziplines, beaches and national parks. What's different here?</summary>
-          <p>At Rafiki, the experience isn't one isolated activity. They wake up inside the forest, raft the river, come back to the same lodge, find the pool and water slide, see wildlife around where they're sleeping — then do something completely different the following day. The novelty comes from living inside it for several days, not checking off another tour.</p>
-        </details>
-        <details class="faq-item">
-          <summary>What if one child is adventurous and the other isn't?</summary>
-          <p>Don't build the whole trip around the most adventurous person — that's exactly why Rafiki works as a base. One experience can be shared, the next day can split. Everyone still returns to the same place.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Is Rafiki too family-oriented for a couple?</summary>
-          <p>No. Families use Rafiki one way; couples use it completely differently — early birding, rafting together, horseback riding, massage, long afternoons by the pool, dinner and nowhere else you need to go afterward.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Do I have to be an "adventure traveler" to enjoy Rafiki?</summary>
-          <p>No. You can come with someone who wants rafting and never get into a raft yourself — birding from breakfast, reading, the pool, a massage, a slower trail. Active people have plenty to do without making quieter travelers feel like they're doing the trip wrong.</p>
-        </details>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== 05. STAY LONG ENOUGH TO STOP RUSHING ===== -->
+<!-- ===== 05. HOW MANY NIGHTS ===== -->
 <section class="section" style="background:var(--cream-2);">
   <div class="container">
     <span class="eyebrow center">How Many Nights?</span>
     <h2 class="section-title center">TWO NIGHTS WORK.<br>THREE NIGHTS FEEL BETTER.</h2>
-    <p style="text-align:center; max-width:680px; margin:-24px auto 48px; color:var(--text-dark-muted); font-size:16px; line-height:1.75;">One night tells you what Rafiki looks like. Two nights give you time for a real adventure. Three nights let you have another one without feeling like you're already leaving.<br><br>For most road trips through Costa Rica, we recommend making room for two or three nights — long enough to unpack and do something memorable, short enough to fit naturally between the other places already on your itinerary.</p>
+    <p style="text-align:center; max-width:680px; margin:-24px auto 48px; color:var(--text-dark-muted); font-size:16px; line-height:1.75;">One night tells you what Rafiki looks like. Two nights give you time for a real adventure. Three nights let you have another one without feeling like you're already leaving.</p>
 
     <div class="plan-grid cols-2" style="margin-bottom:0;">
       <div class="plan-card">
@@ -126,141 +352,46 @@ $tent_amenities = $tent_post ? rafiki_rows( $tent_post->ID, 'rafiki_amenities' )
       <div class="plan-card">
         <?php echo rafiki_icon( 'heart' ); ?>
         <h3>Three Nights</h3>
-        <p>Arrive without rushing. Choose two different kinds of days. Leave room for the pool, birds, food, conversation and doing nothing for an afternoon. This is where staying at Rafiki starts to feel different from simply coming for an activity.</p>
-      </div>
-    </div>
-
-    <p style="text-align:center; margin-top:40px;">
-      <a href="<?php echo esc_url( home_url( '/#two-or-three-nights' ) ); ?>" class="btn btn-primary">See What 3 Nights Can Look Like</a>
-    </p>
-  </div>
-</section>
-
-<!-- ===== 06. YOUR TENT IS ONLY THE BASE ===== -->
-<section class="section">
-  <div class="container intro-block" style="text-align:center; max-width:820px;">
-    <span class="eyebrow center">What Happens Between Nights</span>
-    <h2 class="section-title center">YOUR TENT IS ONLY THE BASE.</h2>
-    <p style="font-size:18px;">You don't come all this way just for the bed. Breakfast might lead to rafting. A horseback ride might end back at the lodge for lunch. A hike can take most of the day. Or you may decide that the water slide, pool and porch are enough for a while.</p>
-    <p>That's why we think of Rafiki as all-inclusive nature. Not because every person has to follow the same schedule — because once you're here, there are several ways to experience the landscape without changing hotels every morning.</p>
-    <p><a href="<?php echo esc_url( get_post_type_archive_link( 'activity' ) ); ?>" class="btn btn-primary">Explore Rafiki Experiences</a></p>
-  </div>
-</section>
-
-<!-- ===== 07. A DAY CAN BE FULL WITHOUT FEELING BUSY ===== -->
-<section class="section" style="background:var(--cream-2);">
-  <div class="container">
-    <span class="eyebrow center">Life at the Lodge</span>
-    <h2 class="section-title center">THERE'S TIME BETWEEN THE ADVENTURES TOO.</h2>
-
-    <div class="itinerary" style="max-width:820px; margin:48px auto 0;">
-      <div class="itinerary-step">
-        <div class="itinerary-step-num"></div>
-        <div class="itinerary-step-body">
-          <h3>Breakfast</h3>
-          <p>Coffee, breakfast and whatever has decided to visit the trees or bird feeders that morning.</p>
-        </div>
-      </div>
-      <div class="itinerary-step">
-        <div class="itinerary-step-num"></div>
-        <div class="itinerary-step-body">
-          <h3>Out for the Day</h3>
-          <p>Raft. Ride. Hike. Look for birds. Follow the river.</p>
-        </div>
-      </div>
-      <div class="itinerary-step">
-        <div class="itinerary-step-num"></div>
-        <div class="itinerary-step-body">
-          <h3>Back at Rafiki</h3>
-          <p>Lunch. Pool. Water slide. Massage. Porch. A drink. Someone telling a story about what happened on the river.</p>
-        </div>
-      </div>
-      <div class="itinerary-step">
-        <div class="itinerary-step-num"></div>
-        <div class="itinerary-step-body">
-          <h3>Dinner</h3>
-          <p>Everyone eventually finds their way back to the table. And tomorrow doesn't have to look anything like today.</p>
-        </div>
+        <p>Arrive without rushing. Choose two different kinds of days. Leave room for the pool, birds, food, conversation and doing nothing for an afternoon.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== 08. WHAT YOU'LL FIND IN YOUR SAFARI TENT ===== -->
+<?php if ( $tent_amenities ) : ?>
+<!-- ===== 06. WHAT'S IN YOUR SAFARI TENT ===== -->
 <section class="section">
   <div class="container">
     <span class="eyebrow center">The Practical Part</span>
     <h2 class="section-title center">WILD OUTSIDE. COMFORTABLE INSIDE.</h2>
-    <p style="text-align:center; max-width:680px; margin:-24px auto 48px; color:var(--text-dark-muted); font-size:16px;">Each Rafiki safari tent is designed to give you the feeling of sleeping in the forest without giving up the essentials you actually care about at the end of a full day.</p>
+    <p style="text-align:center; max-width:680px; margin:-24px auto 48px; color:var(--text-dark-muted); font-size:16px;">All the tents are perched on raised hardwood platforms. Each has a unique view of the forest, allowing the sensation of sleeping in the forest without giving up the essentials you care about.</p>
 
-    <?php if ( $tent_amenities ) : ?>
-      <div class="amenities-grid">
-        <?php foreach ( $tent_amenities as $a ) : if ( empty( $a['title'] ) ) continue; ?>
-          <div class="amenity-item">
-            <?php echo rafiki_icon( $a['icon'] ); ?>
-            <div><strong><?php echo esc_html( $a['title'] ); ?></strong><span><?php echo esc_html( $a['text'] ); ?></span></div>
-          </div>
-        <?php endforeach; ?>
-      </div>
-      <p style="text-align:center; margin-top:36px;">
-        <a href="<?php echo esc_url( $tent_post ? get_permalink( $tent_post ) : get_post_type_archive_link( 'accommodation' ) ); ?>" class="btn btn-outline" style="border-color: var(--text-dark); color: var(--text-dark);">See Full Tent Details →</a>
-      </p>
-    <?php endif; ?>
-
-    <div style="max-width:760px; margin:56px auto 0;">
-      <h3 style="text-align:center; font-size:22px; text-transform:uppercase; margin-bottom:32px;">Still Picturing It?</h3>
-      <div class="faq-list">
-        <details class="faq-item">
-          <summary>We already have Manuel Antonio and Uvita on our route. Why add Rafiki?</summary>
-          <p>Those places give you the Pacific side of Costa Rica. Rafiki changes the landscape completely — you leave the coast for a few days and wake up with the river, forest, horses and trails becoming part of where you're staying. You're not adding another version of the same stop. You're adding contrast to the trip.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Is this glamping?</summary>
-          <p>We don't really think of it that way. The safari tents are comfortable — proper beds, private bathrooms, hot showers and a porch — but the point isn't a luxury room under canvas. It's letting you stay closer to the forest without giving up a good night's sleep.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Will we hear animals at night?</summary>
-          <p>Probably. You're sleeping in tropical forest, not inside a sealed resort building. Rain, frogs, insects, birds and whatever else is moving outside become part of the soundtrack. For many guests, that's one of the things they remember most.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Is Rafiki too remote for a family?</summary>
-          <p>Rafiki feels remote once you're there — that's different from being unsupported. You still have your tent, meals, guides, lodge team, pool and experiences organized around the property. The remoteness is what gives you the forest. The team is what makes that remoteness feel manageable.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Is it too rustic for someone who doesn't like camping?</summary>
-          <p>If what you dislike about camping is sleeping on the ground, shared bathrooms and cooking dinner outside, Rafiki is a very different experience — fixed safari tents with real beds and private bathrooms.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Is there air conditioning?</summary>
-          <p><em>[Placeholder — confirm current answer with Loki, and explain how the tent stays comfortable if there's no A/C.]</em></p>
-        </details>
-      </div>
+    <div class="amenities-grid">
+      <?php foreach ( $tent_amenities as $a ) : if ( empty( $a['title'] ) ) continue; ?>
+        <div class="amenity-item">
+          <?php echo rafiki_icon( $a['icon'] ); ?>
+          <div><strong><?php echo esc_html( $a['title'] ); ?></strong><span><?php echo esc_html( $a['text'] ); ?></span></div>
+        </div>
+      <?php endforeach; ?>
     </div>
+    <p style="text-align:center; margin-top:36px;">
+      <a href="<?php echo esc_url( $tent_post ? get_permalink( $tent_post ) : $stay_url ); ?>" class="btn btn-outline" style="border-color: var(--text-dark); color: var(--text-dark);">See Full Tent Details &rarr;</a>
+    </p>
   </div>
 </section>
+<?php endif; ?>
 
-<!-- ===== 09. WHAT RAFIKI DOESN'T TRY TO BE ===== -->
+<!-- ===== 07. FOOD ===== -->
 <section class="section" style="background:var(--cream-2);">
-  <div class="container intro-block" style="text-align:center;">
-    <span class="eyebrow center">Good to Know</span>
-    <h2 class="section-title center">THIS IS A LODGE IN THE FOREST.</h2>
-    <p>That means you may hear rain at night. Birds in the morning. Insects outside. A river nearby. And occasionally something moving through the trees that makes everyone stop talking for a minute.</p>
-    <p>That's part of the reason to come. Rafiki isn't trying to separate you from Costa Rica. It's trying to give you a comfortable way to stay in the middle of it.</p>
-  </div>
-</section>
-
-<!-- ===== 10. FOOD IS PART OF THE RHYTHM ===== -->
-<section class="section">
   <div class="container intro-block" style="text-align:center;">
     <span class="eyebrow center">Around the Table</span>
     <h2 class="section-title center">ADVENTURE MAKES PEOPLE HUNGRY.</h2>
     <p>Meals at Rafiki are simple, generous and made for the kind of days people have here. Breakfast before heading out. Lunch when you return. Dinner when everyone finally slows down again.</p>
-    <p>The food doesn't need to compete with the landscape. It needs to make you want to sit down, eat well and stay at the table a little longer.</p>
-    <p><a href="<?php echo esc_url( home_url( '/lekker-bar-braai/' ) ); ?>" class="btn btn-outline" style="border-color: var(--text-dark); color: var(--text-dark);">Food at Rafiki →</a></p>
+    <p><a href="<?php echo esc_url( rafiki_lekker_url() ); ?>" class="btn btn-outline" style="border-color: var(--text-dark); color: var(--text-dark);">Food at Rafiki &rarr;</a></p>
   </div>
 </section>
 
-<!-- ===== 11. BRING YOUR PEOPLE ===== -->
+<!-- ===== 08. GROUP STAYS ===== -->
 <section class="cta-banner">
   <div class="cta-media">
     <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-property-and-food-web_14a-700x420.jpg" alt="Group gathered together at Rafiki Safari Lodge">
@@ -268,98 +399,58 @@ $tent_amenities = $tent_post ? rafiki_rows( $tent_post->ID, 'rafiki_amenities' )
   </div>
   <div class="container cta-content">
     <span class="eyebrow">Group Stays</span>
-    <h2>YOU CAN TRAVEL TOGETHER WITHOUT SPENDING EVERY MINUTE TOGETHER.</h2>
-    <p>With 14 safari tents, Rafiki gives families and groups something that's surprisingly difficult to find on a trip: room for everyone to come. Some people can raft. Some can ride. Some can stay behind with the pool. Someone can go looking for birds. Someone else can do absolutely nothing.</p>
-    <p>Then everyone comes back to the same lodge at the end of the day. Same table. Different stories.</p>
-    <a href="<?php echo esc_url( home_url( '/bring-your-group/' ) ); ?>" class="btn btn-primary">Plan a Group Stay →</a>
+    <h2>TRAVEL TOGETHER WITHOUT SPENDING EVERY MINUTE TOGETHER.</h2>
+    <p>With 14 safari tents, Rafiki has room for families and groups to come. Some people raft. Some ride. Some stay with the pool. Then everyone comes back to the same table at the end of the day.</p>
+    <a href="<?php echo esc_url( home_url( '/bring-your-group/' ) ); ?>" class="btn btn-primary">Plan a Group Stay &rarr;</a>
   </div>
 </section>
 
-<!-- ===== 12. FOREST FIRST. BEACH AFTER. ===== -->
-<?php $beach_camp_post = rafiki_beach_camp_post(); ?>
-<section class="cta-banner">
-  <div class="cta-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2016/12/beach-pool-700x420.jpg" alt="Rafiki Beach Camp near Playa Matapalo">
-    <div class="hero-overlay"></div>
-  </div>
-  <div class="container cta-content">
-    <span class="eyebrow">Lodge + Beach Camp</span>
-    <h2>TWO SIDES OF COSTA RICA. ONE RAFIKI JOURNEY.</h2>
-    <p>If your trip has a little more room, combine the rainforest experience at Rafiki Safari Lodge with Rafiki Beach Camp near Playa Matapalo. Start inland with the river, forest and adventure. Then continue toward the Pacific and slow everything down again.</p>
-    <a href="<?php echo $beach_camp_post ? esc_url( get_permalink( $beach_camp_post ) ) : esc_url( home_url( '/#beach-camp' ) ); ?>" class="btn btn-primary">Explore Rafiki Beach Camp →</a>
-  </div>
-</section>
-
-<!-- ===== 13. GETTING HERE IS PART OF THE ROAD TRIP ===== -->
-<section class="section">
-  <div class="container intro-block" style="text-align:center;">
-    <span class="eyebrow center">Where Rafiki Fits</span>
-    <h2 class="section-title center">COME INLAND FOR A FEW DAYS.</h2>
-    <p>Rafiki sits away from Costa Rica's main South Pacific coastal route. If Manuel Antonio, Dominical or Uvita is already part of your trip, we'll help you understand where Rafiki fits before you start driving.</p>
-    <p>Tell us where you're coming from. We'll help with the route. And if you'd rather not drive yourself, ask us about transportation.</p>
-    <p><a href="<?php echo esc_url( home_url( '/#getting-here' ) ); ?>" class="btn btn-primary">Getting to Rafiki</a></p>
-  </div>
-</section>
-
-<!-- ===== 14. NOT SURE WHICH STAY MAKES SENSE? ===== -->
-<section class="section" style="background:var(--cream-2);">
-  <div class="container intro-block" style="text-align:center;">
-    <span class="eyebrow center">Ask Us</span>
-    <h2 class="section-title center">TELL US WHO'S COMING.</h2>
-    <p>Couple? Young kids? Teenagers who want adventure? Grandparents coming too? Several families?</p>
-    <p>Tell us your dates, who's traveling and what the rest of your Costa Rica itinerary looks like. We'll help you figure out which tent setup, number of nights and experiences make the most sense.</p>
-    <p>There's a real person answering.</p>
-    <p><a href="<?php echo esc_url( rafiki_whatsapp_link( "Hi! I'd like help planning my stay at Rafiki." ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Help Me Plan My Stay</a></p>
-  </div>
-</section>
-
-<!-- ===== CHOOSE YOUR STAY (dynamic tent/accommodation grid) ===== -->
-<section class="section experience" id="tents">
+<?php
+$activities = get_posts( array( 'post_type' => 'activity', 'posts_per_page' => 4, 'orderby' => 'menu_order date', 'order' => 'ASC', 'post_status' => 'publish' ) );
+if ( $activities ) : ?>
+<!-- ===== 09. ADD SOMETHING EXTRA ===== -->
+<section class="section experience" id="activities">
   <div class="container">
-    <span class="eyebrow center">Choose Your Stay</span>
-    <h2 class="section-title center">WHICH SETUP FITS YOUR TRIP?</h2>
+    <span class="eyebrow center">While You're Here</span>
+    <h2 class="section-title center">WANT TO ADD SOMETHING EXTRA?</h2>
+    <p style="text-align:center; max-width:640px; margin:-24px auto 40px; color:var(--text-dark-muted); font-size:16px;">Book the stay first. You can add individual adventures to any booking &mdash; or leave the days open and decide once you're here.</p>
+
     <div class="experience-grid archive-grid">
-      <?php if ( have_posts() ) : while ( have_posts() ) : the_post();
-        $img = rafiki_lead_image_url( get_the_ID(), 'rafiki-card' );
-        $sub = get_post_meta( get_the_ID(), 'rafiki_subtitle', true );
+      <?php foreach ( $activities as $act ) :
+        $img = rafiki_lead_image_url( $act->ID, 'rafiki-card' );
       ?>
-        <a href="<?php the_permalink(); ?>" class="experience-card">
-          <?php if ( $img ) : ?><img src="<?php echo esc_url( $img ); ?>" alt="<?php the_title_attribute(); ?>"><?php endif; ?>
+        <a href="<?php echo esc_url( get_permalink( $act ) ); ?>" class="experience-card">
+          <?php if ( $img ) : ?><img src="<?php echo esc_url( $img ); ?>" alt="<?php echo esc_attr( get_the_title( $act ) ); ?>"><?php endif; ?>
           <div class="experience-card-overlay"></div>
           <div class="experience-card-content">
-            <h3><?php the_title(); ?></h3>
-            <?php if ( $sub ) : ?><p><?php echo esc_html( wp_trim_words( $sub, 14 ) ); ?></p><?php endif; ?>
-            <span class="arrow-link">→</span>
+            <h3><?php echo esc_html( get_the_title( $act ) ); ?></h3>
+            <span class="arrow-link">&rarr;</span>
           </div>
         </a>
-      <?php endwhile; else : ?>
-        <p>No accommodations published yet.</p>
-      <?php endif; ?>
+      <?php endforeach; ?>
     </div>
+
+    <p style="text-align:center; margin-top:36px;">
+      <a href="<?php echo esc_url( $activities_url ); ?>" class="btn btn-outline" style="border-color: var(--text-dark); color: var(--text-dark);">View All Activities</a>
+    </p>
   </div>
 </section>
+<?php endif; ?>
 
-<section class="section" style="padding:48px 0;">
-  <div class="container intro-block" style="text-align:center; max-width:680px;">
-    <p style="font-family:var(--font-head); font-size:24px; text-transform:uppercase; letter-spacing:0.4px; color:var(--text-dark);">What will we actually remember about Rafiki?</p>
-    <p style="color:var(--text-dark-muted);">We can't decide that for you. But guests rarely talk only about the tent — they talk about the rafting, the staff, the food, the wildlife, the people they were traveling with, and the feeling of being somewhere very different for a few days.</p>
-  </div>
-</section>
-
-<!-- ===== 15. FINAL CTA ===== -->
-<section class="cta-banner" id="book">
+<!-- ===== 10. FINAL CTA ===== -->
+<section class="cta-banner" style="padding:76px 0;" id="book">
   <div class="cta-media">
     <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_34.jpeg" alt="Group rafting in front of the lodge">
-    <div class="hero-overlay"></div>
+    <div class="hero-overlay" style="background:rgba(8,7,5,0.78);"></div>
   </div>
   <div class="container cta-content">
     <span class="eyebrow">Your Base for a Few Wild Days</span>
     <h2>UNPACK ONCE. SEE WHAT HAPPENS.</h2>
-    <p>Stay for two or three nights and make Rafiki the part of your Costa Rica trip where the river, forest and adventure all start from the same place.</p>
-    <div class="btn-group">
-      <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to check availability at Rafiki Safari Lodge.' ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Check Availability →</a>
-      <a href="<?php echo esc_url( get_post_type_archive_link( 'package' ) ); ?>" class="btn btn-outline">Explore Packages</a>
-    </div>
+    <p>Choose your tent and make Rafiki the part of your Costa Rica trip where the river, forest and adventure all start from the same place.</p>
+    <p style="display:flex; gap:14px; flex-wrap:wrap; margin:0;">
+      <a href="#availability" class="btn btn-primary">See Where You'll Stay &rarr;</a>
+      <a href="<?php echo esc_url( $packages_url ); ?>" class="btn btn-outline">Explore Packages</a>
+    </p>
   </div>
 </section>
 

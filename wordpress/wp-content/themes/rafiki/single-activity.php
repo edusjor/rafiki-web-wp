@@ -83,7 +83,7 @@
 <?php if ( $itinerary ) : ?>
 <section class="section" style="background:var(--cream-2);">
   <div class="container">
-    <h2 class="section-title">YOUR DAY, STEP BY STEP</h2>
+    <h2 class="section-title">WHAT TO EXPECT</h2>
     <div class="itinerary">
       <?php foreach ( $itinerary as $step ) : if ( empty( $step['title'] ) ) continue; ?>
         <div class="itinerary-step">
@@ -132,7 +132,7 @@
 </section>
 <?php endif; ?>
 
-<?php if ( $packages ) : ?>
+<?php if ( false && $packages ) : // "Packages that include this activity" section hidden per request ?>
 <section class="section" id="packages">
   <div class="container">
     <h2 class="section-title center">PACKAGES THAT INCLUDE THIS ACTIVITY</h2>
@@ -176,7 +176,6 @@
   <div class="container cta-content">
     <h2><?php echo esc_html( $cta_title ); ?></h2>
     <p><?php echo esc_html( $cta_text ); ?></p>
-    <?php $GLOBALS['rafiki_booking_variant'] = 'anchor'; ?>
     <?php get_template_part( 'template-parts/booking-cta', null, array( 'post_id' => $post_id, 'book_now_label' => 'Check Availability →' ) ); ?>
   </div>
 </section>

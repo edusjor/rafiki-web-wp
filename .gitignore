@@ -39,3 +39,6 @@ wordpress/wp-content/uploads/
 
 # Contiene credenciales de la base de datos de produccion una vez las llenes.
 wordpress/wp-config.php
+
+# Backups de la base de datos: contienen hashes de contrasenas y datos de clientes.
+*.sql

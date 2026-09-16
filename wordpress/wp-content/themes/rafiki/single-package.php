@@ -20,6 +20,8 @@
 	$cta_text    = get_post_meta( $post_id, 'rafiki_cta_text', true ) ?: 'We\'ll help you build the perfect itinerary.';
 	$cta_img_id  = get_post_meta( $post_id, 'rafiki_cta_image', true );
 	$cta_img     = $cta_img_id ? wp_get_attachment_image_url( $cta_img_id, 'full' ) : $hero_img;
+
+	$book_url = rafiki_booking_link( $post_id ); // per-post "Booking Link" field, else the site-wide Beds24 URL
 ?>
 
 <section class="page-hero">
@@ -62,7 +64,7 @@
       <?php echo rafiki_paragraphs( get_post_meta( $post_id, 'rafiki_intro_text', true ) ); ?>
     </div>
 
-    <aside class="facts-card" id="booking-widget">
+    <aside class="facts-card" id="reserve">
       <h3>Quick Facts</h3>
       <?php if ( $price ) : ?>
         <span class="facts-price">$<?php echo esc_html( $price ); ?><span style="font-family:var(--font-body); font-size:14px; color:var(--text-muted);"> <?php echo esc_html( $price_unit ); ?></span></span>
@@ -75,7 +77,10 @@
           <?php endforeach; ?>
         </ul>
       <?php endif; ?>
-      <?php get_template_part( 'template-parts/booking-cta', null, array( 'post_id' => $post_id ) ); ?>
+
+      <a class="btn btn-primary" href="<?php echo esc_url( $book_url ); ?>" target="_blank" rel="noopener">Book Now &rarr;</a>
+      <p style="font-size:12.5px; color:var(--text-muted); margin:10px 0 0;">Opens our booking system to choose your dates.</p>
+      <a class="btn btn-outline" href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I have a question about the ' . get_the_title() . ' package at Rafiki Safari Lodge.' ) ); ?>" target="_blank" rel="noopener" style="margin-top:10px;">Ask on WhatsApp</a>
     </aside>
   </div>
 </section>
@@ -83,7 +88,7 @@
 <?php if ( $itinerary ) : ?>
 <section class="section" style="background:var(--cream-2);">
   <div class="container">
-    <h2 class="section-title">DAY BY DAY</h2>
+    <h2 class="section-title">DAY BY DAY <span class="section-title-mark">*</span></h2>
     <div class="itinerary">
       <?php foreach ( $itinerary as $step ) : if ( empty( $step['title'] ) ) continue; ?>
         <div class="itinerary-step">
@@ -95,6 +100,7 @@
         </div>
       <?php endforeach; ?>
     </div>
+    <p class="itinerary-note">* The order of activities may vary depending on logistics.</p>
   </div>
 </section>
 <?php endif; ?>
@@ -135,7 +141,7 @@
 <?php if ( $pricing ) : ?>
 <section class="section" id="pricing">
   <div class="container">
-    <h2 class="section-title">PRICING BY GROUP SIZE</h2>
+    <h2 class="section-title">Prices of <?php the_title(); ?></h2>
     <div style="overflow-x:auto;">
       <table class="rate-table">
         <thead><tr><th>Group Size</th><th>Green Season</th><th>High Season</th></tr></thead>
@@ -178,8 +184,9 @@
   <div class="container cta-content">
     <h2><?php echo esc_html( $cta_title ); ?></h2>
     <p><?php echo esc_html( $cta_text ); ?></p>
-    <?php $GLOBALS['rafiki_booking_variant'] = 'anchor'; ?>
-    <?php get_template_part( 'template-parts/booking-cta', null, array( 'post_id' => $post_id, 'book_now_label' => 'Check Availability →' ) ); ?>
+    <div class="btn-group">
+      <a class="btn btn-primary" href="<?php echo esc_url( $book_url ); ?>" target="_blank" rel="noopener">Book Now &rarr;</a>
+    </div>
   </div>
 </section>
 

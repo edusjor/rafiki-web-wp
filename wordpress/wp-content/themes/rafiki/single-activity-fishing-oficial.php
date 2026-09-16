@@ -37,7 +37,7 @@ while ( have_posts() ) : the_post();
       <p class="hero-sub">Rafting shows you what the river can do. Fishing makes you stop long enough to notice how it works.</p>
       <p class="hero-sub">Spend the day moving through the lower Savegre by raft, stopping at deep pools and slower stretches of water where tropical freshwater species hide. No crowds. No marina. Just the river, the forest and a guide helping you read what is happening beneath the surface.</p>
       <div class="hero-actions">
-        <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to add fishing to my stay at Rafiki.' ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Add Fishing to Your Stay</a>
+        <a href="<?php echo esc_url( rafiki_booking_link( get_the_ID() ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Check Availability</a>
         <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to ask about current fishing conditions at Rafiki.' ) ); ?>" class="btn btn-outline" target="_blank" rel="noopener">Ask About Current Conditions</a>
       </div>
     </div>
@@ -172,8 +172,8 @@ while ( have_posts() ) : the_post();
     <h2>TAKE A DAY AND SEE WHAT'S BELOW THE SURFACE.</h2>
     <p>Add fishing to your Rafiki stay and experience the Savegre at a pace that gives you time to understand it.</p>
     <div class="btn-group">
-      <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to ask about fishing at Rafiki.' ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Ask About Fishing</a>
-      <a href="<?php echo esc_url( home_url( '/#plan' ) ); ?>" class="btn btn-outline">Plan Your Rafiki Stay</a>
+      <a href="<?php echo esc_url( rafiki_booking_link( get_the_ID() ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Check Availability &rarr;</a>
+      <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to ask about fishing at Rafiki.' ) ); ?>" class="btn btn-outline" target="_blank" rel="noopener">Ask About Fishing</a>
     </div>
   </div>
 </section>

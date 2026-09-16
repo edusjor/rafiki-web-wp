@@ -35,10 +35,10 @@ while ( have_posts() ) : the_post();
       <span class="eyebrow">Rafiki's Signature Experience</span>
       <h1>THIS IS THE RIVER<br><span class="accent">WE BUILT RAFIKI AROUND.</span></h1>
       <p class="hero-sub">You don't need to wake up early, get in a van and spend the morning driving across Costa Rica to find the adventure. When you stay at Rafiki, the Savegre River is already part of your day.</p>
-      <p class="hero-sub">Head out with our guides for Class II–III rapids, tropical forest, clear water and a waterfall stop along the way — then come back to the lodge for lunch, the pool and whatever you decide to do next.</p>
+      <p class="hero-sub">4X4 SAFARI DRIVE &middot; CLASS II&ndash;III RAPIDS &middot; WARM WATER &middot; WATERFALL STOPS &middot; NATURAL SWIMMING HOLES &middot; 13 KM DOWN THE SAVEGRE</p>
       <div class="hero-actions">
-        <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to add whitewater rafting to my stay at Rafiki.' ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Add Rafting to Your Stay</a>
-        <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to check availability at Rafiki Safari Lodge.' ) ); ?>" class="btn btn-outline" target="_blank" rel="noopener">Check Availability</a>
+        <a href="<?php echo esc_url( rafiki_booking_link( get_the_ID() ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Check Availability</a>
+        <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to add whitewater rafting to my stay at Rafiki.' ) ); ?>" class="btn btn-outline" target="_blank" rel="noopener">Ask About Rafting</a>
       </div>
     </div>
   </div>
@@ -120,7 +120,8 @@ while ( have_posts() ) : the_post();
       </details>
       <details class="faq-item">
         <summary>What does Class II–III actually mean?</summary>
-        <p>Enough moving water and rapids to make the day exciting, with calmer sections in between. You don't need to understand rafting classifications before arriving — your guide will explain the river you're actually going to experience that day.</p>
+        <p>Rivers are classed from 1 to 6. Class 1 is flat water. Class 6 is basically a waterfall. Class II and III sit lower on that scale — exciting, but not too extreme.</p>
+        <p>What makes the Savegre Class II&ndash;III is that even though you get big waves, the water is warm, the rocks are round, and the rapids are short.</p>
       </details>
       <details class="faq-item">
         <summary>What if someone in our family is nervous?</summary>
@@ -142,10 +143,7 @@ while ( have_posts() ) : the_post();
 <section class="section" style="background:var(--cream-2);">
   <div class="container intro-block" style="text-align:center; max-width:820px;">
     <span class="eyebrow center">Know the River</span>
-    <h2 class="section-title center">A GOOD GUIDE KNOWS WHEN THE RIVER IS DIFFERENT TODAY.</h2>
-    <p>The Savegre is not a ride with an on/off switch. It's a real river. Rain changes it. Water levels change it. Seasons change it.</p>
-    <p>That's why the person guiding your raft matters. Before getting on the water, the team reviews the day's conditions, explains what to expect and makes the call based on the river in front of them — not simply what the itinerary said when you booked.</p>
-    <p style="font-size:14px; color:var(--text-dark-muted);">Children from around age six may be able to participate, but this depends on water levels and individual conditions. Guests should be comfortable in water and in appropriate physical condition.</p>
+    <h2 class="section-title center">A GOOD GUIDE KNOWS WHERE THE RIVER IS DIFFERENT TODAY.</h2>
     <div style="max-width:560px; margin:32px auto 0; padding:28px 32px; background:var(--dark); border-radius:var(--radius); border-left:4px solid var(--orange);">
       <p style="color:#fff; font-family:var(--font-head); font-size:22px; text-transform:uppercase; letter-spacing:0.4px; margin:0;">You don't need to understand river classifications before arriving.</p>
       <p style="color:var(--text-muted); margin:10px 0 0; font-size:15px;">That's our job.</p>
@@ -242,7 +240,7 @@ while ( have_posts() ) : the_post();
     <h2>COME STAY BESIDE IT.</h2>
     <p>Add a day on the Savegre to two or three nights at Rafiki and experience the river as part of the place you're staying — not another stop on the schedule.</p>
     <div class="btn-group">
-      <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to check availability at Rafiki Safari Lodge.' ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Check Availability →</a>
+      <a href="<?php echo esc_url( rafiki_booking_link( get_the_ID() ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Check Availability →</a>
       <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I have a question about whitewater rafting at Rafiki.' ) ); ?>" class="btn btn-outline" target="_blank" rel="noopener">Ask Us About Rafting</a>
     </div>
   </div>

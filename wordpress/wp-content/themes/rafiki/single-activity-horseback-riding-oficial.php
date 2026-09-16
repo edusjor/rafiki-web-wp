@@ -37,8 +37,8 @@ while ( have_posts() ) : the_post();
       <p class="hero-sub">Before horseback riding became something guests came to experience, horses were simply part of getting around this valley. They still are.</p>
       <p class="hero-sub">From Rafiki, ride through the tropical forest, along the Savegre River and into parts of the valley you would never experience from the main road. No rush. No engine. Just the trail, the horse beneath you and a very different view of where you've come to stay.</p>
       <div class="hero-actions">
-        <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to add horseback riding to my stay at Rafiki.' ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Add Horseback Riding to Your Stay</a>
-        <a href="<?php echo esc_url( home_url( '/#plan' ) ); ?>" class="btn btn-outline">Plan Your Rafiki Stay</a>
+        <a href="<?php echo esc_url( rafiki_booking_link( get_the_ID() ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Check Availability</a>
+        <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to add horseback riding to my stay at Rafiki.' ) ); ?>" class="btn btn-outline" target="_blank" rel="noopener">Ask About Horseback Riding</a>
       </div>
     </div>
   </div>
@@ -188,8 +188,8 @@ while ( have_posts() ) : the_post();
     <h2>RIDE INTO THE VALLEY.</h2>
     <p>Add horseback riding to your Rafiki stay and experience the forest, river and surrounding community at a pace that still belongs here.</p>
     <div class="btn-group">
-      <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to add horseback riding to my stay at Rafiki.' ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Add Horseback Riding to My Stay</a>
-      <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to check availability at Rafiki Safari Lodge.' ) ); ?>" class="btn btn-outline" target="_blank" rel="noopener">Check Availability</a>
+      <a href="<?php echo esc_url( rafiki_booking_link( get_the_ID() ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Check Availability</a>
+      <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to add horseback riding to my stay at Rafiki.' ) ); ?>" class="btn btn-outline" target="_blank" rel="noopener">Ask About Horseback Riding</a>
     </div>
   </div>
 </section>

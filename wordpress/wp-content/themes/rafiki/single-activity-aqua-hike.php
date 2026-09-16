@@ -36,8 +36,8 @@ while ( have_posts() ) : the_post();
       <p class="hero-sub">Cross the Savegre. Climb into the rainforest. Follow the water upstream. Swim below a waterfall. Eat lunch with the people who call this mountain home. Then walk across one of those bridges that looks considerably higher once you're standing in the middle of it.</p>
       <p class="hero-sub">The Aqua Hike takes you beyond Rafiki and into Quebrada Arroyo and Los Campesinos — a part of the valley most travelers driving Costa Rica's Pacific coast would never know was here.</p>
       <div class="hero-actions">
-        <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to add the Aqua Hike to my stay at Rafiki.' ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Add the Aqua Hike to Your Stay</a>
-        <a href="<?php echo esc_url( home_url( '/#plan' ) ); ?>" class="btn btn-outline">Plan Your Rafiki Stay</a>
+        <a href="<?php echo esc_url( rafiki_booking_link( get_the_ID() ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Check Availability</a>
+        <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to add the Aqua Hike to my stay at Rafiki.' ) ); ?>" class="btn btn-outline" target="_blank" rel="noopener">Ask About the Aqua Hike</a>
       </div>
     </div>
   </div>
@@ -221,8 +221,8 @@ while ( have_posts() ) : the_post();
     <h2>STAY AT RAFIKI. WE'LL SHOW YOU THE WAY IN.</h2>
     <p>Add the Aqua Hike to your stay and spend a day moving through the forest, water and community beyond the lodge.</p>
     <div class="btn-group">
-      <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to add the Aqua Hike to my stay at Rafiki.' ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Add Aqua Hike to My Stay</a>
-      <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to check availability at Rafiki Safari Lodge.' ) ); ?>" class="btn btn-outline" target="_blank" rel="noopener">Check Availability</a>
+      <a href="<?php echo esc_url( rafiki_booking_link( get_the_ID() ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Check Availability</a>
+      <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to add the Aqua Hike to my stay at Rafiki.' ) ); ?>" class="btn btn-outline" target="_blank" rel="noopener">Ask About the Aqua Hike</a>
     </div>
   </div>
 </section>

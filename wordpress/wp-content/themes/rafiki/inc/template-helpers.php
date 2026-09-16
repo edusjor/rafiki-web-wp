@@ -21,12 +21,13 @@ function rafiki_testimonial_source_svg( $source ) {
 		'google' => '<svg viewBox="0 0 24 24" width="24" height="24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>',
 		'tripadvisor' => '<svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="11" fill="#34E0A1"/><circle cx="8" cy="12" r="3.2" fill="#fff"/><circle cx="16" cy="12" r="3.2" fill="#fff"/><circle cx="8" cy="12" r="1.3" fill="#1a1a1a"/><circle cx="16" cy="12" r="1.3" fill="#1a1a1a"/></svg>',
 		'facebook' => '<svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="11" fill="#1877F2"/><path fill="#fff" d="M13.5 21v-7.2h2.4l.36-2.8h-2.76V9.1c0-.81.22-1.36 1.39-1.36h1.48V5.2c-.26-.03-1.14-.11-2.16-.11-2.14 0-3.6 1.31-3.6 3.7v2.21H8.2v2.8h2.41V21h2.89z"/></svg>',
+		'yelp' => '<svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="11" fill="#D32323"/><path fill="#fff" d="M11.2 12.9 6.8 14.4c-.6.2-1.2-.3-1.1-.9.2-1.6.5-3.9.9-4.9.2-.5.9-.6 1.3-.2l3.6 3.3c.5.4.2 1.2-.3 1.2zm.8 1.7 2.9 3.6c.4.5 0 1.2-.6 1.2-1.1 0-2.9-.1-3.9-.5-.5-.2-.6-.9-.2-1.3l1-1c.8-.9 1.6-1.5 2.8-2zm1.6-2.2 4.1-1.9c.6-.3 1.3.2 1.1.8-.4 1.5-1.1 3.6-1.7 4.5-.3.4-1 .5-1.3.1l-2.7-3c-.4-.4-.1-1.1.5-1.5zm-1.1-1.9-.9-4.5c-.1-.6.5-1.1 1-.9 1.4.6 3.4 1.6 4.1 2.4.4.4.2 1.1-.3 1.3l-3.1 1.8c-.4.3-.7-.1-.8-.1z"/></svg>',
 	);
 	return isset( $icons[ $source ] ) ? $icons[ $source ] : $icons['google'];
 }
 
 function rafiki_testimonial_source_label( $source ) {
-	$labels = array( 'google' => 'Google Review', 'tripadvisor' => 'TripAdvisor Review', 'facebook' => 'Facebook Review' );
+	$labels = array( 'google' => 'Google Review', 'tripadvisor' => 'TripAdvisor Review', 'facebook' => 'Facebook Review', 'yelp' => 'Yelp Review' );
 	return isset( $labels[ $source ] ) ? $labels[ $source ] : 'Review';
 }
 
@@ -52,10 +53,35 @@ function rafiki_whatsapp_icon_svg() {
 	return '<svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.36A10 10 0 1 0 12 2zm5.9 14.2c-.25.7-1.45 1.34-2 1.42-.5.08-1.15.11-1.86-.12-.43-.14-.98-.32-1.68-.63-2.96-1.28-4.9-4.24-5.04-4.44-.15-.2-1.2-1.6-1.2-3.05 0-1.45.76-2.16 1.03-2.46.27-.3.6-.37.8-.37h.57c.18 0 .43-.07.67.51.25.6.85 2.07.92 2.22.07.15.12.33.02.53-.1.2-.15.32-.3.5-.15.18-.32.4-.45.53-.15.15-.31.32-.13.62.18.3.8 1.32 1.72 2.14 1.18 1.05 2.18 1.38 2.48 1.53.3.15.48.13.65-.08.18-.2.75-.87.95-1.17.2-.3.4-.25.67-.15.28.1 1.75.83 2.05 .98.3.15.5.22.57.35.08.13.08.75-.17 1.45z"/></svg>';
 }
 
-/** Booking link for a tour: whatever the admin set, or WhatsApp with the tour name as a fallback. */
+/**
+ * "Book Now" link for an accommodation / package / activity: its own
+ * "Booking Link" field if the admin set one, otherwise the site-wide
+ * Beds24 URL from Rafiki Settings (rafiki_beds24_url()).
+ */
 function rafiki_booking_link( $post_id ) {
 	$link = get_post_meta( $post_id, 'rafiki_booking_link', true );
-	return $link ? $link : rafiki_whatsapp_link( 'Hi! I would like to book: ' . get_the_title( $post_id ) );
+	return $link ? $link : rafiki_beds24_url();
+}
+
+/**
+ * URL for the Lekker Bar & Braai: its "accommodation" post (the current
+ * info page) if it exists, otherwise the dedicated /lekker-bar-braai/ page.
+ * One source of truth for the menu, footer and the /stay/ "Food at Rafiki" link.
+ */
+function rafiki_lekker_url() {
+	$post = rafiki_find_post_by_keyword( 'accommodation', 'Lekker' );
+	return $post ? get_permalink( $post ) : home_url( '/lekker-bar-braai/' );
+}
+
+/**
+ * True for "accommodation" posts that aren't actually bookable and are
+ * shown in the Stay listing for information only — the Lekker Bar & Braai
+ * (the lodge bar/restaurant, included with every stay). Their detail page
+ * drops the booking CTA and keeps just a WhatsApp "ask a question" button.
+ */
+function rafiki_is_info_only_stay( $post_id ) {
+	$t = strtolower( (string) get_the_title( $post_id ) );
+	return ( false !== strpos( $t, 'lekker' ) || false !== strpos( $t, 'braai' ) );
 }
 
 /**
@@ -107,4 +133,97 @@ function rafiki_lead_image_url( $post_id, $size = 'large' ) {
 		return get_the_post_thumbnail_url( $post_id, $size );
 	}
 	return '';
+}
+
+/* ------------------------------------------------------------------ */
+/* Stay selection hand-off between the Stay selection page            */
+/* (page-templates/template-stay-copia.php), single-accommodation.php  */
+/* and single-package.php, carried in the query string:               */
+/*   ?checkin=Y-m-d&checkout=Y-m-d&guests=N&tent=<accommodation id>    */
+/* ------------------------------------------------------------------ */
+
+/**
+ * URL of the stay selection page. That is the /stay/ accommodation archive
+ * (archive-accommodation.php, the booking-first page). Kept as a helper so
+ * every detail-page "back to your stay" link has one source of truth.
+ */
+function rafiki_stay_selection_page_url() {
+	return get_post_type_archive_link( 'accommodation' );
+}
+
+/**
+ * Reads and validates the current request's stay selection from $_GET.
+ * Returns an array with: checkin, checkout (Y-m-d or ''), guests (int),
+ * tent (accommodation post id or 0), tent_post (WP_Post|null), nights (int).
+ */
+function rafiki_stay_selection() {
+	$sel = array(
+		'checkin'   => '',
+		'checkout'  => '',
+		'guests'    => 0,
+		'tent'      => 0,
+		'tent_post' => null,
+		'nights'    => 0,
+	);
+
+	$ci = isset( $_GET['checkin'] ) ? sanitize_text_field( wp_unslash( $_GET['checkin'] ) ) : '';
+	$co = isset( $_GET['checkout'] ) ? sanitize_text_field( wp_unslash( $_GET['checkout'] ) ) : '';
+	$d1 = DateTime::createFromFormat( 'Y-m-d', $ci );
+	$d2 = DateTime::createFromFormat( 'Y-m-d', $co );
+	if ( $d1 && $d1->format( 'Y-m-d' ) === $ci && $d2 && $d2->format( 'Y-m-d' ) === $co && $co > $ci ) {
+		$sel['checkin']  = $ci;
+		$sel['checkout'] = $co;
+		$sel['nights']   = (int) $d1->diff( $d2 )->days;
+	}
+
+	if ( isset( $_GET['guests'] ) ) {
+		$g = (int) $_GET['guests'];
+		if ( $g > 0 && $g <= 40 ) {
+			$sel['guests'] = $g;
+		}
+	}
+
+	if ( isset( $_GET['tent'] ) ) {
+		$tid = (int) $_GET['tent'];
+		if ( $tid > 0 && 'accommodation' === get_post_type( $tid ) && 'publish' === get_post_status( $tid ) ) {
+			$sel['tent']      = $tid;
+			$sel['tent_post'] = get_post( $tid );
+		}
+	}
+
+	return $sel;
+}
+
+/** Builds a link back to the stay selection page carrying the given selection + optional #hash. */
+function rafiki_stay_selection_url( $args = array(), $hash = '' ) {
+	$clean = array();
+	foreach ( array( 'checkin', 'checkout', 'guests', 'tent' ) as $k ) {
+		if ( ! empty( $args[ $k ] ) ) {
+			$clean[ $k ] = $args[ $k ];
+		}
+	}
+	$url = rafiki_stay_selection_page_url();
+	if ( $clean ) {
+		$url = add_query_arg( $clean, $url );
+	}
+	if ( $hash ) {
+		$url .= '#' . ltrim( $hash, '#' );
+	}
+	return $url;
+}
+
+/** "Sat, Sep 12 – Mon, Sep 14 · 2 nights" style label for a selection. */
+function rafiki_stay_selection_label( $sel ) {
+	if ( empty( $sel['checkin'] ) || empty( $sel['checkout'] ) ) {
+		return '';
+	}
+	$fmt = 'M j';
+	$in  = date_i18n( $fmt, strtotime( $sel['checkin'] ) );
+	$out = date_i18n( $fmt, strtotime( $sel['checkout'] ) );
+	$n   = (int) $sel['nights'];
+	$label = $in . ' – ' . $out . ' · ' . $n . ' night' . ( 1 === $n ? '' : 's' );
+	if ( ! empty( $sel['guests'] ) ) {
+		$label .= ' · ' . $sel['guests'] . ' guest' . ( 1 === (int) $sel['guests'] ? '' : 's' );
+	}
+	return $label;
 }

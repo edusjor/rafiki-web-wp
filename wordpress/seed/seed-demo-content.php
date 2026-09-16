@@ -2,17 +2,32 @@
 /**
  * Seeds real Rafiki Safari Lodge content (pulled from rafikisafari.com)
  * as Accommodation / Activity / Package posts, with real sideloaded
- * media. Safe to re-run — skips an image/post if one with the same
- * source URL / title already exists. Also removes the old demo posts
- * that were created under the retired Spanish post type slugs
- * ('alojamiento' / 'actividad') before they existed as English CPTs.
+ * media. Also removes the old demo posts that were created under the
+ * retired Spanish post type slugs ('alojamiento' / 'actividad').
  *
- * Usage: wp eval-file seed/seed-demo-content.php
+ * Safe to re-run: any post or page that ALREADY EXISTS is left completely
+ * untouched, so this can never overwrite content edited in wp-admin — it
+ * only fills in what is missing. To deliberately push the seed values back
+ * onto existing posts, run it with the override constant defined:
+ *
+ *   wp eval 'define("RAFIKI_SEED_OVERWRITE", true); include "/seed/seed-demo-content.php";'
+ *
+ * Normal usage: wp eval-file seed/seed-demo-content.php
  */
 
 require_once ABSPATH . 'wp-admin/includes/media.php';
 require_once ABSPATH . 'wp-admin/includes/file.php';
 require_once ABSPATH . 'wp-admin/includes/image.php';
+
+/**
+ * True only when the caller explicitly opted in to overwriting existing
+ * content (define RAFIKI_SEED_OVERWRITE = true before running). Default is
+ * false: the seed then only creates what's missing and never touches a
+ * post or page that already exists.
+ */
+function rafiki_seed_overwrite() {
+	return defined( 'RAFIKI_SEED_OVERWRITE' ) && RAFIKI_SEED_OVERWRITE;
+}
 
 /* ==================================================================== */
 /* Clean up posts left over from the old Spanish CPT slugs               */
@@ -69,7 +84,7 @@ function rafiki_gallery_from_urls( $urls, $alt ) {
 	return $rows;
 }
 
-function rafiki_seed_post( $post_type, $title, $meta ) {
+function rafiki_seed_post( $post_type, $title, $meta, $menu_order = null ) {
 	$found = get_posts( array(
 		'post_type'      => $post_type,
 		'title'          => $title,
@@ -78,14 +93,24 @@ function rafiki_seed_post( $post_type, $title, $meta ) {
 		'fields'         => 'ids',
 	) );
 
+	// Once a post exists the seed leaves it alone (see file header) unless the
+	// RAFIKI_SEED_OVERWRITE override is on — this is what makes re-running safe.
 	if ( $found ) {
 		$post_id = $found[0];
-		WP_CLI::log( "Already exists \"$title\" (#$post_id), updating fields." );
+		if ( ! rafiki_seed_overwrite() ) {
+			WP_CLI::log( "Kept \"$title\" (#$post_id) — exists already, left untouched." );
+			return $post_id;
+		}
+		WP_CLI::log( "Already exists \"$title\" (#$post_id), overwriting fields (RAFIKI_SEED_OVERWRITE)." );
+		if ( null !== $menu_order ) {
+			wp_update_post( array( 'ID' => $post_id, 'menu_order' => (int) $menu_order ) );
+		}
 	} else {
 		$post_id = wp_insert_post( array(
 			'post_type'   => $post_type,
 			'post_title'  => $title,
 			'post_status' => 'publish',
+			'menu_order'  => null !== $menu_order ? (int) $menu_order : 0,
 		), true );
 		if ( is_wp_error( $post_id ) ) {
 			WP_CLI::error( "Could not create \"$title\": " . $post_id->get_error_message() );
@@ -141,8 +166,7 @@ $tents_id = rafiki_seed_post( 'accommodation', 'Luxury Safari Tents', array(
 	), 'Luxury safari tent at Rafiki' ),
 	'rafiki_amenities_title' => "EVERYTHING YOUR TENT INCLUDES",
 	'rafiki_amenities'     => array(
-		array( 'icon' => 'tent', 'title' => 'Imported from South Africa', 'text' => 'High-end canvas on a raised structure.' ),
-		array( 'icon' => 'wood', 'title' => 'Wooden platform', 'text' => 'Raised off the ground, with a direct forest view.' ),
+		array( 'icon' => 'tent', 'title' => 'Imported from South Africa', 'text' => 'Three-layer tactical tent that keeps the sun, rain and bugs at bay.' ),
 		array( 'icon' => 'porch', 'title' => 'Private porch', 'text' => 'With rocking chairs and a coffee table facing the jungle.' ),
 		array( 'icon' => 'bolt', 'title' => 'Electricity & fan', 'text' => 'Hydro-electric generator, available 24 hours.' ),
 		array( 'icon' => 'bath', 'title' => 'Private tiled bathroom', 'text' => 'Shower, hot water and full amenities.' ),
@@ -162,7 +186,7 @@ $tents_id = rafiki_seed_post( 'accommodation', 'Luxury Safari Tents', array(
 	'rafiki_cta_title'    => 'READY TO SLEEP IN THE JUNGLE?',
 	'rafiki_cta_text'     => 'Check availability for your safari tent and build your ideal package.',
 	'rafiki_cta_image'    => rafiki_seed_image( 'https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-tents-web_8.jpeg' ),
-) );
+), 3 );
 
 $lodge_id = rafiki_seed_post( 'accommodation', 'Main Lodge', array(
 	'rafiki_subtitle'     => 'A traditional Costa Rican "rancho" with an African twist — the base camp and starting point of every adventure.',
@@ -203,7 +227,7 @@ $lodge_id = rafiki_seed_post( 'accommodation', 'Main Lodge', array(
 	'rafiki_cta_title'    => 'READY TO EXPERIENCE THE LODGE?',
 	'rafiki_cta_text'     => 'Check availability and start planning your stay at Rafiki.',
 	'rafiki_cta_image'    => rafiki_seed_image( 'https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-property-and-food-web_19.jpeg' ),
-) );
+), 1 );
 
 $beach_id = rafiki_seed_post( 'accommodation', 'Beach Camp', array(
 	'rafiki_is_beach_camp' => '1',
@@ -246,16 +270,15 @@ $beach_id = rafiki_seed_post( 'accommodation', 'Beach Camp', array(
 	'rafiki_cta_title'    => 'READY FOR JUNGLE AND OCEAN?',
 	'rafiki_cta_text'     => 'Ask us about combining Beach Camp with your lodge stay.',
 	'rafiki_cta_image'    => rafiki_seed_image( 'https://rafikisafari.com/wp/wp-content/uploads/2016/12/beach-pool.jpg' ),
-) );
+), 2 );
 
 $braai_id = rafiki_seed_post( 'accommodation', 'Lekker Bar and Braai', array(
 	'rafiki_subtitle'     => 'Enjoy delicious home-cooked meals while we keep your spirits up at the Lekker Bar — the centerpiece of the Main Lodge.',
 	'rafiki_badges'       => array(
 		array( 'text' => 'Horseshoe bar' ),
 		array( 'text' => 'South African braai' ),
-		array( 'text' => '3 meals daily' ),
 	),
-	'rafiki_price_note'   => 'Included with your stay — no separate booking needed',
+	'rafiki_price_note'   => 'Meals included depend on your package',
 	'rafiki_quick_facts'  => array(
 		array( 'label' => 'Breakfast', 'value' => '7:00–9:30am (coffee/tea from 6:15am)' ),
 		array( 'label' => 'Lunch', 'value' => '11:00am–3:00pm' ),
@@ -281,9 +304,9 @@ $braai_id = rafiki_seed_post( 'accommodation', 'Lekker Bar and Braai', array(
 		array( 'icon' => 'wave', 'title' => 'Kids\' juices & smoothies', 'text' => 'Natural, made fresh at the bar.' ),
 	),
 	'rafiki_cta_title'    => 'READY TO EAT LIKE A RAFIKI?',
-	'rafiki_cta_text'     => 'The Lekker Bar and Braai is included with every stay at the lodge.',
+	'rafiki_cta_text'     => 'Which meals are included depends on your package. The Lekker Bar is open to every guest for lunch and dinner.',
 	'rafiki_cta_image'    => rafiki_seed_image( 'https://rafikisafari.com/wp/wp-content/uploads/2026/02/IMG_1190-scaled.jpg' ),
-) );
+), 4 );
 
 /* ==================================================================== */
 /* ACTIVITIES                                                            */
@@ -469,7 +492,7 @@ $kayaking_id = rafiki_seed_post( 'activity', 'Kayaking', array(
 	),
 	'rafiki_intro_eyebrow' => 'Adventure / Kayaking',
 	'rafiki_intro_title'   => 'FROM RIVER TO SEA THROUGH THE MANGROVES',
-	'rafiki_intro_text'    => "Launch on the Savegre River, float through the mangrove estuary, and land on the beach — roughly 3 kilometers of paddling packed with wildlife and scenery.\nThe tour is tide-dependent, with departures ranging from 5:00am to 2:00pm, timed about 3 hours before high tide. After a safety briefing, we guide you through the mangrove forest, with a snack stop at Playa El Rey inside Manuel Antonio National Park and plenty of context on the mangrove ecosystem along the way.",
+	'rafiki_intro_text'    => "Launch on the river, float through mangroves, and land on the beach!\nOur kayak trip explores the remote wilderness of the Savegre River estuary and its mangrove forest. Amazing shore birds, monkey encounters, sloth sightings and breath taking scenery make this trip a once in a life time experience. The river and tides do most of the work, so you can relax as you glide along in one of our swift sea kayaks.",
 	'rafiki_gallery'       => rafiki_gallery_from_urls( array(
 		'https://rafikisafari.com/wp/wp-content/uploads/2016/12/kayak-trip-small.jpg',
 		'https://rafikisafari.com/wp/wp-content/uploads/2016/12/palmtreeswide.jpg',
@@ -881,8 +904,12 @@ function rafiki_seed_journal_post( $title, $category_name, $excerpt, $paragraphs
 
 	if ( $found ) {
 		$post_id = $found[0];
-		WP_CLI::log( "Journal post \"$title\" already exists (#$post_id), updating." );
-		wp_update_post( array( 'ID' => $post_id, 'post_content' => $content, 'post_excerpt' => $excerpt ) );
+		if ( rafiki_seed_overwrite() ) {
+			WP_CLI::log( "Journal post \"$title\" already exists (#$post_id), overwriting content (RAFIKI_SEED_OVERWRITE)." );
+			wp_update_post( array( 'ID' => $post_id, 'post_content' => $content, 'post_excerpt' => $excerpt ) );
+		} else {
+			WP_CLI::log( "Kept journal post \"$title\" (#$post_id) — exists already, content left untouched." );
+		}
 	} else {
 		$post_id = wp_insert_post( array(
 			'post_type'     => 'post',

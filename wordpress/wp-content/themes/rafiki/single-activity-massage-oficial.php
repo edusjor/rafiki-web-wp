@@ -35,7 +35,8 @@ while ( have_posts() ) : the_post();
       <p class="hero-sub">No traffic. No phones ringing. No spa music trying to make the room feel peaceful. Just the sound of the forest, the breeze moving through the trees and someone taking care of you while everything else can wait.</p>
       <p class="hero-sub">At Rafiki, a massage is a chance to stop completely for a while — without having to leave the nature you came all this way to experience.</p>
       <div class="hero-actions">
-        <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to book a massage during my stay at Rafiki.' ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Make Time to Slow Down</a>
+        <a href="<?php echo esc_url( rafiki_booking_link( get_the_ID() ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Check Availability</a>
+        <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to book a massage during my stay at Rafiki.' ) ); ?>" class="btn btn-outline" target="_blank" rel="noopener">Ask About a Massage</a>
       </div>
     </div>
   </div>
@@ -45,7 +46,7 @@ while ( have_posts() ) : the_post();
 <section class="section">
   <div class="container intro-block" style="text-align:center; max-width:720px;">
     <h2 class="section-title center">NOTHING TO LISTEN TO BUT WHAT'S ALREADY HERE.</h2>
-    <p>Close your eyes. You may hear birds somewhere beyond the trees. Rain moving in. Leaves shifting with the wind. Maybe the river in the distance. That's it.</p>
+    <p>Close your eyes. Birds chirping somewhere beyond the trees. Rain moving in. Leaves shifting with the wind. Maybe the river in the distance. That's it.</p>
     <p style="font-size:18px;">No need to manufacture calm when you're already surrounded by it.</p>
   </div>
 </section>
@@ -85,8 +86,11 @@ while ( have_posts() ) : the_post();
   </div>
   <div class="container cta-content">
     <h2>MAKE TIME TO SLOW DOWN.</h2>
-    <p>Ask us to book a massage during your stay — arranged right where you're sleeping, forest included.</p>
-    <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to book a massage during my stay at Rafiki.' ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Make Time to Slow Down →</a>
+    <p>Check your dates, then let us know — a massage is arranged right where you're sleeping, forest included.</p>
+    <div class="btn-group">
+      <a href="<?php echo esc_url( rafiki_booking_link( get_the_ID() ) ); ?>" class="btn btn-primary" target="_blank" rel="noopener">Check Availability &rarr;</a>
+      <a href="<?php echo esc_url( rafiki_whatsapp_link( 'Hi! I would like to book a massage during my stay at Rafiki.' ) ); ?>" class="btn btn-outline" target="_blank" rel="noopener">Ask About a Massage</a>
+    </div>
   </div>
 </section>
 
