@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
       heroSlides[heroIndex].classList.remove('is-active');
       heroIndex = (heroIndex + 1) % heroSlides.length;
       heroSlides[heroIndex].classList.add('is-active');
-    }, 5500);
+    }, 3500);
   }
 
   var header = document.getElementById('siteHeader');
