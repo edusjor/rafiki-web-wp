@@ -42,3 +42,7 @@ wordpress/wp-config.php
 
 # Backups de la base de datos: contienen hashes de contrasenas y datos de clientes.
 *.sql
+
+# Fotos originales del cliente (pesadas): se suben a WordPress, no al repo.
+wordpress/Rafiki images/
+wordpress/*.zip
