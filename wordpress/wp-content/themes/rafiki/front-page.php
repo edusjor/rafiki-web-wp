@@ -105,7 +105,7 @@ $birding_post   = rafiki_find_post_by_keyword( 'activity', 'bird' );
       <p>At Rafiki, there's no pressure to do everything. Start early or sleep in. Head out for an adventure or spend the afternoon by the pool. The day is yours.<br><br>You stay in one place, unpack once, and choose how much you want to do. Curated adventures, home-style meals and Rafiki hospitality are all steps from your front porch. We take the stress out of planning, so you can actually relax on your vacation.</p>
     </div>
 
-    <img src="<?php echo esc_url( rafiki_photo( 'place-wildlife-24' ) ); ?>" alt="Savegre River surrounded by tropical rainforest at Rafiki" style="width:100%; height:420px; object-fit:cover; border-radius:var(--radius); margin-bottom:56px;">
+    <img src="<?php echo esc_url( rafiki_photo( 'property-and-food-18' ) ); ?>" alt="Aerial view of Rafiki's gardens, ponds and rainforest" style="width:100%; height:420px; object-fit:cover; border-radius:var(--radius); margin-bottom:56px;">
 
     <div class="plan-grid cols-4" style="margin-bottom:0;">
       <div class="plan-card">
