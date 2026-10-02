@@ -58,7 +58,7 @@ while ( have_posts() ) : the_post();
 <!-- ===== 03. THE RAFT GETS YOU WHERE THE ROAD CAN'T ===== -->
 <section class="section why-rafiki">
   <div class="why-media">
-    <img src="<?php echo esc_url( $hero_img ? $hero_img : 'https://rafikisafari.com/wp/wp-content/uploads/2017/03/fish3-1.jpg' ); ?>" alt="Fishing the Savegre River from a whitewater raft">
+    <img src="<?php echo esc_url( $hero_img ? $hero_img : rafiki_photo( 'fish3-1' ) ); ?>" alt="Fishing the Savegre River from a whitewater raft">
     <div class="why-media-text" style="max-width:none;">
       <span class="eyebrow">Fish the River From the River</span>
       <h2>SOME OF THE BEST POOLS<br><span class="accent">AREN'T BESIDE A PARKING LOT.</span></h2>

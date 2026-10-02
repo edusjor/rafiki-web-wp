@@ -2,7 +2,7 @@
 
 <section class="page-hero" style="min-height:46vh;">
   <div class="hero-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2026/02/im2b.jpeg" alt="Activities at Rafiki Safari Lodge">
+    <img src="<?php echo esc_url( rafiki_photo( 'im2b' ) ); ?>" alt="Activities at Rafiki Safari Lodge">
     <div class="hero-overlay"></div>
   </div>
   <div class="container page-hero-content">
@@ -53,7 +53,7 @@
 
 <section class="cta-banner" id="book">
   <div class="cta-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2026/02/raffting5-scaled.jpeg" alt="Rafiki Safari Lodge">
+    <img src="<?php echo esc_url( rafiki_photo( 'raffting5' ) ); ?>" alt="Rafiki Safari Lodge">
     <div class="hero-overlay"></div>
   </div>
   <div class="container cta-content">

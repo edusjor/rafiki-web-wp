@@ -6,6 +6,7 @@
 	$badges       = rafiki_rows( $post_id, 'rafiki_badges' );
 	$facts        = rafiki_rows( $post_id, 'rafiki_quick_facts' );
 	$gallery      = rafiki_rows( $post_id, 'rafiki_gallery' );
+	$photo_set    = rafiki_photo_set( rafiki_stay_photo_key( $post_id ) ); // bundled client photos win over the gallery meta
 	$amenities    = rafiki_rows( $post_id, 'rafiki_amenities' );
 	$room_options = rafiki_rows( $post_id, 'rafiki_room_options' );
 	$rates        = rafiki_rows( $post_id, 'rafiki_rates' );
@@ -92,18 +93,19 @@
   </div>
 </section>
 
-<?php if ( $gallery ) : ?>
+<?php if ( $photo_set || $gallery ) : ?>
 <section class="section" style="padding-top:0;">
   <div class="container">
     <h2 class="section-title">GALLERY</h2>
     <div class="gallery-grid">
+      <?php if ( $photo_set ) : rafiki_photo_grid( $photo_set ); else : ?>
       <?php foreach ( $gallery as $i => $g ) : if ( empty( $g['image'] ) ) continue;
         $url = wp_get_attachment_image_url( $g['image'], 'large' );
         if ( ! $url ) continue;
         $span = ( 0 === $i ) ? ' span-2 span-2-row' : ( ( 4 === $i ) ? ' span-2' : '' );
       ?>
         <img class="<?php echo esc_attr( ltrim( $span ) ); ?>" src="<?php echo esc_url( $url ); ?>" alt="<?php echo esc_attr( $g['alt'] ); ?>">
-      <?php endforeach; ?>
+      <?php endforeach; endif; ?>
     </div>
   </div>
 </section>

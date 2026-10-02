@@ -14,7 +14,7 @@ $status = isset( $_GET['group_inquiry'] ) ? sanitize_key( $_GET['group_inquiry']
 
 <section class="page-hero" style="min-height:46vh;">
   <div class="hero-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-property-and-food-web_14a-700x420.jpg" alt="Group gathered at a long table at Rafiki Safari Lodge">
+    <img src="<?php echo esc_url( rafiki_photo( 'property-and-food-14a' ) ); ?>" alt="Group gathered at a long table at Rafiki Safari Lodge">
     <div class="hero-overlay"></div>
   </div>
   <div class="container page-hero-content">
@@ -130,7 +130,7 @@ $status = isset( $_GET['group_inquiry'] ) ? sanitize_key( $_GET['group_inquiry']
 
 <section class="cta-banner" id="book">
   <div class="cta-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_34.jpeg" alt="Group activity at Rafiki Safari Lodge">
+    <img src="<?php echo esc_url( rafiki_photo( 'activities-34' ) ); ?>" alt="Group activity at Rafiki Safari Lodge">
     <div class="hero-overlay"></div>
   </div>
   <div class="container cta-content">

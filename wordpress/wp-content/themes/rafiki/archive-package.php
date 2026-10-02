@@ -19,7 +19,7 @@ $journey_moods = array(
 <!-- ===== 01. HERO ===== -->
 <section class="page-hero">
   <div class="hero-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_25.jpeg" alt="Rafiki Safari Lodge and Rafiki Beach Camp">
+    <img src="<?php echo esc_url( rafiki_photo( 'activities-25' ) ); ?>" alt="Rafiki Safari Lodge and Rafiki Beach Camp">
     <div class="hero-overlay"></div>
   </div>
   <div class="container page-hero-content">
@@ -193,7 +193,7 @@ $journey_moods = array(
 <!-- ===== 12. FINAL CTA ===== -->
 <section class="cta-banner" id="book">
   <div class="cta-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_34.jpeg" alt="Rafiki Safari Lodge">
+    <img src="<?php echo esc_url( rafiki_photo( 'activities-34' ) ); ?>" alt="Rafiki Safari Lodge">
     <div class="hero-overlay"></div>
   </div>
   <div class="container cta-content">

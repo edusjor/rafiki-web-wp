@@ -12,7 +12,7 @@ get_header();
 
 <section class="page-hero" style="min-height:40vh;">
   <div class="hero-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-property-and-food-web_19.jpeg" alt="Rafiki Safari Lodge main deck">
+    <img src="<?php echo esc_url( rafiki_photo( 'property-and-food-19' ) ); ?>" alt="Rafiki Safari Lodge main deck">
     <div class="hero-overlay"></div>
   </div>
   <div class="container page-hero-content">
@@ -52,7 +52,7 @@ get_header();
 
 <section class="cta-banner" id="book">
   <div class="cta-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_11.jpeg" alt="Guides and guests at Rafiki Safari Lodge">
+    <img src="<?php echo esc_url( rafiki_photo( 'activities-11' ) ); ?>" alt="Guides and guests at Rafiki Safari Lodge">
     <div class="hero-overlay"></div>
   </div>
   <div class="container cta-content">

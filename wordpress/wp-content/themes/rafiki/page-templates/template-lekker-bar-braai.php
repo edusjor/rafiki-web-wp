@@ -18,7 +18,7 @@ get_header();
      the Lekker/Braai definitions land. -->
 <section class="page-hero" style="min-height:56vh;">
   <div class="hero-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-property-and-food-web_16.jpeg" alt="Guests eating together at the Lekker Bar & Braai rancho">
+    <img src="<?php echo esc_url( rafiki_photo( 'property-and-food-16' ) ); ?>" alt="Guests eating together at the Lekker Bar & Braai rancho">
     <div class="hero-overlay"></div>
   </div>
   <div class="container page-hero-content">
@@ -140,7 +140,7 @@ get_header();
 <!-- ===== FINAL CTA ===== -->
 <section class="cta-banner" id="book">
   <div class="cta-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-property-and-food-web_19-700x480.jpeg" alt="Lekker Bar & Braai at Rafiki Safari Lodge">
+    <img src="<?php echo esc_url( rafiki_photo( 'property-and-food-19' ) ); ?>" alt="Lekker Bar & Braai at Rafiki Safari Lodge">
     <div class="hero-overlay"></div>
   </div>
   <div class="container cta-content">

@@ -19,7 +19,7 @@ $journal_query = new WP_Query( array(
 
 <section class="page-hero" style="min-height:40vh;">
   <div class="hero-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-place-wildlife-web_9.jpeg" alt="Rainforest at Rafiki Safari Lodge">
+    <img src="<?php echo esc_url( rafiki_photo( 'place-wildlife-9' ) ); ?>" alt="Rainforest at Rafiki Safari Lodge">
     <div class="hero-overlay"></div>
   </div>
   <div class="container page-hero-content">
@@ -61,7 +61,7 @@ $journal_query = new WP_Query( array(
 
 <section class="cta-banner" id="book">
   <div class="cta-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_44.jpeg" alt="Family exploring Rafiki Safari Lodge">
+    <img src="<?php echo esc_url( rafiki_photo( 'activities-44' ) ); ?>" alt="Family exploring Rafiki Safari Lodge">
     <div class="hero-overlay"></div>
   </div>
   <div class="container cta-content">

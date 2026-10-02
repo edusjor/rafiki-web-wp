@@ -124,6 +124,9 @@ function rafiki_find_post_by_keyword( $post_type, $keyword ) {
 
 /** Returns the first gallery image URL, or the featured image, as a fallback for heros/CTAs. */
 function rafiki_lead_image_url( $post_id, $size = 'large' ) {
+	if ( 'accommodation' === get_post_type( $post_id ) && ( $set = rafiki_photo_set( rafiki_stay_photo_key( $post_id ) ) ) ) {
+		return $set[0]['url'];
+	}
 	$gallery = rafiki_rows( $post_id, 'rafiki_gallery' );
 	if ( ! empty( $gallery[0]['image'] ) ) {
 		$url = wp_get_attachment_image_url( $gallery[0]['image'], $size );
@@ -226,4 +229,100 @@ function rafiki_stay_selection_label( $sel ) {
 		$label .= ' · ' . $sel['guests'] . ' guest' . ( 1 === (int) $sel['guests'] ? '' : 's' );
 	}
 	return $label;
+}
+
+/* ------------------------------------------------------------------ */
+/* Client photo sets (assets/img/photos/)                              */
+/* Bundled with the theme so they ship with the repo. Where a set      */
+/* exists for an accommodation it wins over the post's gallery meta.   */
+/* ------------------------------------------------------------------ */
+
+/** URL of a bundled photo, e.g. rafiki_photo( 'tents-1' ). */
+function rafiki_photo( $name ) {
+	return get_template_directory_uri() . '/assets/img/photos/' . $name . '.webp';
+}
+
+/** Named photo sets: key => list of array( file, alt ). */
+function rafiki_photo_set( $key ) {
+	$sets = array(
+		'home'   => array(
+			array( 'property-and-food-19', 'Aerial view of the Main Lodge and pool in the rainforest' ),
+			array( 'property-and-food-22', 'Luxury safari tent deck surrounded by rainforest' ),
+			array( 'activities-35', 'Twin waterfall in the rainforest of the reserve' ),
+			array( 'lodge-heliconia', 'The Main Lodge seen through heliconia flowers' ),
+			array( 'tent-sunset', 'Sunset over the valley from a safari tent' ),
+			array( 'property-and-food-5', 'Guests sharing dinner and drinks at the Lekker Bar' ),
+		),
+		'lodge'  => array(
+			array( 'property-and-food-19', 'Aerial view of the Main Lodge, pool and gardens' ),
+			array( 'property-and-food-14', 'The Main Lodge thatched roof against the forest' ),
+			array( 'lodge-heliconia', 'The Main Lodge seen through heliconia flowers' ),
+			array( 'property-and-food-18', 'Aerial view of the ponds and gardens around the lodge' ),
+			array( 'property-and-food-12', 'Wooden bridge into the rainforest gardens' ),
+		),
+		'tents'  => array(
+			array( 'property-and-food-22', 'Safari tent deck raised above the rainforest' ),
+			array( 'tents-1', 'Inside a safari tent: real bed and canvas walls' ),
+			array( 'tents-10', 'Safari tent bedroom open to the forest' ),
+			array( 'tents-5', 'Private bathroom with walk-in shower' ),
+			array( 'tents-15', 'Tent deck with table and rocking chairs' ),
+			array( 'tents-4', 'Family tent with a view out to the valley' ),
+			array( 'tents-9', 'Deck seating looking into the tent' ),
+			array( 'tents-3', 'Family tent with double and single beds' ),
+			array( 'tents-17', 'King bed under the canvas roof' ),
+			array( 'tent-sunset', 'Sunset over the valley from a safari tent' ),
+			array( 'tent-garden', 'Safari tents among the gardens' ),
+			array( 'tent-bridge', 'Footbridge up to a safari tent' ),
+		),
+		'lekker' => array(
+			array( 'lekker-dinner', 'Dinner under the thatched roof of the Lekker Bar & Braai' ),
+			array( 'property-and-food-3', 'Cocktails being made at the bar' ),
+			array( 'property-and-food-6', 'Grilled steak with mashed potatoes and vegetables' ),
+			array( 'property-and-food-5', 'Guests sharing dinner and drinks' ),
+			array( 'property-and-food-7', 'Candlelit table for two' ),
+			array( 'property-and-food-9', 'Breakfast with a view over the valley' ),
+			array( 'lekker-deck-sunset', 'Guests watching the sunset from the deck' ),
+		),
+		'story'  => array(
+			array( 'property-and-food-22', 'Safari tent raised above the rainforest' ),
+			array( 'tent-bridge', 'Footbridge up to a safari tent' ),
+			array( 'tents-9', 'Inside an African-style safari tent' ),
+			array( 'tent-garden', 'Safari tents among the gardens' ),
+			array( 'cabin-horizontal', 'A safari tent hidden in the forest' ),
+			array( 'tent-sunset', 'Sunset over the valley from a safari tent' ),
+		),
+		'eco'    => array(
+			array( 'place-wildlife-9', 'Hummingbird at a heliconia flower' ),
+			array( 'activities-49', 'Tree frog on a leaf at night' ),
+			array( 'activities-35', 'Twin waterfall in the rainforest' ),
+			array( 'property-and-food-18', 'Aerial view of the forest and ponds' ),
+			array( 'activities-42', 'Hiking up a rainforest river' ),
+			array( 'activities-44', 'Waterfall pool in the reserve' ),
+			array( 'property-and-food-12', 'Wooden bridge into the rainforest' ),
+		),
+	);
+	if ( empty( $sets[ $key ] ) ) return array();
+	return array_map( function ( $p ) {
+		return array( 'url' => rafiki_photo( $p[0] ), 'alt' => $p[1] );
+	}, $sets[ $key ] );
+}
+
+/** Which bundled set belongs to an accommodation post ('' if none). */
+function rafiki_stay_photo_key( $post_id ) {
+	$t = strtolower( get_the_title( $post_id ) );
+	if ( false !== strpos( $t, 'lekker' ) || false !== strpos( $t, 'braai' ) ) return 'lekker';
+	if ( false !== strpos( $t, 'tent' ) ) return 'tents';
+	if ( false !== strpos( $t, 'lodge' ) ) return 'lodge';
+	return '';
+}
+
+/** Renders a photo set with the .gallery-grid layout used on stay pages. */
+function rafiki_photo_grid( $photos ) {
+	// Lead photo takes a 2x2 block; widen the last few so every 4-column row ends flush.
+	$n     = count( $photos );
+	$extra = ( 4 - ( ( $n + 3 ) % 4 ) ) % 4;
+	foreach ( $photos as $i => $p ) {
+		$span = ( 0 === $i ) ? 'span-2 span-2-row' : ( ( $i >= $n - $extra ) ? 'span-2' : '' );
+		printf( '<img class="%s" src="%s" alt="%s" loading="lazy">', esc_attr( $span ), esc_url( $p['url'] ), esc_attr( $p['alt'] ) );
+	}
 }

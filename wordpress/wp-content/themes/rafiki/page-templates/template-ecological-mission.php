@@ -22,7 +22,7 @@ get_header();
 <!-- ===== 01. HERO ===== -->
 <section class="page-hero" style="min-height:56vh;">
   <div class="hero-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-place-wildlife-web_3.jpeg" alt="Rainforest canopy in the Savegre Valley near Rafiki">
+    <img src="<?php echo esc_url( rafiki_photo( 'property-and-food-18' ) ); ?>" alt="Rainforest canopy in the Savegre Valley near Rafiki">
     <div class="hero-overlay"></div>
   </div>
   <div class="container page-hero-content">
@@ -46,6 +46,13 @@ get_header();
 </section>
 
 <!-- ===== 03. MAP ===== -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">THE FOREST WE ARE HERE TO PROTECT.</h2>
+    <div class="gallery-grid"><?php rafiki_photo_grid( rafiki_photo_set( 'eco' ) ); ?></div>
+  </div>
+</section>
+
 <section class="section" style="background:var(--cream-2);">
   <div class="container">
     <!-- Visual for Eduardo: simple map — Savegre Valley / Rafiki -> Paso de la Danta
@@ -156,7 +163,7 @@ get_header();
 <!-- ===== FINAL CTA ===== -->
 <section class="cta-banner" id="book">
   <div class="cta-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-place-wildlife-web_9.jpeg" alt="Wildlife in the forest surrounding Rafiki">
+    <img src="<?php echo esc_url( rafiki_photo( 'place-wildlife-9' ) ); ?>" alt="Wildlife in the forest surrounding Rafiki">
     <div class="hero-overlay"></div>
   </div>
   <div class="container cta-content">

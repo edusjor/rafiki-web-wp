@@ -283,6 +283,15 @@ h1, h2, h3 {
   height: 100%;
   object-fit: cover;
 }
+/* Home hero slideshow: stacked images crossfading via .is-active (main.js) */
+.hero-slides { position: absolute; inset: 0; }
+.hero-slides img {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+.hero-slides img.is-active { opacity: 1; }
 .hero-overlay {
   position: absolute;
   inset: 0;

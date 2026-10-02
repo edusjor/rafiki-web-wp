@@ -64,7 +64,21 @@ function rafiki_seed_image( $url ) {
 		return $existing[0];
 	}
 
-	$id = media_sideload_image( $url, 0, null, 'id' );
+	// Import from the copy bundled in the theme (assets/img/photos/) so the seed
+	// keeps working once the old rafikisafari.com site is gone. The URL stays the
+	// lookup key above, so already-imported attachments are still reused.
+	$base  = strtolower( pathinfo( wp_parse_url( $url, PHP_URL_PATH ), PATHINFO_FILENAME ) );
+	$base  = preg_replace( array( '/-\d+x\d+$/', '/-scaled$/' ), '', $base );
+	$base  = str_replace( array( 'rafiki-', '-web_', '_' ), array( '', '-', '-' ), $base );
+	$local = get_template_directory() . '/assets/img/photos/' . $base . '.webp';
+	if ( file_exists( $local ) ) {
+		$tmp = wp_tempnam( $base . '.webp' );
+		copy( $local, $tmp );
+		$id = media_handle_sideload( array( 'name' => $base . '.webp', 'tmp_name' => $tmp ), 0 );
+		if ( is_wp_error( $id ) ) @unlink( $tmp );
+	} else {
+		$id = media_sideload_image( $url, 0, null, 'id' );
+	}
 	if ( is_wp_error( $id ) ) {
 		WP_CLI::warning( 'Could not import ' . $url . ': ' . $id->get_error_message() );
 		return 0;

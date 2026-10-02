@@ -24,7 +24,7 @@ $stay_url     = get_post_type_archive_link( 'accommodation' ); // -> /stay/
 $packages_url = get_post_type_archive_link( 'package' );        // -> /packages/
 
 $hero_img_url = wp_get_attachment_image_url( 125, 'full' );
-if ( ! $hero_img_url ) $hero_img_url = 'https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-property-and-food-web_19-700x480.jpeg';
+if ( ! $hero_img_url ) $hero_img_url = rafiki_photo( 'property-and-food-19' );
 
 $rafting_post   = rafiki_find_post_by_keyword( 'activity', 'raft' );
 $horseback_post = rafiki_find_post_by_keyword( 'activity', 'horseback' );
@@ -101,7 +101,7 @@ $birding_post   = rafiki_find_post_by_keyword( 'activity', 'bird' );
       <p>At Rafiki, there's no pressure to do everything. Start early or sleep in. Head out for an adventure or spend the afternoon by the pool. The day is yours.<br><br>You stay in one place, unpack once, and choose how much you want to do. Curated adventures, home-style meals and Rafiki hospitality are all steps from your front porch.</p>
     </div>
 
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-place-wildlife-web_24.jpeg" alt="Savegre River surrounded by tropical rainforest at Rafiki" style="width:100%; height:420px; object-fit:cover; border-radius:var(--radius); margin-bottom:56px;">
+    <img src="<?php echo esc_url( rafiki_photo( 'place-wildlife-24' ) ); ?>" alt="Savegre River surrounded by tropical rainforest at Rafiki" style="width:100%; height:420px; object-fit:cover; border-radius:var(--radius); margin-bottom:56px;">
 
     <div class="plan-grid cols-4" style="margin-bottom:0;">
       <div class="plan-card">
@@ -144,9 +144,9 @@ $birding_post   = rafiki_find_post_by_keyword( 'activity', 'bird' );
     </style>
 
     <div class="tent-shots">
-      <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-tents-web_19.jpeg" alt="Safari tent exterior surrounded by rainforest at Rafiki">
-      <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-tents-web_1.jpeg" alt="Inside a safari tent at Rafiki — real bed and canvas walls">
-      <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-place-wildlife-web_3.jpeg" alt="Forest view from a safari tent porch at Rafiki">
+      <img src="<?php echo esc_url( rafiki_photo( 'tents-19' ) ); ?>" alt="Safari tent exterior surrounded by rainforest at Rafiki">
+      <img src="<?php echo esc_url( rafiki_photo( 'tents-1' ) ); ?>" alt="Inside a safari tent at Rafiki — real bed and canvas walls">
+      <img src="<?php echo esc_url( rafiki_photo( 'place-wildlife-3' ) ); ?>" alt="Forest view from a safari tent porch at Rafiki">
     </div>
 
     <p style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin:0 0 60px;">
@@ -201,7 +201,7 @@ $birding_post   = rafiki_find_post_by_keyword( 'activity', 'bird' );
 
     <div class="experience-grid">
       <a href="<?php echo $rafting_post ? esc_url( get_permalink( $rafting_post ) ) : esc_url( get_post_type_archive_link( 'activity' ) ); ?>" class="experience-card">
-        <img src="<?php echo $rafting_post ? esc_url( rafiki_lead_image_url( $rafting_post->ID, 'rafiki-card' ) ) : 'https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_25.jpeg'; ?>" alt="Whitewater rafting on the Savegre River">
+        <img src="<?php echo $rafting_post ? esc_url( rafiki_lead_image_url( $rafting_post->ID, 'rafiki-card' ) ) : rafiki_photo( 'activities-25' ); ?>" alt="Whitewater rafting on the Savegre River">
         <div class="experience-card-overlay"></div>
         <div class="experience-card-content">
           <h3>RUN THE RIVER</h3>
@@ -210,7 +210,7 @@ $birding_post   = rafiki_find_post_by_keyword( 'activity', 'bird' );
         </div>
       </a>
       <a href="<?php echo $horseback_post ? esc_url( get_permalink( $horseback_post ) ) : esc_url( get_post_type_archive_link( 'activity' ) ); ?>" class="experience-card">
-        <img src="<?php echo $horseback_post ? esc_url( rafiki_lead_image_url( $horseback_post->ID, 'rafiki-card' ) ) : 'https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_50.jpeg'; ?>" alt="Horseback riding through the valley">
+        <img src="<?php echo $horseback_post ? esc_url( rafiki_lead_image_url( $horseback_post->ID, 'rafiki-card' ) ) : rafiki_photo( 'activities-50' ); ?>" alt="Horseback riding through the valley">
         <div class="experience-card-overlay"></div>
         <div class="experience-card-content">
           <h3>SEE THE VALLEY FROM THE SADDLE</h3>
@@ -219,7 +219,7 @@ $birding_post   = rafiki_find_post_by_keyword( 'activity', 'bird' );
         </div>
       </a>
       <a href="<?php echo $hiking_post ? esc_url( get_permalink( $hiking_post ) ) : esc_url( get_post_type_archive_link( 'activity' ) ); ?>" class="experience-card">
-        <img src="<?php echo $hiking_post ? esc_url( rafiki_lead_image_url( $hiking_post->ID, 'rafiki-card' ) ) : 'https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-place-wildlife-web_1.jpeg'; ?>" alt="Hiking into the rainforest at Rafiki">
+        <img src="<?php echo $hiking_post ? esc_url( rafiki_lead_image_url( $hiking_post->ID, 'rafiki-card' ) ) : rafiki_photo( 'place-wildlife-1' ); ?>" alt="Hiking into the rainforest at Rafiki">
         <div class="experience-card-overlay"></div>
         <div class="experience-card-content">
           <h3>WALK INTO THE FOREST</h3>
@@ -228,7 +228,7 @@ $birding_post   = rafiki_find_post_by_keyword( 'activity', 'bird' );
         </div>
       </a>
       <a href="<?php echo $birding_post ? esc_url( get_permalink( $birding_post ) ) : esc_url( get_post_type_archive_link( 'activity' ) ); ?>" class="experience-card">
-        <img src="<?php echo $birding_post ? esc_url( rafiki_lead_image_url( $birding_post->ID, 'rafiki-card' ) ) : 'https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-place-wildlife-web_24.jpeg'; ?>" alt="Birding at Rafiki Safari Lodge">
+        <img src="<?php echo $birding_post ? esc_url( rafiki_lead_image_url( $birding_post->ID, 'rafiki-card' ) ) : rafiki_photo( 'place-wildlife-24' ); ?>" alt="Birding at Rafiki Safari Lodge">
         <div class="experience-card-overlay"></div>
         <div class="experience-card-content">
           <h3>WAKE UP EARLY FOR A GOOD REASON</h3>
@@ -323,7 +323,7 @@ $birding_post   = rafiki_find_post_by_keyword( 'activity', 'bird' );
 <!-- ===== 08. FINAL CTA — full-width background, contained content, short ===== -->
 <section class="cta-banner" style="padding:76px 0;" id="book">
   <div class="cta-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_34.jpeg" alt="Group rafting in front of the lodge">
+    <img src="<?php echo esc_url( rafiki_photo( 'activities-34' ) ); ?>" alt="Group rafting in front of the lodge">
     <div class="hero-overlay" style="background:rgba(8,7,5,0.78);"></div>
   </div>
   <div class="container cta-content">

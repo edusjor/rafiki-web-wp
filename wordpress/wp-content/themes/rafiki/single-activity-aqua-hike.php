@@ -66,7 +66,7 @@ while ( have_posts() ) : the_post();
 <!-- ===== 04. FOLLOW THE WATER ===== -->
 <section class="section why-rafiki">
   <div class="why-media">
-    <img src="<?php echo esc_url( $hero_img ? $hero_img : 'https://rafikisafari.com/wp/wp-content/uploads/2017/01/streamcalm.jpg' ); ?>" alt="Trail above Quebrada Arroyo on the Aqua Hike">
+    <img src="<?php echo esc_url( $hero_img ? $hero_img : rafiki_photo( 'streamcalm' ) ); ?>" alt="Trail above Quebrada Arroyo on the Aqua Hike">
     <div class="why-media-text" style="max-width:none;">
       <span class="eyebrow">Quebrada Arroyo</span>
       <h2>THE FOREST CHANGES WHEN<br><span class="accent">YOU WALK THROUGH IT SLOWLY.</span></h2>
@@ -198,7 +198,7 @@ while ( have_posts() ) : the_post();
 <!-- ===== 13. COME BACK TO RAFIKI ===== -->
 <section class="cta-banner">
   <div class="cta-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-property-and-food-web_16.jpeg" alt="Back at Rafiki after the Aqua Hike">
+    <img src="<?php echo esc_url( rafiki_photo( 'property-and-food-16' ) ); ?>" alt="Back at Rafiki after the Aqua Hike">
     <div class="hero-overlay"></div>
   </div>
   <div class="container cta-content">

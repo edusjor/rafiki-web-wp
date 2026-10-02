@@ -176,7 +176,7 @@ foreach ( $all_accommodations as $acc ) {
 <!-- ===== 01. HERO (short) ===== -->
 <section class="page-hero">
   <div class="hero-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-tents-web_19.jpeg" alt="Safari tent at Rafiki Safari Lodge, surrounded by rainforest">
+    <img src="<?php echo esc_url( rafiki_photo( 'tents-19' ) ); ?>" alt="Safari tent at Rafiki Safari Lodge, surrounded by rainforest">
     <div class="hero-overlay"></div>
   </div>
   <div class="container page-hero-content">
@@ -332,7 +332,7 @@ foreach ( $all_accommodations as $acc ) {
     <p>Proper beds. Private bathrooms. Hot showers. Space for your things. A porch to sit on when you've had enough adventure for the day.</p>
   </div>
   <div class="container">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-tents-web_1.jpeg" alt="Inside a safari tent at Rafiki Safari Lodge" style="width:100%; height:420px; object-fit:cover; border-radius:var(--radius);">
+    <img src="<?php echo esc_url( rafiki_photo( 'tents-1' ) ); ?>" alt="Inside a safari tent at Rafiki Safari Lodge" style="width:100%; height:420px; object-fit:cover; border-radius:var(--radius);">
   </div>
 </section>
 
@@ -394,7 +394,7 @@ foreach ( $all_accommodations as $acc ) {
 <!-- ===== 08. GROUP STAYS ===== -->
 <section class="cta-banner">
   <div class="cta-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-property-and-food-web_14a-700x420.jpg" alt="Group gathered together at Rafiki Safari Lodge">
+    <img src="<?php echo esc_url( rafiki_photo( 'property-and-food-14a' ) ); ?>" alt="Group gathered together at Rafiki Safari Lodge">
     <div class="hero-overlay"></div>
   </div>
   <div class="container cta-content">
@@ -440,7 +440,7 @@ if ( $activities ) : ?>
 <!-- ===== 10. FINAL CTA ===== -->
 <section class="cta-banner" style="padding:76px 0;" id="book">
   <div class="cta-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_34.jpeg" alt="Group rafting in front of the lodge">
+    <img src="<?php echo esc_url( rafiki_photo( 'activities-34' ) ); ?>" alt="Group rafting in front of the lodge">
     <div class="hero-overlay" style="background:rgba(8,7,5,0.78);"></div>
   </div>
   <div class="container cta-content">

@@ -1,4 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
+  // Home hero slideshow — rotate .is-active through the stacked images.
+  var heroSlides = document.querySelectorAll('[data-hero-slides] img');
+  if (heroSlides.length > 1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var heroIndex = 0;
+    setInterval(function () {
+      heroSlides[heroIndex].classList.remove('is-active');
+      heroIndex = (heroIndex + 1) % heroSlides.length;
+      heroSlides[heroIndex].classList.add('is-active');
+    }, 5500);
+  }
+
   var header = document.getElementById('siteHeader');
   var navToggle = document.getElementById('navToggle');
 

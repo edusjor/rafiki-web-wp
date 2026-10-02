@@ -15,7 +15,7 @@ get_header();
 <!-- ===== 01. HERO ===== -->
 <section class="page-hero" style="min-height:56vh;">
   <div class="hero-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-place-wildlife-web_24.jpeg" alt="Savegre River surrounded by tropical rainforest">
+    <img src="<?php echo esc_url( rafiki_photo( 'place-wildlife-24' ) ); ?>" alt="Savegre River surrounded by tropical rainforest">
     <div class="hero-overlay"></div>
   </div>
   <div class="container page-hero-content">
@@ -32,7 +32,7 @@ get_header();
 <!-- ===== 02. IT STARTED LONG BEFORE THE FIRST GUEST ARRIVED ===== -->
 <section class="section why-rafiki">
   <div class="why-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-property-and-food-web_18.jpeg" alt="The original Rafiki property on the Savegre River">
+    <img src="<?php echo esc_url( rafiki_photo( 'property-and-food-18' ) ); ?>" alt="The original Rafiki property on the Savegre River">
     <div class="why-media-text" style="max-width:none;">
       <span class="eyebrow">Constant Boshoff</span>
       <h2>THE IDEA CAME FROM AFRICA.<br><span class="accent">THE PLACE CHANGED IT.</span></h2>
@@ -119,7 +119,7 @@ get_header();
 <!-- ===== 07. COME FOR YOUR OWN REASON ===== -->
 <section class="cta-banner" id="book">
   <div class="cta-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-place-wildlife-web_1.jpeg" alt="Exploring the tropical rainforest at Rafiki">
+    <img src="<?php echo esc_url( rafiki_photo( 'place-wildlife-1' ) ); ?>" alt="Exploring the tropical rainforest at Rafiki">
     <div class="hero-overlay"></div>
   </div>
   <div class="container cta-content">

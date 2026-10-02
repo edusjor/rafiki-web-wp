@@ -16,7 +16,7 @@ $birding_post    = rafiki_find_post_by_keyword( 'activity', 'bird' );
 $beach_camp_post = rafiki_beach_camp_post();
 
 $hero_img_url = wp_get_attachment_image_url( 125, 'full' );
-if ( ! $hero_img_url ) $hero_img_url = 'https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-property-and-food-web_19-700x480.jpeg';
+if ( ! $hero_img_url ) $hero_img_url = rafiki_photo( 'property-and-food-19' );
 ?>
 
 <!-- ===== 01. HERO ===== -->
@@ -83,7 +83,7 @@ if ( ! $hero_img_url ) $hero_img_url = 'https://rafikisafari.com/wp/wp-content/u
       <p>Nature is what fills the days here — river, forest, horses, trails, birds, waterfalls. Stay two or three nights, unpack once, and decide each morning how much of it becomes your day.</p>
     </div>
 
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-place-wildlife-web_24.jpeg" alt="Savegre River surrounded by tropical rainforest at Rafiki" style="width:100%; height:420px; object-fit:cover; border-radius:var(--radius); margin-bottom:56px;">
+    <img src="<?php echo esc_url( rafiki_photo( 'place-wildlife-24' ) ); ?>" alt="Savegre River surrounded by tropical rainforest at Rafiki" style="width:100%; height:420px; object-fit:cover; border-radius:var(--radius); margin-bottom:56px;">
 
     <div class="plan-grid cols-4" style="margin-bottom:0;">
       <div class="plan-card">
@@ -118,7 +118,7 @@ if ( ! $hero_img_url ) $hero_img_url = 'https://rafikisafari.com/wp/wp-content/u
 
     <div class="experience-grid home-grid">
       <a href="<?php echo $rafting_post ? esc_url( get_permalink( $rafting_post ) ) : esc_url( get_post_type_archive_link( 'activity' ) ); ?>" class="experience-card">
-        <img src="<?php echo $rafting_post ? esc_url( rafiki_lead_image_url( $rafting_post->ID, 'rafiki-card' ) ) : 'https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_25.jpeg'; ?>" alt="Whitewater rafting on the Savegre River">
+        <img src="<?php echo $rafting_post ? esc_url( rafiki_lead_image_url( $rafting_post->ID, 'rafiki-card' ) ) : rafiki_photo( 'activities-25' ); ?>" alt="Whitewater rafting on the Savegre River">
         <div class="experience-card-overlay"></div>
         <div class="experience-card-content">
           <h3>RUN THE RIVER</h3>
@@ -127,7 +127,7 @@ if ( ! $hero_img_url ) $hero_img_url = 'https://rafikisafari.com/wp/wp-content/u
         </div>
       </a>
       <a href="<?php echo $horseback_post ? esc_url( get_permalink( $horseback_post ) ) : esc_url( get_post_type_archive_link( 'activity' ) ); ?>" class="experience-card">
-        <img src="<?php echo $horseback_post ? esc_url( rafiki_lead_image_url( $horseback_post->ID, 'rafiki-card' ) ) : 'https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_50.jpeg'; ?>" alt="Horseback riding through the valley">
+        <img src="<?php echo $horseback_post ? esc_url( rafiki_lead_image_url( $horseback_post->ID, 'rafiki-card' ) ) : rafiki_photo( 'activities-50' ); ?>" alt="Horseback riding through the valley">
         <div class="experience-card-overlay"></div>
         <div class="experience-card-content">
           <h3>SEE THE VALLEY FROM THE SADDLE</h3>
@@ -136,7 +136,7 @@ if ( ! $hero_img_url ) $hero_img_url = 'https://rafikisafari.com/wp/wp-content/u
         </div>
       </a>
       <a href="<?php echo $hiking_post ? esc_url( get_permalink( $hiking_post ) ) : esc_url( get_post_type_archive_link( 'activity' ) ); ?>" class="experience-card">
-        <img src="<?php echo $hiking_post ? esc_url( rafiki_lead_image_url( $hiking_post->ID, 'rafiki-card' ) ) : 'https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-place-wildlife-web_1.jpeg'; ?>" alt="Hiking into the rainforest at Rafiki">
+        <img src="<?php echo $hiking_post ? esc_url( rafiki_lead_image_url( $hiking_post->ID, 'rafiki-card' ) ) : rafiki_photo( 'place-wildlife-1' ); ?>" alt="Hiking into the rainforest at Rafiki">
         <div class="experience-card-overlay"></div>
         <div class="experience-card-content">
           <h3>WALK INTO THE FOREST</h3>
@@ -145,7 +145,7 @@ if ( ! $hero_img_url ) $hero_img_url = 'https://rafikisafari.com/wp/wp-content/u
         </div>
       </a>
       <a href="<?php echo $birding_post ? esc_url( get_permalink( $birding_post ) ) : esc_url( get_post_type_archive_link( 'activity' ) ); ?>" class="experience-card">
-        <img src="<?php echo $birding_post ? esc_url( rafiki_lead_image_url( $birding_post->ID, 'rafiki-card' ) ) : 'https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-place-wildlife-web_24.jpeg'; ?>" alt="Birding at Rafiki Safari Lodge">
+        <img src="<?php echo $birding_post ? esc_url( rafiki_lead_image_url( $birding_post->ID, 'rafiki-card' ) ) : rafiki_photo( 'place-wildlife-24' ); ?>" alt="Birding at Rafiki Safari Lodge">
         <div class="experience-card-overlay"></div>
         <div class="experience-card-content">
           <h3>WAKE UP EARLY FOR A GOOD REASON</h3>
@@ -154,7 +154,7 @@ if ( ! $hero_img_url ) $hero_img_url = 'https://rafikisafari.com/wp/wp-content/u
         </div>
       </a>
       <a href="<?php echo esc_url( get_post_type_archive_link( 'accommodation' ) ); ?>" class="experience-card">
-        <img src="https://rafikisafari.com/wp/wp-content/uploads/2016/12/beach-pool-700x420.jpg" alt="Pool at Rafiki Safari Lodge">
+        <img src="<?php echo esc_url( rafiki_photo( 'beach-pool' ) ); ?>" alt="Pool at Rafiki Safari Lodge">
         <div class="experience-card-overlay"></div>
         <div class="experience-card-content">
           <h3>OR DON'T PLAN THE AFTERNOON</h3>
@@ -252,7 +252,7 @@ if ( ! $hero_img_url ) $hero_img_url = 'https://rafikisafari.com/wp/wp-content/u
 <!-- ===== 06. FINAL CTA ===== -->
 <section class="cta-banner" id="plan">
   <div class="cta-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_34.jpeg" alt="Group rafting in front of the lodge">
+    <img src="<?php echo esc_url( rafiki_photo( 'activities-34' ) ); ?>" alt="Group rafting in front of the lodge">
     <div class="hero-overlay"></div>
   </div>
   <div class="container cta-content">

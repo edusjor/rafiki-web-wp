@@ -29,12 +29,19 @@ get_header();
     .wr-story .why-media { min-height: 0; }
     .wr-story .why-media-text { padding: 44px 0; }
   }
+  .wr-split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  .wr-split-grid p { color: var(--text-dark-muted); }
+  .wr-split-grid img { width: 100%; height: 520px; object-fit: cover; border-radius: var(--radius); }
+  @media (max-width: 900px) {
+    .wr-split-grid { grid-template-columns: 1fr; gap: 28px; }
+    .wr-split-grid img { height: 300px; }
+  }
 </style>
 
 <!-- ===== 01. HERO — Rafiki was never supposed to be just another hotel ===== -->
 <section class="page-hero" style="min-height:56vh;">
   <div class="hero-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-place-wildlife-web_24.jpeg" alt="Savegre River surrounded by tropical rainforest">
+    <img src="<?php echo esc_url( rafiki_photo( 'tent-sunset' ) ); ?>" alt="Sunset over the Savegre Valley from a safari tent">
     <div class="hero-overlay"></div>
   </div>
   <div class="container page-hero-content">
@@ -49,22 +56,28 @@ get_header();
 </section>
 
 <!-- ===== 02. FROM AFRICA TO COSTA RICA ===== -->
-<section class="section why-rafiki wr-story">
-  <div class="why-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-property-and-food-web_18.jpeg" alt="The original Rafiki property on the Savegre River">
-    <div class="why-media-text">
-      <div class="container">
-        <span class="eyebrow">From Africa to Costa Rica</span>
-        <h2>THE IDEA CAME FROM AFRICA.<br><span class="accent">COSTA RICA MADE IT ITS OWN.</span></h2>
-        <p>Constant Boshoff grew up close to wilderness in Africa and built a family retreat around simple things &mdash; canvas tents, a fire, time outside, people together. Not luxury for its own sake: just comfortable enough to stay close to nature instead of walling yourself off from it.</p>
-        <p>In 1999 he found a farm in Costa Rica's lower Savegre Valley &mdash; tropical forest, a warm river, birdlife, small communities, waterfalls. Rafiki opened in 2002. The safari tents came from Africa. Everything after that became Costa Rican.</p>
-        <p style="font-weight:700; color:#fff;">You're not coming here for an African animal safari. Here, safari is the journey &mdash; the days, the people you travel with, and the places the river takes you.</p>
-      </div>
+<!-- Light split block (not a full-bleed photo) so it doesn't read as a second hero. -->
+<section class="section wr-split">
+  <div class="container wr-split-grid">
+    <div>
+      <span class="eyebrow">From Africa to Costa Rica</span>
+      <h2 class="section-title">THE IDEA CAME FROM AFRICA.<br><span class="accent">COSTA RICA MADE IT ITS OWN.</span></h2>
+      <p>Constant Boshoff grew up close to wilderness in Africa and built a family retreat around simple things &mdash; canvas tents, a fire, time outside, people together. Not luxury for its own sake: just comfortable enough to stay close to nature instead of walling yourself off from it.</p>
+      <p>In 1999 he found a farm in Costa Rica's lower Savegre Valley &mdash; tropical forest, a warm river, birdlife, small communities, waterfalls. Rafiki opened in 2002. The safari tents came from Africa. Everything after that became Costa Rican.</p>
+      <p style="font-weight:700;">You're not coming here for an African animal safari. Here, safari is the journey &mdash; the days, the people you travel with, and the places the river takes you.</p>
     </div>
+    <img src="<?php echo esc_url( rafiki_photo( 'tents-15' ) ); ?>" alt="Safari tent deck with rocking chairs, open to the forest">
   </div>
 </section>
 
 <!-- ===== 03. WHY THIS PLACE ===== -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <h2 class="section-title">AN AFRICAN SAFARI CAMP, IN THE COSTA RICAN FOREST.</h2>
+    <div class="gallery-grid"><?php rafiki_photo_grid( rafiki_photo_set( 'story' ) ); ?></div>
+  </div>
+</section>
+
 <section class="section">
   <div class="container intro-block" style="text-align:center; max-width:820px;">
     <span class="eyebrow center">The Place Came First</span>
@@ -73,14 +86,14 @@ get_header();
     <p style="font-size:18px;">The point was never to build somewhere convenient and manufacture a nature experience around it. The river was already here. The forest was already here. The people were already here. Rafiki had to learn how to belong to that.</p>
   </div>
   <div class="container">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-place-wildlife-web_3.jpeg" alt="Forest and river in the lower Savegre Valley at Rafiki" style="width:100%; height:440px; object-fit:cover; border-radius:var(--radius); margin-top:16px;">
+    <img src="<?php echo esc_url( rafiki_photo( 'place-wildlife-3' ) ); ?>" alt="Forest and river in the lower Savegre Valley at Rafiki" style="width:100%; height:440px; object-fit:cover; border-radius:var(--radius); margin-top:16px;">
   </div>
 </section>
 
 <!-- ===== 04. THE PEOPLE & THE COMMUNITY ===== -->
 <section class="section why-rafiki wr-story">
   <div class="why-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-property-and-food-web_16.jpeg" alt="The Rafiki team and neighbors from the Savegre Valley">
+    <img src="<?php echo esc_url( rafiki_photo( 'property-and-food-16' ) ); ?>" alt="Swimming in the Savegre River below Rafiki">
     <div class="why-media-text">
       <div class="container">
         <span class="eyebrow">Santo Domingo &amp; the Valley</span>
@@ -136,7 +149,7 @@ get_header();
 <!-- ===== 06. CLOSING CTA ===== -->
 <section class="cta-banner" id="book">
   <div class="cta-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-place-wildlife-web_1.jpeg" alt="Exploring the tropical rainforest at Rafiki">
+    <img src="<?php echo esc_url( rafiki_photo( 'place-wildlife-1' ) ); ?>" alt="Exploring the tropical rainforest at Rafiki">
     <div class="hero-overlay"></div>
   </div>
   <div class="container cta-content">

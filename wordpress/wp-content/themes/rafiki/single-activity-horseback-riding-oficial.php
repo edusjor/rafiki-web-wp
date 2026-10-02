@@ -57,7 +57,7 @@ while ( have_posts() ) : the_post();
 <!-- ===== 03. MEET THE DUARTE FAMILY ===== -->
 <section class="section why-rafiki">
   <div class="why-media">
-    <img src="<?php echo esc_url( $hero_img ? $hero_img : 'https://rafikisafari.com/wp/wp-content/uploads/2016/12/horseback-ceibadoctored-1.jpg' ); ?>" alt="The Duarte family's horses at Rafiki">
+    <img src="<?php echo esc_url( $hero_img ? $hero_img : rafiki_photo( 'horseback-ceibadoctored-1' ) ); ?>" alt="The Duarte family's horses at Rafiki">
     <div class="why-media-text" style="max-width:none;">
       <span class="eyebrow">Local Family. Local Horses.</span>
       <h2>THIS STORY STARTED<br><span class="accent">LONG BEFORE YOUR RIDE.</span></h2>

@@ -22,7 +22,7 @@ $beach_camp_post = rafiki_beach_camp_post();
 $packages = get_posts( array( 'post_type' => 'package', 'posts_per_page' => 4, 'orderby' => 'menu_order date', 'order' => 'ASC', 'post_status' => 'publish' ) );
 
 $hero_img_url = wp_get_attachment_image_url( 125, 'full' );
-if ( ! $hero_img_url ) $hero_img_url = 'https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-property-and-food-web_19-700x480.jpeg';
+if ( ! $hero_img_url ) $hero_img_url = rafiki_photo( 'property-and-food-19' );
 ?>
 
 <!-- ===== HERO ===== -->
@@ -109,10 +109,10 @@ if ( ! $hero_img_url ) $hero_img_url = 'https://rafikisafari.com/wp/wp-content/u
     </div>
 
     <div class="for-you-photos">
-      <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-property-and-food-web_16.jpeg" alt="Family sharing a meal at Rafiki">
-      <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_11.jpeg" alt="Group whitewater rafting on the Savegre River">
-      <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_50.jpeg" alt="Group activity outdoors at Rafiki">
-      <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-place-wildlife-web_1.jpeg" alt="Exploring the tropical rainforest at Rafiki">
+      <img src="<?php echo esc_url( rafiki_photo( 'property-and-food-16' ) ); ?>" alt="Family sharing a meal at Rafiki">
+      <img src="<?php echo esc_url( rafiki_photo( 'activities-11' ) ); ?>" alt="Group whitewater rafting on the Savegre River">
+      <img src="<?php echo esc_url( rafiki_photo( 'activities-50' ) ); ?>" alt="Group activity outdoors at Rafiki">
+      <img src="<?php echo esc_url( rafiki_photo( 'place-wildlife-1' ) ); ?>" alt="Exploring the tropical rainforest at Rafiki">
     </div>
   </div>
 </section>
@@ -124,7 +124,7 @@ if ( ! $hero_img_url ) $hero_img_url = 'https://rafikisafari.com/wp/wp-content/u
 
     <div class="experience-grid">
       <a href="<?php echo $stay_post ? esc_url( get_permalink( $stay_post ) ) : esc_url( get_post_type_archive_link( 'accommodation' ) ); ?>" class="experience-card">
-        <img src="<?php echo $stay_post ? esc_url( rafiki_lead_image_url( $stay_post->ID, 'rafiki-card' ) ) : 'https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-tents-web_8.jpeg'; ?>" alt="Safari-style tents at Rafiki">
+        <img src="<?php echo $stay_post ? esc_url( rafiki_lead_image_url( $stay_post->ID, 'rafiki-card' ) ) : rafiki_photo( 'tents-8' ); ?>" alt="Safari-style tents at Rafiki">
         <div class="experience-card-overlay"></div>
         <div class="experience-card-content">
           <h3>STAY</h3>
@@ -133,7 +133,7 @@ if ( ! $hero_img_url ) $hero_img_url = 'https://rafikisafari.com/wp/wp-content/u
         </div>
       </a>
       <a href="<?php echo $activity_post ? esc_url( get_permalink( $activity_post ) ) : esc_url( get_post_type_archive_link( 'activity' ) ); ?>" class="experience-card">
-        <img src="<?php echo $activity_post ? esc_url( rafiki_lead_image_url( $activity_post->ID, 'rafiki-card' ) ) : 'https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_25.jpeg'; ?>" alt="Rafting on the Savegre River">
+        <img src="<?php echo $activity_post ? esc_url( rafiki_lead_image_url( $activity_post->ID, 'rafiki-card' ) ) : rafiki_photo( 'activities-25' ); ?>" alt="Rafting on the Savegre River">
         <div class="experience-card-overlay"></div>
         <div class="experience-card-content">
           <h3>ADVENTURE</h3>
@@ -142,7 +142,7 @@ if ( ! $hero_img_url ) $hero_img_url = 'https://rafikisafari.com/wp/wp-content/u
         </div>
       </a>
       <a href="<?php echo esc_url( home_url( '/bring-your-group/' ) ); ?>" class="experience-card">
-        <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-property-and-food-web_14a-700x420.jpg" alt="Group and retreat space at Rafiki">
+        <img src="<?php echo esc_url( rafiki_photo( 'property-and-food-14a' ) ); ?>" alt="Group and retreat space at Rafiki">
         <div class="experience-card-overlay"></div>
         <div class="experience-card-content">
           <h3>GROUPS &amp; RETREATS</h3>
@@ -151,7 +151,7 @@ if ( ! $hero_img_url ) $hero_img_url = 'https://rafikisafari.com/wp/wp-content/u
         </div>
       </a>
       <a href="<?php echo $beach_camp_post ? esc_url( get_permalink( $beach_camp_post ) ) : esc_url( home_url( '/#beach-camp' ) ); ?>" class="experience-card">
-        <img src="<?php echo $beach_camp_post ? esc_url( rafiki_lead_image_url( $beach_camp_post->ID, 'rafiki-card' ) ) : 'https://rafikisafari.com/wp/wp-content/uploads/2016/12/beach-pool-700x420.jpg'; ?>" alt="Rafiki Beach Camp at Playa Matapalo">
+        <img src="<?php echo $beach_camp_post ? esc_url( rafiki_lead_image_url( $beach_camp_post->ID, 'rafiki-card' ) ) : rafiki_photo( 'beach-pool' ); ?>" alt="Rafiki Beach Camp at Playa Matapalo">
         <div class="experience-card-overlay"></div>
         <div class="experience-card-content">
           <h3>BEACH CAMP</h3>
@@ -188,7 +188,7 @@ if ( ! $hero_img_url ) $hero_img_url = 'https://rafikisafari.com/wp/wp-content/u
 <section class="section why-rafiki" id="about">
   <div class="why-grid">
     <div class="why-media">
-      <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-place-wildlife-web_24.jpeg" alt="Savegre River surrounded by tropical rainforest">
+      <img src="<?php echo esc_url( rafiki_photo( 'place-wildlife-24' ) ); ?>" alt="Savegre River surrounded by tropical rainforest">
       <div class="why-media-text">
         <h2>WHY RAFIKI?<br><span class="accent">WE DON'T PUT NATURE IN A BOX.</span></h2>
         <p>The animals live their life. We live in their world. This is Costa Rica, raw and real.</p>
@@ -280,7 +280,7 @@ if ( ! $hero_img_url ) $hero_img_url = 'https://rafikisafari.com/wp/wp-content/u
 <!-- ===== CTA BANNER ===== -->
 <section class="cta-banner" id="book">
   <div class="cta-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_34.jpeg" alt="Group rafting in front of the lodge">
+    <img src="<?php echo esc_url( rafiki_photo( 'activities-34' ) ); ?>" alt="Group rafting in front of the lodge">
     <div class="hero-overlay"></div>
   </div>
   <div class="container cta-content">

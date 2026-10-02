@@ -20,7 +20,7 @@ $tent_amenities = $tent_post ? rafiki_rows( $tent_post->ID, 'rafiki_amenities' )
 <!-- ===== 01. HERO ===== -->
 <section class="page-hero">
   <div class="hero-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-tents-web_19.jpeg" alt="Safari tent at Rafiki Safari Lodge, surrounded by rainforest">
+    <img src="<?php echo esc_url( rafiki_photo( 'tents-19' ) ); ?>" alt="Safari tent at Rafiki Safari Lodge, surrounded by rainforest">
     <div class="hero-overlay"></div>
   </div>
   <div class="container page-hero-content">
@@ -49,14 +49,14 @@ $tent_amenities = $tent_post ? rafiki_rows( $tent_post->ID, 'rafiki_amenities' )
   </div>
 
   <div class="container">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-tents-web_1.jpeg" alt="Inside a safari tent at Rafiki Safari Lodge" style="width:100%; height:420px; object-fit:cover; border-radius:var(--radius); margin-top:16px;">
+    <img src="<?php echo esc_url( rafiki_photo( 'tents-1' ) ); ?>" alt="Inside a safari tent at Rafiki Safari Lodge" style="width:100%; height:420px; object-fit:cover; border-radius:var(--radius); margin-top:16px;">
   </div>
 </section>
 
 <!-- ===== 03. THE BEST PART IS WHAT'S OUTSIDE ===== -->
 <section class="section why-rafiki">
   <div class="why-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-place-wildlife-web_3.jpeg" alt="Forest view from a safari tent porch at Rafiki">
+    <img src="<?php echo esc_url( rafiki_photo( 'place-wildlife-3' ) ); ?>" alt="Forest view from a safari tent porch at Rafiki">
     <div class="why-media-text">
       <span class="eyebrow">Morning at Rafiki</span>
       <h2>YOU'LL PROBABLY HEAR THE FOREST<br><span class="accent">BEFORE YOU SEE IT.</span></h2>
@@ -272,7 +272,7 @@ $tent_amenities = $tent_post ? rafiki_rows( $tent_post->ID, 'rafiki_amenities' )
 <!-- ===== 11. BRING YOUR PEOPLE ===== -->
 <section class="cta-banner">
   <div class="cta-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-property-and-food-web_14a-700x420.jpg" alt="Group gathered together at Rafiki Safari Lodge">
+    <img src="<?php echo esc_url( rafiki_photo( 'property-and-food-14a' ) ); ?>" alt="Group gathered together at Rafiki Safari Lodge">
     <div class="hero-overlay"></div>
   </div>
   <div class="container cta-content">
@@ -288,7 +288,7 @@ $tent_amenities = $tent_post ? rafiki_rows( $tent_post->ID, 'rafiki_amenities' )
 <?php $beach_camp_post = rafiki_beach_camp_post(); ?>
 <section class="cta-banner">
   <div class="cta-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2016/12/beach-pool-700x420.jpg" alt="Rafiki Beach Camp near Playa Matapalo">
+    <img src="<?php echo esc_url( rafiki_photo( 'beach-pool' ) ); ?>" alt="Rafiki Beach Camp near Playa Matapalo">
     <div class="hero-overlay"></div>
   </div>
   <div class="container cta-content">
@@ -358,7 +358,7 @@ $tent_amenities = $tent_post ? rafiki_rows( $tent_post->ID, 'rafiki_amenities' )
 <!-- ===== 15. FINAL CTA ===== -->
 <section class="cta-banner" id="book">
   <div class="cta-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_34.jpeg" alt="Group rafting in front of the lodge">
+    <img src="<?php echo esc_url( rafiki_photo( 'activities-34' ) ); ?>" alt="Group rafting in front of the lodge">
     <div class="hero-overlay"></div>
   </div>
   <div class="container cta-content">

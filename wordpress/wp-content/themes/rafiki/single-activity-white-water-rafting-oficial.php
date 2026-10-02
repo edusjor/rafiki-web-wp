@@ -58,7 +58,7 @@ while ( have_posts() ) : the_post();
 <!-- ===== 03. WHAT THE DAY ACTUALLY FEELS LIKE ===== -->
 <section class="section why-rafiki">
   <div class="why-media">
-    <img src="<?php echo esc_url( $hero_img ? $hero_img : 'https://rafikisafari.com/wp/wp-content/uploads/2026/02/rafting2-scaled.jpg' ); ?>" alt="Rafting the Class II-III rapids of the Savegre River">
+    <img src="<?php echo esc_url( $hero_img ? $hero_img : rafiki_photo( 'rafting2' ) ); ?>" alt="Rafting the Class II-III rapids of the Savegre River">
     <div class="why-media-text" style="max-width:none;">
       <span class="eyebrow">On the Savegre</span>
       <h2>FIRST RAPID: EVERYONE IS<br><span class="accent">STILL TRYING TO STAY DRY.</span></h2>
@@ -214,7 +214,7 @@ while ( have_posts() ) : the_post();
 <!-- ===== 11. BUILD IT INTO YOUR RAFIKI STAY ===== -->
 <section class="cta-banner">
   <div class="cta-media">
-    <img src="https://rafikisafari.com/wp/wp-content/uploads/2025/12/rafiki-activities-web_34.jpeg" alt="Group rafting in front of the lodge">
+    <img src="<?php echo esc_url( rafiki_photo( 'activities-34' ) ); ?>" alt="Group rafting in front of the lodge">
     <div class="hero-overlay"></div>
   </div>
   <div class="container cta-content">
