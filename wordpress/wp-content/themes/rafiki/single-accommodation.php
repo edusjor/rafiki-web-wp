@@ -153,15 +153,15 @@
   <div class="container">
     <h2 class="section-title">RATES</h2>
     <div style="overflow-x:auto;">
-      <table class="rate-table">
+      <table class="rate-table rate-table-stack">
         <thead><tr><th>Season</th><th>Double Occupancy</th><th>Extra Person</th><th>Upgrade</th></tr></thead>
         <tbody>
           <?php foreach ( $rates as $r ) : if ( empty( $r['season'] ) ) continue; ?>
             <tr>
-              <td><?php echo esc_html( $r['season'] ); ?></td>
-              <td><strong><?php echo esc_html( $r['double'] ); ?></strong></td>
-              <td><?php echo esc_html( $r['extra'] ); ?></td>
-              <td><?php echo esc_html( $r['upgrade'] ); ?></td>
+              <td data-label="Season"><?php echo esc_html( $r['season'] ); ?></td>
+              <td data-label="Double Occupancy"><strong><?php echo esc_html( $r['double'] ); ?></strong></td>
+              <td data-label="Extra Person"><?php echo esc_html( $r['extra'] ); ?></td>
+              <td data-label="Upgrade"><?php echo esc_html( $r['upgrade'] ); ?></td>
             </tr>
           <?php endforeach; ?>
         </tbody>
