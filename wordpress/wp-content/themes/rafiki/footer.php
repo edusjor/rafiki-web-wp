@@ -56,6 +56,7 @@
 
     <div class="footer-col footer-contact">
       <h4>Contact</h4>
+      <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Send us a message</a>
       <a href="mailto:rafikireservations@gmail.com">rafikireservations@gmail.com</a>
       <a href="tel:+50683689944">+506 8368 9944</a>
       <a href="tel:+50684196832">+506 8419 6832</a>

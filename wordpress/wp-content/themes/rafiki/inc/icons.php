@@ -45,6 +45,9 @@ function rafiki_icon( $key = 'leaf' ) {
 		'family'   => '<circle cx="14" cy="16" r="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="34" cy="16" r="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 40 C4 30 9 25 14 25 C19 25 24 30 24 40" fill="none" stroke="currentColor" stroke-width="2"/><path d="M24 40 C24 30 29 25 34 25 C39 25 44 30 44 40" fill="none" stroke="currentColor" stroke-width="2"/>',
 		'leaf'     => '<path d="M24 4 C30 14 36 20 36 28 C36 36.8 30.8 42 24 42 C17.2 42 12 36.8 12 28 C12 20 18 14 24 4 Z" fill="none" stroke="currentColor" stroke-width="2"/>',
 		'check'    => '<path d="M8 25 L19 36 L40 12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>',
+		'phone'    => '<rect x="14" y="5" width="20" height="38" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M21 37 h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+		'mail'     => '<rect x="6" y="11" width="36" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 13 L24 26 L41 13" fill="none" stroke="currentColor" stroke-width="2"/>',
+		'pin'      => '<path d="M24 43 C24 43 10 28 10 19 A14 14 0 0 1 38 19 C38 28 24 43 24 43 Z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="19" r="5" fill="none" stroke="currentColor" stroke-width="2"/>',
 	);
 	$path = isset( $paths[ $key ] ) ? $paths[ $key ] : $paths['leaf'];
 	return '<svg viewBox="0 0 48 48" aria-hidden="true">' . $path . '</svg>';

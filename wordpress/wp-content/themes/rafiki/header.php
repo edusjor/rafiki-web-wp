@@ -84,6 +84,9 @@
       <div class="nav-item">
         <a href="<?php echo esc_url( home_url( '/bring-your-group/' ) ); ?>">Bring Your Group</a>
       </div>
+      <div class="nav-item">
+        <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Contact</a>
+      </div>
       <?php /* Rafiki Journal oculto del menú
       <a href="<?php echo esc_url( home_url( '/rafiki-journal/' ) ); ?>">Rafiki Journal</a>
       */ ?>

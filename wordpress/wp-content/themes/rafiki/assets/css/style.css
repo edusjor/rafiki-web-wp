@@ -2286,3 +2286,56 @@ body:not(.woocommerce-checkout) .page-plain { padding-top: 200px; }
   }
   .site-header.nav-open .sub-menu a { font-size: 12px; }
 }
+
+/* ----- Contact page ----- */
+.contact-details li span { display: flex; flex-direction: column; gap: 2px; }
+.contact-details li strong {
+  font-size: 12px;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  color: var(--text-dark-muted);
+}
+.contact-details li a { color: var(--text-dark); font-weight: 600; }
+.contact-details li a:hover { color: var(--orange); }
+.contact-details li em { font-size: 13px; color: var(--text-dark-muted); }
+.contact-details .btn-group .btn { flex: 0 1 auto; }
+.rafiki-form-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.contact-map { line-height: 0; }
+.contact-map iframe { width: 100%; height: 420px; border: 0; filter: grayscale(0.25); }
+
+/* ----- Journal article body: images, galleries, press logos, quotes ----- */
+.journal-article-body figure { margin: 32px 0; }
+.journal-article-body img { border-radius: var(--radius); width: 100%; height: auto; }
+.journal-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.journal-gallery img { aspect-ratio: 4 / 3; object-fit: cover; height: 100%; }
+.journal-press-logo {
+  display: flex;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid rgba(32,28,22,0.08);
+  border-radius: var(--radius);
+  padding: 28px;
+}
+.journal-press-logo img { width: auto; max-width: 220px; max-height: 140px; border-radius: 0; }
+.journal-article-body blockquote {
+  margin: 32px 0;
+  padding: 4px 0 4px 24px;
+  border-left: 3px solid var(--orange);
+  font-style: italic;
+  color: var(--text-dark-muted);
+}
+.journal-article-body blockquote p { margin-bottom: 10px; }
+.journal-article-body blockquote cite { font-style: normal; font-size: 13px; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; }
+.journal-article-body .btn { margin-top: 8px; }
+.journal-article-body a:not(.btn) { color: var(--orange-dark); text-decoration: underline; }
+
+@media (max-width: 620px) {
+  .contact-map iframe { height: 320px; }
+  .journal-article-body { font-size: 16px; }
+  .journal-gallery { gap: 8px; }
+  .journal-press-logo { padding: 20px; }
+}

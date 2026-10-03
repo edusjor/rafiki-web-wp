@@ -9,6 +9,8 @@ require_once get_template_directory() . '/inc/admin-users.php';
 require_once get_template_directory() . '/inc/settings.php';
 require_once get_template_directory() . '/inc/booking.php';
 require_once get_template_directory() . '/inc/group-inquiry.php';
+require_once get_template_directory() . '/inc/contact-form.php';
+require_once get_template_directory() . '/inc/redirects.php';
 
 function rafiki_theme_setup() {
 	add_theme_support( 'title-tag' );
