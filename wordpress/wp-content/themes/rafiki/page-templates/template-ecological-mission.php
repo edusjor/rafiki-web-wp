@@ -53,16 +53,6 @@ get_header();
   </div>
 </section>
 
-<section class="section" style="background:var(--cream-2);">
-  <div class="container">
-    <!-- Visual for Eduardo: simple map — Savegre Valley / Rafiki -> Paso de la Danta
-         Biological Corridor -> Osa Peninsula / Corcovado, with an overlay noting
-         "Connected forest = room for wildlife to move." -->
-    <div class="placeholder-photo" style="min-height:320px; max-width:820px; margin:0 auto;">
-      <span>Placeholder — add a simple map here: Savegre Valley / Rafiki → Paso de la Danta Biological Corridor → Osa Peninsula / Corcovado, with a callout reading "Connected forest = room for wildlife to move."</span>
-    </div>
-  </div>
-</section>
 
 <!-- ===== 04. FROM LOGGING TO TOURISM (real 1999 history) ===== -->
 <section class="section">
@@ -93,9 +83,6 @@ get_header();
     <span class="eyebrow center">Your Stay Has a Footprint</span>
     <h2 class="section-title center">THE QUESTION IS WHAT KIND.</h2>
     <p>Every traveler uses resources, and every lodge does too — so this isn't about pretending to leave nothing behind. It's staying local, using local guides, choosing community-owned experiences, respecting river conditions and wildlife, and remembering that the people showing you Costa Rica live here after your vacation ends. It's also why Rafiki doesn't chase day-tour volume: too many visitors changes the river, the trails and the experience itself.</p>
-    <div class="placeholder-photo" style="min-height:180px; margin-top:24px;">
-      <span>Placeholder — only publish practices Rafiki can currently verify (water, waste, energy, single-use plastics, trail management). "We're eco-friendly" isn't the goal here; "here's exactly what we do" is.</span>
-    </div>
   </div>
 </section>
 

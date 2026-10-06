@@ -107,7 +107,7 @@
       <?php foreach ( $gallery as $i => $g ) : if ( empty( $g['image'] ) ) continue;
         $url = wp_get_attachment_image_url( $g['image'], 'large' );
         if ( ! $url ) continue;
-        $span = ( 0 === $i ) ? ' span-2 span-2-row' : ( ( 4 === $i ) ? ' span-2' : '' );
+        $span = rafiki_gallery_span( $i, count( $gallery ) );
       ?>
         <img class="<?php echo esc_attr( ltrim( $span ) ); ?>" src="<?php echo esc_url( $url ); ?>" alt="<?php echo esc_attr( $g['alt'] ); ?>">
       <?php endforeach; ?>

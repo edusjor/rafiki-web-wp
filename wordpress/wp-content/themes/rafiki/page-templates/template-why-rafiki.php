@@ -140,7 +140,9 @@ get_header();
           <li>You're fine trading a few conveniences for something you'll remember.</li>
           <li>You want a place with a story, not a chain with a logo.</li>
         </ul>
+        <?php if ( rafiki_page_is_published( 'meet-rafiki' ) ) : ?>
         <p style="margin-top:18px;"><a href="<?php echo esc_url( home_url( '/meet-rafiki/' ) ); ?>" class="btn btn-outline">Meet the Whole Team &rarr;</a></p>
+        <?php endif; ?>
       </div>
     </div>
   </div>

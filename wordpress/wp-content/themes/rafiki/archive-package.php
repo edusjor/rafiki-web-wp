@@ -110,7 +110,7 @@ $journey_moods = array(
       </details>
       <details class="faq-item">
         <summary>Do all members of our family have to do the same experience?</summary>
-        <p>Not necessarily. One of Rafiki's strengths is allowing people to spend parts of the day differently. <em>[Placeholder — confirm with Loki how this affects package inclusions/pricing.]</em></p>
+        <p>Not necessarily. One of Rafiki's strengths is allowing people to spend parts of the day differently.</p>
       </details>
       <details class="faq-item">
         <summary>Which package is best for a first visit?</summary>

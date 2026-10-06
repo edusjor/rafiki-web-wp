@@ -2,7 +2,7 @@
 
 <?php while ( have_posts() ) : the_post();
 	$post_id   = get_the_ID();
-	$hero_img  = rafiki_lead_image_url( $post_id, 'full' );
+	$hero_img  = rafiki_package_hero_url( $post_id );
 	$badges    = rafiki_rows( $post_id, 'rafiki_badges' );
 	$facts     = rafiki_rows( $post_id, 'rafiki_quick_facts' );
 	$gallery   = rafiki_rows( $post_id, 'rafiki_gallery' );
@@ -113,7 +113,7 @@
       <?php foreach ( $gallery as $i => $g ) : if ( empty( $g['image'] ) ) continue;
         $url = wp_get_attachment_image_url( $g['image'], 'large' );
         if ( ! $url ) continue;
-        $span = ( 0 === $i ) ? ' span-2 span-2-row' : ( ( 4 === $i ) ? ' span-2' : '' );
+        $span = rafiki_gallery_span( $i, count( $gallery ) );
       ?>
         <img class="<?php echo esc_attr( ltrim( $span ) ); ?>" src="<?php echo esc_url( $url ); ?>" alt="<?php echo esc_attr( $g['alt'] ); ?>">
       <?php endforeach; ?>

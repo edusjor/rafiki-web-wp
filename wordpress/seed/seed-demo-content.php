@@ -953,7 +953,6 @@ rafiki_seed_journal_post(
 	'Families',
 	"Multi-generational trips are hard to plan and easy to forget. Here's why Rafiki keeps bringing the same families back, year after year.",
 	array(
-		'<em>[Draft article — written for the site launch, not yet fact-checked against real guest stories. Replace the placeholder details below with a specific family\'s trip once the client can share one.]</em>',
 		'Every family trip starts with the same problem: too many ages, too many opinions, and a shrinking window where everyone can actually get away at once. By the time the group agrees on a destination, half the excitement is gone.',
 		'What we hear from families who\'ve stayed at Rafiki is different. It isn\'t about the tents, or the rafting, or the pool with the water slide — though those help. It\'s that there\'s finally nowhere else to be. No errands. No separate schedules. Just breakfast together at the Lekker Bar, and then a full day ahead with nothing else competing for anyone\'s attention.',
 		'One guest put it simply: it was the first time in years the whole family had been in the same place at the same time, not glancing at a phone. That\'s not a rafting review. That\'s what the trip was actually for.',
@@ -967,7 +966,6 @@ rafiki_seed_journal_post(
 	'Why Rafiki',
 	'No lions. No jeeps circling a fenced enclosure. Here\'s what "safari" actually means at Rafiki, and why that\'s the point.',
 	array(
-		'<em>[Draft article — the story of the name and the South African tents should be corrected/expanded by Loki directly; the version below is a reasonable placeholder based on public information about the property.]</em>',
 		'The name "safari" tends to set the wrong expectation. People picture Africa — jeeps, guaranteed sightings, animals that show up on cue for a photo. Rafiki isn\'t that, and was never trying to be.',
 		'The "safari" here refers to the style of the tents — imported from South Africa, raised on wooden platforms, built for sleeping surrounded by forest rather than behind four walls — not to a promise of wildlife on demand. What you actually get is 600 acres of private Costa Rican rainforest along the Savegre River, where animals come and go because it\'s their home, not because they\'re fenced in for guests.',
 		'That means some mornings you\'ll watch a troop of monkeys cross right over the lodge, and other mornings you won\'t see much beyond birdsong. Both are the real forest. If what you want is a guaranteed animal checklist, a wildlife park will serve you better. If what you want is nature that isn\'t performing for you, that\'s exactly what Rafiki is built around.',
@@ -980,7 +978,6 @@ rafiki_seed_journal_post(
 	'Retreats & Groups',
 	'Beyond a pretty yoga deck: what actually makes or breaks a retreat venue, from someone who has to answer for how it goes.',
 	array(
-		'<em>[Draft article — written from a generic retreat-leader perspective. Should be reviewed against real retreats hosted at Rafiki, with specifics swapped in once available (capacity numbers, past retreat photos, leader testimonials).]</em>',
 		'If you lead retreats, the venue isn\'t decor — it\'s a co-facilitator. A space that feels corporate undoes half the work before anyone sits down. A space that feels genuinely apart from daily life does some of the work for you.',
 		'The questions that actually matter rarely show up on a venue\'s photo gallery: Is there a real outdoor space for a circle, not just a conference room with a mat rolled out? Can the kitchen accommodate a group with mixed dietary needs without a week\'s notice? Is the WiFi weak enough that people actually put their phones down?',
 		'At Rafiki, groups get an open-air lodge built for gathering, meals the kitchen adjusts for the table rather than a fixed banquet menu, and a setting where "unplugging" isn\'t a suggestion — it\'s just what happens when the signal drops off on the way in.',

@@ -50,15 +50,6 @@ get_header();
     <p>Roughly 3.5–4 hours by car from San José (SJO), 16 km off the Coastal Highway near Savegre River, Pérez Zeledón. The last stretch is unpaved — 4x4 is required, not just recommended, especially in green season.</p>
     <h3 style="font-size:20px; margin:28px 0 8px;">"CAN YOU ARRANGE TRANSPORTATION?"</h3>
     <p>Yes. Tell us where you're sleeping before Rafiki and where you're heading afterward. We'll help connect the route.</p>
-    <h3 style="font-size:20px; margin:28px 0 8px;">"WHAT WILL THE FINAL PART OF THE DRIVE LOOK LIKE?"</h3>
-    <p style="font-size:18px;">Show it. Don't just explain it.</p>
-    <!-- Insert a short real journey video here: coastal road -> turn inland ->
-         Santo Domingo -> road toward Rafiki -> entrance -> arrival. Goal:
-         reduce booking anxiety — the visitor should think "okay, now I
-         understand how I get there." -->
-    <div class="placeholder-photo" style="min-height:280px; margin-top:16px;">
-      <span>Placeholder — short real video/photo sequence: coastal road → turn inland → Santo Domingo → road toward Rafiki → entrance → arrival.</span>
-    </div>
   </div>
 </section>
 
@@ -71,12 +62,6 @@ get_header();
     <p>Canvas outside. A proper bed inside. Private bathroom. Hot shower. Rocking chairs and your own porch. Forest around you. You hear more of Costa Rica's nature without having to sleep like you're camping.</p>
     <h3 style="font-size:20px; margin:28px 0 8px;">"ARE THERE BUGS?"</h3>
     <p style="font-size:18px;">Yes. You're in a rainforest. Most of them belong outside your tent. Keep the screens and tent properly closed and let the forest stay where it belongs.</p>
-    <!-- Ideally a short POV-style walkthrough: entrance -> tent exterior ->
-         bed -> bathroom -> porch -> view. Goal: "this is what I'll
-         experience when I arrive." -->
-    <div class="placeholder-photo" style="min-height:280px; margin-top:16px;">
-      <span>Placeholder — POV-style walkthrough video/photos: entrance → safari tent exterior → bed → bathroom → porch → view.</span>
-    </div>
     <p style="margin-top:24px;"><a href="<?php echo esc_url( get_post_type_archive_link( 'accommodation' ) ); ?>" class="btn btn-outline" style="border-color: var(--text-dark); color: var(--text-dark);">See the Safari Tents →</a></p>
   </div>
 </section>
@@ -116,8 +101,6 @@ get_header();
     <h2 class="section-title center">"WHAT WILL WE EAT?"</h2>
     <p>Breakfast, lunch and dinner are served at Lekker Bar &amp; Braai. And yes — you can see the menus before arriving.</p>
     <p><a href="<?php echo esc_url( home_url( '/lekker-bar-braai/' ) ); ?>" class="btn btn-primary">See What's Cooking →</a></p>
-    <h3 style="font-size:20px; margin:28px 0 8px;">"CAN YOU HANDLE DIETARY RESTRICTIONS?"</h3>
-    <p><em>[Placeholder — confirm current policy for vegetarian, vegan, gluten-free, allergies and children's meals with Loki.]</em></p>
   </div>
 </section>
 

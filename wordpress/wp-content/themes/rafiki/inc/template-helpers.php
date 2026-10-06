@@ -231,6 +231,16 @@ function rafiki_stay_selection_label( $sel ) {
 	return $label;
 }
 
+/**
+ * Whether the page at $path is published. Hard-coded menu links to a page
+ * check this so a page switched to draft drops out of the nav instead of
+ * leaving a link to a 404.
+ */
+function rafiki_page_is_published( $path ) {
+	$page = get_page_by_path( $path );
+	return $page && 'publish' === $page->post_status;
+}
+
 /* ------------------------------------------------------------------ */
 /* Client photo sets (assets/img/photos/)                              */
 /* Bundled with the theme so they ship with the repo. Where a set      */
@@ -316,13 +326,38 @@ function rafiki_stay_photo_key( $post_id ) {
 	return '';
 }
 
+/**
+ * Hero photo for a package page. Each package gets its own bundled photo
+ * (their galleries all lead with the same rafting shot); falls back to the
+ * lead image for any package not listed here.
+ */
+function rafiki_package_hero_url( $post_id ) {
+	$heroes = array(
+		'rafiki-safari'       => 'img-3784',          // family floating down the river
+		'safarito'            => 'img-1190',          // lodge deck at sunset
+		'savegre-adventure'   => 'place-wildlife-24', // Savegre valley at sunset
+		'super-lekker-safari' => 'img-1448',          // pool with misty mountains
+	);
+	$slug = get_post_field( 'post_name', $post_id );
+	return isset( $heroes[ $slug ] ) ? rafiki_photo( $heroes[ $slug ] ) : rafiki_lead_image_url( $post_id, 'full' );
+}
+
+/**
+ * .gallery-grid tile classes for photo $i of $n: the lead photo takes a 2x2
+ * block, and the last few are widened so every 4-column row ends flush
+ * (no holes, whatever the photo count).
+ */
+function rafiki_gallery_span( $i, $n ) {
+	if ( 0 === $i ) return 'span-2 span-2-row';
+	$extra = ( 4 - ( ( $n + 3 ) % 4 ) ) % 4;
+	return $i >= $n - $extra ? 'span-2' : '';
+}
+
 /** Renders a photo set with the .gallery-grid layout used on stay pages. */
 function rafiki_photo_grid( $photos ) {
-	// Lead photo takes a 2x2 block; widen the last few so every 4-column row ends flush.
-	$n     = count( $photos );
-	$extra = ( 4 - ( ( $n + 3 ) % 4 ) ) % 4;
+	$n = count( $photos );
 	foreach ( $photos as $i => $p ) {
-		$span = ( 0 === $i ) ? 'span-2 span-2-row' : ( ( $i >= $n - $extra ) ? 'span-2' : '' );
+		$span = rafiki_gallery_span( $i, $n );
 		printf( '<img class="%s" src="%s" alt="%s" loading="lazy">', esc_attr( $span ), esc_url( $p['url'] ), esc_attr( $p['alt'] ) );
 	}
 }

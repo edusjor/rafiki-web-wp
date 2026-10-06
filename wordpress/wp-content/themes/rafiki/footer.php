@@ -50,7 +50,7 @@
       <h4>Why Rafiki</h4>
       <a href="<?php echo esc_url( home_url( '/why-rafiki/' ) ); ?>">Our Story</a>
       <a href="<?php echo esc_url( home_url( '/ecological-mission/' ) ); ?>">Our Ecological Mission</a>
-      <a href="<?php echo esc_url( home_url( '/meet-rafiki/' ) ); ?>">Meet Rafiki</a>
+      <?php if ( rafiki_page_is_published( 'meet-rafiki' ) ) : ?><a href="<?php echo esc_url( home_url( '/meet-rafiki/' ) ); ?>">Meet Rafiki</a><?php endif; ?>
       <a href="<?php echo esc_url( home_url( '/plan-your-trip/' ) ); ?>">Before You Get Here</a>
     </div>
 
